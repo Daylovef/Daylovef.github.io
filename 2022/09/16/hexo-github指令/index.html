@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            留言板
+            hexo+github指令
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,32 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/page.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">留言板</h1>
+                <h1 class="header-subtitle">hexo+github指令</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-09-16
+                        </span>
+                        
+                            <span id="/2022/09/16/hexo-github指令/" class="leancloud_visitors" data-flag-title="hexo+github指令">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/09/16/hexo-github指令/"></span>
+                        </span>  
+                    </p>
+                    
+                    
+                        
+                            <span class="tag-color">装逼必备</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,22 +65,117 @@
 </div>
 <div id="container">
     
-        <!-- 独立页面 -->
-        
-            <div id="article">
-                <div class="article-body">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="总结一下-github加hexo搭建博客的指令"><a href="#总结一下-github加hexo搭建博客的指令" class="headerlink" title="总结一下,github加hexo搭建博客的指令"></a>总结一下,github加hexo搭建博客的指令</h4><ol>
+<li><a href=https://www.liaoxuefeng.com/wiki/896043488029600><u>安装git git教程<br></u></a></li>
+</ol>
+<p><code>git --version</code>检查是否安装成功</p>
+<p>如果是linux系统的话，可以直接代码 <code>sudo apt-get install git</code></p>
+<p>有git的话建议使用git bash使用指令</p>
+<ol start="2">
+<li><a href=http://nodejs.cn/download><u>node js下载</u></a></li>
+</ol>
+<p>下载完成的话可以使用 <code>node -v</code> <code>npm -v</code> 检测你的版本号，也可以看是否安装成功</p>
+<ol start="3">
+<li><p>去Github 上创一个github的号</p>
+</li>
+<li><p>选择一个地方去做你的仓库，在仓库的位置使用Git GUI里面的Help的show ssh key<br>如果你的电脑没有ssh就可以点击Generate Key生成你的ssh</p>
+</li>
+</ol>
+<p>然后打开GitHub点到你的setting</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/hexo001.png"></p>
+<p>new ssh key里面的title随便填，下面那就把生成的ssh放进去</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/hexo002.png"></p>
+<ol start="5">
+<li>安装hexo<br>在仓库的位置右键先可以建一个blog，打开blog，在blog内右键打开git bash here执行一下指令</li>
+</ol>
+<ul>
+<li><p><code>hexo -v</code>检查是否安装完成</p>
+</li>
+<li><p><code>npm install -g hexo-cli</code> </p>
+</li>
+<li><p><code>hexo init</code> </p>
+</li>
+<li><p><code>hexo g</code></p>
+</li>
+<li><p><code>hexo s</code> 这里会出现一个网址，直接浏览器输入，你就可以看到部署之后的样子ctrl+c结束</p>
+</li>
+<li><p><code>git config --global user.name &quot;github的账号名&quot;</code><br><code>git config --global user.email &quot;电子邮箱&quot;</code> 这两个代码就可以连上你的GitHub</p>
+</li>
+<li><p><code>ssh -T git@github.com</code> 查看你的ssh有没有配置成功,成功了会回复你一个 Hi XXXXXX!you’ve successfully XXXXXXXXXXX</p>
+</li>
+</ul>
+<ol start="6">
+<li>修改配置文件.config.yml <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/gaoziman/gaoziman.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+这里的repository你要填你自己的github的仓库名，别直接复制粘贴。分支也得用自己的分支名<br>再安装一下.deploy-git</li>
+</ol>
+<ul>
+<li><p><code>npm install hexo-deployer-git --save</code></p>
+</li>
+<li><p><code>hexo clean</code></p>
+</li>
+<li><p><code>hexo g;hexo s;hexo d;</code> 部署完成，可以自己去看看自己的博客</p>
+</li>
+<li><p><code>hexo new &quot;创建的文章名&quot;</code> 这是创建文章，来写自己的博客。</p>
+</li>
+</ul>
+<p><a href=https://hexo.io/themes><u>hexo主题</u></a> 可以选一些自己喜欢的主题去搭建自己的博客</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="Live For Code">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>Live For Code
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2022/09/16/hexo-github%E6%8C%87%E4%BB%A4/" target="_blank">hexo+github指令</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tags/%E8%A3%85%E9%80%BC%E5%BF%85%E5%A4%87/">装逼必备</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2022/09/17/buu-WUSUCTF2020-%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/09/17/buu-WUSUCTF2020-%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/" title="发布于 2022-09-17 12:11">buu[WUSUCTF2020]朴实无华</a>
+                        <br>
                     
                     
+                        <a href="/2022/09/16/php/" class="next-prefix">» </a> 下一篇：    <a href="/2022/09/16/php/" title="发布于 2022-09-16 09:37">php</a>
                     
                 </div>
-                
+            </div>
+            
     <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
         
         <div class="comments-content"></div>
     </div>
 
-            </div>
-        
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -105,7 +217,7 @@
                     
                         <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
                     
-                        <li class=" active "><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
                     
                         <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
                     

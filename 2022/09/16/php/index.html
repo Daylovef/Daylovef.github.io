@@ -91,8 +91,9 @@
 <li>file_get_contents($text,’r’)这种只读函数可以使用 data:&#x2F;&#x2F;text&#x2F;plain&#x2F;;base64;________(编码) (data伪协议)这个伪协议可以把你的代码包装，相当于一个文件，然后file_get_contents($text,’r’)就会读取这个文件，你可以控制这个文件的内容从而绕过</li>
 <li>basename()会把字符串之中非acsii码的东西删掉，可以利用中文.</li>
 <li>弱比较：字母和数字字符自动变为数字，如 $str &#x3D; “123ffwsfwefwf24r2f32ir23jrw923rskfjwtsw54w3”，比较时，$str&#x3D;123.</li>
-<li>intval（）函数：<br>Intval函数获取变量整数数值<br>Intval最大的值取决于操作系统。<br>32 位系统最大带符号的 integer 范围是 -2147483648 到 2147483647。<br>32位系统上， intval(‘1000000000000’) 会返回 2147483647。<br>64 位系统上，最大带符号的 integer 值是 9223372036854775807。<br>所以如果参数为2147483647，那么当它反过来（就是字面意思），由于超出了限制，所以依然等于2147483647，即为回文。<br>is_numeric() 判断变量是否为数字或数字字符串，不仅检查10进制，16进制是可以<br>is_numeric函数对于空字符%00，无论是%00放在前后都可以判断为非数值，而%20空格字符只能放在数值后。<br>所以，查看函数发现该函数对对于第一个空格字符会跳过空格字符判断，接着后面的判断！<br>该函数还可能造成sql注入，例如将’1 or 1’转换为16进制形式2731206f72203127，再传参，就可以造成sql注入。<br>intval(r e q [ “ n u m b e r “ ] ) &#x3D; i n t v a l ( s t r r e v ( req[“number”])&#x3D;intval(strrev(req[“number”])&#x3D;intval(strrev(req[“number”]))<br>如果要求不是回文，但又要满足这个条件，<br>可以用科学计数法构造0&#x3D;0：<br>number&#x3D;0e-0%00</li>
-<li>$_GET[‘x’]传入的x值会进行url解码，可以利用绕过函数</li>
+<li>intval（）函数：<br>intval()函数会保留科学计数法前面的数，例如2e10 经过intval()处理将会变成 2 但是2e10+1 处理之后 因为加了1所以会是 20000000001<br>Intval函数获取变量整数数值<br>Intval最大的值取决于操作系统。<br>32 位系统最大带符号的 integer 范围是 -2147483648 到 2147483647。<br>32位系统上， intval(‘1000000000000’) 会返回 2147483647。<br>64 位系统上，最大带符号的 integer 值是 9223372036854775807。<br>所以如果参数为2147483647，那么当它反过来（就是字面意思），由于超出了限制，所以依然等于2147483647，即为回文。<br>is_numeric() 判断变量是否为数字或数字字符串，不仅检查10进制，16进制是可以<br>is_numeric函数对于空字符%00，无论是%00放在前后都可以判断为非数值，而%20空格字符只能放在数值后。<br>所以，查看函数发现该函数对对于第一个空格字符会跳过空格字符判断，接着后面的判断！<br>该函数还可能造成sql注入，例如将’1 or 1’转换为16进制形式2731206f72203127，再传参，就可以造成sql注入。<br>intval(req[“number”])&#x3D;intval(strrev(req[“number”])&#x3D;intval(strrev(req[“number”])&#x3D;intval(strrev(req[“number”]))<br>如果要求不是回文，但又要满足这个条件，<br>可以用科学计数法构造0&#x3D;0：<br>number&#x3D;0e-0%00</li>
+<li>$_GET[‘x’]传入的x值会进行url解码，可以利用 取反 绕过preg_match()函数</li>
+<li>is_numeric()函数可以直接加字母来绕过</li>
 </ul>
 
                 
@@ -101,7 +102,7 @@
             <div class="article-footer">
                 <div class="suffix-box">
     <div class="suffix-box-left">
-        <img src="/image/sidebar/avatar.jpg" alt="Live For Code">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="Live For Code">
     </div>
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>Live For Code
@@ -120,6 +121,9 @@
                 
                 
                 <div class="article-prev-next">
+                    
+                        <a href="/2022/09/16/hexo-github%E6%8C%87%E4%BB%A4/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/09/16/hexo-github%E6%8C%87%E4%BB%A4/" title="发布于 2022-09-16 09:51">hexo+github指令</a>
+                        <br>
                     
                     
                         <a href="/2022/09/16/123-1/" class="next-prefix">» </a> 下一篇：    <a href="/2022/09/16/123-1/" title="发布于 2022-09-16 05:36">123</a>
@@ -153,7 +157,7 @@
         <nav class="menu">
             <div class="menu-introduce"> 
                 <div class="introduce-avatar">
-                    <img src="/image/sidebar/avatar.jpg">
+                    <img src="/image/sidebar/-f128e7dd768b5.jpg">
                 </div> 
                 <div class="introduce-info"> 
                     <div class="introduce-user"><span>Live For Code</span></div>
@@ -292,7 +296,7 @@
         GitHubRepositories : "Hexo-LiveForCode",
 
         User             : "Live For Code",
-        UserAvatar       : "/image/sidebar/avatar.jpg",
+        UserAvatar       : "/image/sidebar/-f128e7dd768b5.jpg",
         WebsiteStartDate : "2020-01-01",
 
         WebsiteTitleBlur         : "(◍´꒳`◍) Hi, Live For Code",
@@ -354,6 +358,8 @@
         },
 
         HomeHeaderImage : [
+            
+                "/image/header/51c6d5c3154ea2f0.jpg",
             
                 "/image/header/home.jpg",
             
