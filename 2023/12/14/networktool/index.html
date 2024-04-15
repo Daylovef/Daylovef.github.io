@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            networktool
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,28 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">networktool</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-12-14
+                        </span>
+                        
+                            <span id="/2023/12/14/networktool/" class="leancloud_visitors" data-flag-title="networktool">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/12/14/networktool/"></span>
+                        </span>  
+                    </p>
+                    
+                    
                 </div>
             
         </div>
@@ -48,140 +61,56 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
-                        
-                            目前共计 42 篇日志，继续加油！
-                        
-                    </span>
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h3 id="dirsearch的使用"><a href="#dirsearch的使用" class="headerlink" title="dirsearch的使用"></a>dirsearch的使用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">用法：dirsearch.py [-u|--url] 目标 [-e|--extensions] 扩展名 [选项]</span><br><span class="line"></span><br><span class="line">选项:</span><br><span class="line">  --version             显示程序的版本号并退出</span><br><span class="line">  -h, --help            显示此帮助消息并退出</span><br><span class="line"></span><br><span class="line">必需：</span><br><span class="line">  -u URL, --url=URL     目标URL，可以使用多个选项指定多个目标URL</span><br><span class="line">  -l PATH, --urls-file=PATH</span><br><span class="line">                        URL列表文件</span><br><span class="line">  --stdin               从标准输入读取URL</span><br><span class="line">  --cidr=CIDR           目标CIDR</span><br><span class="line">  --raw=PATH            从文件加载原始HTTP请求（使用&#x27;--scheme&#x27;标志设置方案）</span><br><span class="line">  -s SESSION_FILE, --session=SESSION_FILE</span><br><span class="line">                        会话文件</span><br><span class="line">  --config=PATH         配置文件路径（默认为&#x27;DIRSEARCH_CONFIG&#x27;环境变量，否则为&#x27;config.ini&#x27;）</span><br><span class="line"></span><br><span class="line">字典设置:</span><br><span class="line">  -w WORDLISTS, --wordlists=WORDLISTS</span><br><span class="line">                        单词列表文件或包含单词列表文件的目录（以逗号分隔）</span><br><span class="line">  -e EXTENSIONS, --extensions=EXTENSIONS</span><br><span class="line">                        扩展名列表，以逗号分隔（例如：php,asp）</span><br><span class="line">  -f, --force-extensions</span><br><span class="line">                        在每个单词列表条目的末尾添加扩展名。默认情况下，dirsearch只替换%EXT%关键字为扩展名。</span><br><span class="line">  -O, --overwrite-extensions</span><br><span class="line">                        使用指定的扩展名覆盖单词列表中的其他扩展名（通过&#x27;-e&#x27;选择）</span><br><span class="line">  --exclude-extensions=EXTENSIONS</span><br><span class="line">                        排除的扩展名列表，以逗号分隔（例如：asp,jsp）</span><br><span class="line">  --remove-extensions   删除所有路径中的扩展名（例如：admin.php -&gt; admin）</span><br><span class="line">  --prefixes=PREFIXES   将自定义前缀添加到所有单词列表条目中（以逗号分隔）</span><br><span class="line">  --suffixes=SUFFIXES   将自定义后缀添加到所有单词列表条目中，忽略目录（以逗号分隔）</span><br><span class="line">  -U, --uppercase       单词列表转为大写</span><br><span class="line">  -L, --lowercase       单词列表转为小写</span><br><span class="line">  -C, --capital         单词首字母大写</span><br><span class="line"></span><br><span class="line">通用设置:</span><br><span class="line">  -t THREADS, --threads=THREADS</span><br><span class="line">                        线程数</span><br><span class="line">  -r, --recursive       递归地进行强制破解</span><br><span class="line">  --deep-recursive      在每个目录深度上执行递归扫描（例如：api/users -&gt; api/）</span><br><span class="line">  --force-recursive     对找到的每个路径执行递归强制破解，而不仅仅是目录</span><br><span class="line">  -R DEPTH, --max-recursion-depth=DEPTH</span><br><span class="line">                        最大递归深度</span><br><span class="line">  --recursion-status=CODES</span><br><span class="line">                        用于执行递归扫描的有效状态码，支持范围（以逗号分隔）</span><br><span class="line">  --subdirs=SUBDIRS     扫描给定URL的子目录（以逗号分隔）</span><br><span class="line">  --exclude-subdirs=SUBDIRS</span><br><span class="line">                        在递归扫描期间排除以下子目录（以逗号分隔）</span><br><span class="line">  -i CODES, --include-status=CODES</span><br><span class="line">                        包括的状态码，以逗号分隔，支持范围（例如：200,300-399）</span><br><span class="line">  -x CODES, --exclude-status=CODES</span><br><span class="line">                        排除的状态码，以逗号分隔，支持范围（例如：301,500-599）</span><br><span class="line">eg : python dirsearch.py -u &quot;http://node4.anna.nssctf.cn:28694/&quot; -x 404</span><br><span class="line"></span><br><span class="line">                    </span><br><span class="line">  --exclude-sizes=SIZES</span><br><span class="line">                        根据大小排除响应，以逗号分隔（例如：0B,4KB）</span><br><span class="line">  --exclude-text=TEXTS  根据文本排除响应，可以使用多个标志</span><br><span class="line">  --exclude-regex=REGEX</span><br><span class="line">                        根据正则表达式排除响应</span><br><span class="line">  --exclude-redirect=STRING</span><br><span class="line">                        如果此正则表达式（或文本）与重定向URL匹配，则排除响应（例如：&#x27;/index.html&#x27;）</span><br><span class="line">  --exclude-response=PATH</span><br><span class="line">                        排除类似于此页面响应的响应，路径作为输入（例如：404.html）</span><br><span class="line">  --skip-on-status=CODES</span><br><span class="line">                        每当命中这些状态码之一时跳过目标，以逗号分隔，支持范围</span><br><span class="line">  --min-response-size=LENGTH</span><br><span class="line">                        响应的最小长度</span><br><span class="line">  --max-response-size=LENGTH</span><br><span class="line">                        响应的最大长度</span><br><span class="line">  --max-time=SECONDS    扫描的最大运行时间</span><br><span class="line">  --exit-on-error       发生错误时退出</span><br><span class="line"></span><br><span class="line">请求设置:</span><br><span class="line">  -m METHOD, --http-method=METHOD</span><br><span class="line">                        HTTP请求方法（默认为GET）</span><br><span class="line">  -d DATA, --data=DATA  HTTP请求数据</span><br><span class="line">  --data-file=PATH      包含HTTP请求数据的文件</span><br><span class="line">  -H HEADERS, --header=HEADERS</span><br><span class="line">                        HTTP请求标头，可以使用多个标志</span><br><span class="line">  --headers-file=PATH   包含HTTP请求标头的文件</span><br><span class="line">  -F, --follow-redirects</span><br><span class="line">                        跟随HTTP重定向</span><br><span class="line">  --random-agent        每个请求选择一个随机User-Agent</span><br><span class="line">  --auth=CREDENTIAL     认证凭据（例如：user:password或bearer token）</span><br><span class="line">  --auth-type=TYPE      认证类型（basic、digest、bearer、ntlm、jwt）</span><br><span class="line">  --cert-file=PATH      包含客户端证书的文件</span><br><span class="line">  --key-file=PATH       包含客户端证书私钥的文件（未加密）</span><br><span class="line">  --user-agent=USER_AGENT</span><br><span class="line">  --cookie=COOKIE</span><br><span class="line"></span><br><span class="line">连接设置:</span><br><span class="line">  --timeout=TIMEOUT     连接超时时间</span><br><span class="line">  --delay=DELAY         请求之间的延迟</span><br><span class="line">  -p PROXY, --proxy=PROXY</span><br><span class="line">                        代理URL（HTTP/SOCKS），可以使用多个标志</span><br><span class="line">  --proxies-file=PATH   包含代理服务器的文件</span><br><span class="line">  --proxy-auth=CREDENTIAL</span><br><span class="line">                        代理认证凭据</span><br><span class="line">  --replay-proxy=PROXY  用于重放已发现路径的代理</span><br><span class="line">  --tor                 使用Tor网络作为代理</span><br><span class="line">  --scheme=SCHEME       原始请求的协议或URL中没有协议时使用的协议（默认为自动检测）</span><br><span class="line">  --max-rate=RATE       每秒请求数最大值</span><br><span class="line">  --retries=RETRIES     失败请求的重试次数</span><br><span class="line">  --ip=IP               服务器IP地址</span><br><span class="line"></span><br><span class="line">高级设置:</span><br><span class="line">  --crawl               在响应中爬取新路径</span><br><span class="line"></span><br><span class="line">显示设置:</span><br><span class="line">  --full-url            在输出中显示完整URL（在静默模式下自动启用）</span><br><span class="line">  --redirects-history   显示重定向历史记录</span><br><span class="line">  --no-color            不使用彩色输出</span><br><span class="line">  -q, --quiet-mode      安静模式</span><br><span class="line"></span><br><span class="line">输出设置:</span><br><span class="line">  -o PATH/URL, --output=PATH/URL</span><br><span class="line">                        输出文件或MySQL/PostgreSQL数据库URL（格式：</span><br><span class="line">                        scheme://[username:password@]host[:port]/database-</span><br><span class="line">                        name）</span><br><span class="line">  --format=FORMAT       报告格式（可用：simple、plain、json、xml、md、csv、html、</span><br><span class="line">                        sqlite、mysql、postgresql）</span><br><span class="line">  --log=PATH            日志文件</span><br><span class="line"></span><br><span class="line">有关示例配置文件，请参见“config.ini”</span><br></pre></td></tr></table></figure>
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="懒羊羊">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>懒羊羊
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/12/14/networktool/" target="_blank">networktool</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2024/04/01/JavaScript-Prototype-%E6%B1%A1%E6%9F%93/" class="prev-prefix">« </a> 上一篇：    <a href="/2024/04/01/JavaScript-Prototype-%E6%B1%A1%E6%9F%93/" title="发布于 2024-04-01 09:44">JavaScript Prototype 污染</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/01/%E5%AE%89%E6%B4%B5%E6%9D%AF/"><span>安洵杯</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-01</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/28/buu-normal/"><span>buu_normal</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/28/BUU-ssti/"><span>BUU_ssti</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2022</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/12/11/Java/"><span>Java</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">12-11</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/10/BUU/"><span>BUU</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-10</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/08/Hackergame-2022/"><span>Hackergame 2022</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-08</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/07/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/"><span>DASCTF</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-07</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/07/%E7%AC%AC%E4%BA%94%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81/"><span>第五届强网拟态</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-07</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/05/python%E5%A4%9A%E7%BA%BF%E7%A8%8B/"><span>python学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/03/ISCTF2022/"><span>ISCTF2022</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-03</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/12/03/%E5%B7%A5%E5%85%B7/" class="next-prefix">» </a> 下一篇：    <a href="/2023/12/03/%E5%B7%A5%E5%85%B7/" title="发布于 2023-12-03 11:07">工具</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archives/page/2/">上一页</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/4/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -213,7 +142,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

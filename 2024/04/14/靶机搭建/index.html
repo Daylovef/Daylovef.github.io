@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            靶机搭建
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,28 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">靶机搭建</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-04-14
+                        </span>
+                        
+                            <span id="/2024/04/14/靶机搭建/" class="leancloud_visitors" data-flag-title="靶机搭建">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2024/04/14/靶机搭建/"></span>
+                        </span>  
+                    </p>
+                    
+                    
                 </div>
             
         </div>
@@ -48,140 +61,78 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
-                        
-                            目前共计 42 篇日志，继续加油！
-                        
-                    </span>
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h4 id="win7"><a href="#win7" class="headerlink" title="win7"></a>win7</h4><p><a target="_blank" rel="noopener" href="https://msdn.itellyou.cn/?ang=2h-cn">mscn</a></p>
+<p>从mscn上面下载win7的镜像网站</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240414145723.png" alt="20240414145723"></p>
+<p>其他设置就正常设置，固件使用BIOS，win7不支持UEFI</p>
+<p>一般最好分配30个G以上，磁盘容量够的话直接安装60个G也可以</p>
+<ul>
+<li>vmware tools 补丁安装</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://docs.vmware.com/cn/VMware-Tools/12.2/rn/vmware-tools-1226-release-notes/index.html">查阅一下vmware tools的发行文档</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240414152612.png" alt="20240414152612"></p>
+<p>需要安装补丁</p>
+<p><a target="_blank" rel="noopener" href="https://catalog.update.microsoft.com/search.aspx?q=kb4474419">补丁网站</a></p>
+<p>根据补丁编号下载<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240414153004.png" alt="20240414153004"></p>
+<p>选win7,64位</p>
+<p>接下来关闭虚拟机，把共享文件夹调为始终打开，把</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240414155126.png" alt="20240414155126"></p>
+<p>自己添加一个文件夹，然后把补丁移到共享文件夹里面</p>
+<p>右击文件夹，点击属性，共享<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240414160032.png" alt="20240414160032"></p>
+<p>然后添加everyone</p>
+<p>接下来打开虚拟机，win+r,输入<code>\\ip\用户名</code><br>然后会有账号密码的输入</p>
+<p>输入之后就可以看到共享文件夹</p>
+<p>安装补丁之后会让你重启，重启之后点击“虚拟机”再点击“vmware tools”</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240414162942.png" alt="20240414162942"></p>
+<p>就可以安装vmware tools，这样就可以直接进行虚拟机和本机之间的文件交互</p>
+<p>这样我们的win7，基本上就ok了.</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="懒羊羊">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>懒羊羊
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2024/04/14/%E9%9D%B6%E6%9C%BA%E6%90%AD%E5%BB%BA/" target="_blank">靶机搭建</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/01/%E5%AE%89%E6%B4%B5%E6%9D%AF/"><span>安洵杯</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-01</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/28/buu-normal/"><span>buu_normal</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/28/BUU-ssti/"><span>BUU_ssti</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2022</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/12/11/Java/"><span>Java</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">12-11</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/10/BUU/"><span>BUU</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-10</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/08/Hackergame-2022/"><span>Hackergame 2022</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-08</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/07/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/"><span>DASCTF</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-07</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/07/%E7%AC%AC%E4%BA%94%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81/"><span>第五届强网拟态</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-07</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/05/python%E5%A4%9A%E7%BA%BF%E7%A8%8B/"><span>python学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/03/ISCTF2022/"><span>ISCTF2022</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-03</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2024/04/12/kail%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" class="next-prefix">» </a> 下一篇：    <a href="/2024/04/12/kail%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" title="发布于 2024-04-12 10:00">kail虚拟机安装</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archives/page/2/">上一页</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/4/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -213,7 +164,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

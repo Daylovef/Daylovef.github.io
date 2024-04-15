@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            JavaScript Prototype 污染
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,28 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">JavaScript Prototype 污染</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-04-01
+                        </span>
+                        
+                            <span id="/2024/04/01/JavaScript-Prototype-污染/" class="leancloud_visitors" data-flag-title="JavaScript Prototype 污染">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2024/04/01/JavaScript-Prototype-污染/"></span>
+                        </span>  
+                    </p>
+                    
+                    
                 </div>
             
         </div>
@@ -48,140 +61,79 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
-                        
-                            目前共计 42 篇日志，继续加油！
-                        
-                    </span>
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html">p神的文章</a>讲的非常的详细</p>
+<blockquote>
+<p>原理非常简单，就是修改一个类的<code>prototype</code>属性，就会让其他所有这个类对象实例化的时候继承这个<code>prototype</code>属性,同样可以利用这个方法来修改原型类的。</p>
+</blockquote>
+<h3 id="wife-wife"><a href="#wife-wife" class="headerlink" title="wife_wife"></a>wife_wife</h3><p>这个题目的知识点就是JavaScript Prototype 污染</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240401232406.png" alt="20240401232406"></p>
+<p>直接创建一个账号，发现有admin，可以肯定这个题目需要admin账号登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240401232506.png" alt="20240401232506"></p>
+<p>这里贴一下js源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// post请求的路径</span><br><span class="line">app.post(&#x27;/register&#x27;, (req, res) =&gt; &#123;</span><br><span class="line"> </span><br><span class="line">    let user = JSON.parse(req.body)  // 将输入的账号密码从json字符串转成对象</span><br><span class="line"> </span><br><span class="line">    // 判断有没有输入账号和密码</span><br><span class="line">    if (!user.username || !user.password) &#123;  </span><br><span class="line">        return res.json(&#123; msg: &#x27;empty username or password&#x27;, err: true &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    // 判断账号是否存在总对象的username里，若注册时输入的用户名相同，则输出用户名已存在</span><br><span class="line">    if (users.filter(u =&gt; u.username == user.username).length) &#123;  </span><br><span class="line">        return res.json(&#123; msg: &#x27;username already exists&#x27;, err: true &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    //如果用户是管理员但邀请码不匹配，会将 user.isAdmin 设为 false，并返回一个错误的 JSON 响应。</span><br><span class="line">//由于邀请码是常量 INVITE_CODE，其值在代码执行期间不会发生变化。这意味着无论用户提交的邀请码是什么，其与 INVITE_CODE 的比较结果将在代码执行前就已经确定。因此，无论用户如何构造输入，都不能通过修改邀请码来改变条件判断的结果，防止了SQL注入。</span><br><span class="line">    if (user.isAdmin &amp;&amp; user.inviteCode != INVITE_CODE) &#123;</span><br><span class="line">        user.isAdmin = false</span><br><span class="line">        return res.json(&#123; msg: &#x27;invalid invite code&#x27;, err: true &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    // 使用系统函数复制对象，打包成一个新的对象</span><br><span class="line">    let newUser = Object.assign(&#123;&#125;, baseUser, user)</span><br><span class="line">    users.push(newUser)  // 存到总对象里</span><br><span class="line">    res.json(&#123; msg: &#x27;user created successfully&#x27;, err: false &#125;)  // 设置返回信息</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>想要admin登录，就需要user这个类里面属性的<code>isAdmin</code>为<code>true</code></p>
+<p>根据原型链那就是我们需要构建一个<code>user.__proto__=&#123;&quot;isAdmin&quot;:true&#125;</code></p>
+<p>传入之后，<code>let newUser = Object.assign(&#123;&#125;, baseUser, user)</code>这一个存入的对象就会被污染，从而使得isadmin的值为<code>true</code></p>
+<p>因为这个会新建一个对象去存储，污染数据就会直接存入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240402000226.png" alt="20240402000226"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240402000741.png" alt="20240402000741"></p>
+<p>可以看到用户创建成功。然后用新用户去登录。没有源码来打这个题目还是非常有难度</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240402001033.png" alt="20240402001033"></p>
+<p>拿到flag</p>
+<blockquote>
+<p>CatCTF{test_flag_h0w_c@n_I_l1ve_w1th0ut_nilou}</p>
+</blockquote>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/-f128e7dd768b5.jpg" alt="懒羊羊">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>懒羊羊
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2024/04/01/JavaScript-Prototype-%E6%B1%A1%E6%9F%93/" target="_blank">JavaScript Prototype 污染</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2024/04/12/%E6%B8%97%E9%80%8F/" class="prev-prefix">« </a> 上一篇：    <a href="/2024/04/12/%E6%B8%97%E9%80%8F/" title="发布于 2024-04-12 09:15">渗透</a>
+                        <br>
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/01/%E5%AE%89%E6%B4%B5%E6%9D%AF/"><span>安洵杯</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-01</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/28/buu-normal/"><span>buu_normal</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/28/BUU-ssti/"><span>BUU_ssti</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2022</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/12/11/Java/"><span>Java</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">12-11</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/10/BUU/"><span>BUU</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-10</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/08/Hackergame-2022/"><span>Hackergame 2022</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-08</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/07/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/"><span>DASCTF</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-07</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/07/%E7%AC%AC%E4%BA%94%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81/"><span>第五届强网拟态</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-07</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/05/python%E5%A4%9A%E7%BA%BF%E7%A8%8B/"><span>python学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2022/11/03/ISCTF2022/"><span>ISCTF2022</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">11-03</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/12/14/networktool/" class="next-prefix">» </a> 下一篇：    <a href="/2023/12/14/networktool/" title="发布于 2023-12-14 04:30">networktool</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archives/page/2/">上一页</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/4/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -213,7 +165,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

