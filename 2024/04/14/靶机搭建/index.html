@@ -86,10 +86,222 @@
 <p>然后添加everyone</p>
 <p>接下来打开虚拟机，win+r,输入<code>\\ip\用户名</code><br>然后会有账号密码的输入</p>
 <p>输入之后就可以看到共享文件夹</p>
-<p>安装补丁之后会让你重启，重启之后点击“虚拟机”再点击“vmware tools”</p>
+<p>安装补丁之后会让你重启，重启之后点击”虚拟机”再点击”vmware tools”</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240414162942.png" alt="20240414162942"></p>
 <p>就可以安装vmware tools，这样就可以直接进行虚拟机和本机之间的文件交互</p>
 <p>这样我们的win7，基本上就ok了.</p>
+<h4 id="win10"><a href="#win10" class="headerlink" title="win10"></a>win10</h4><p>因为很久以前搭建的，当时没有写博客，等哪天重新搭建的时候再补上吧</p>
+<h4 id="php系列靶场-win7搭建"><a href="#php系列靶场-win7搭建" class="headerlink" title="php系列靶场 (win7搭建)"></a>php系列靶场 (win7搭建)</h4><p>可以重新直接利用自己搭建的虚拟机直接去操作，但是我这里设置快照，去搭建我们的php靶机</p>
+<p>对我们win7的靶机去进行克隆，然后保存就欧克了</p>
+<p>我先给我的win7的电脑去安装压缩的工具，对于有的扩展名的压缩包，电脑是无法直接去进行解压的</p>
+<p>将我们的压缩文件,和php集成环境的工具下载到虚拟机</p>
+<p>集成环境使用的是phpstudy</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240501193548.png" alt="20240501193548"></p>
+<p>配置一键启动</p>
+<p>网络配置建议使用桥接模式，因为桥接可以让你的本机直接和你的虚拟机进行互通,如果网络连接还是有问题，在桥接模式那里，可以勾选复制物理机的网卡配置</p>
+<h5 id="bwapp"><a href="#bwapp" class="headerlink" title="bwapp"></a>bwapp</h5><p><a target="_blank" rel="noopener" href="https://github.com/raesene/bWAPP">github项目地址</a></p>
+<p>然后将app移入根目录下，利用<code>/app/install.php</code>初始化，初始化之后就ok了</p>
+<h5 id="Pikachu"><a href="#Pikachu" class="headerlink" title="Pikachu"></a>Pikachu</h5><p><a target="_blank" rel="noopener" href="https://github.com/zhuifengshaonianhanlu/pikachu">github项目地址</a></p>
+<p>初始化同样的</p>
+<h5 id="dvwa"><a href="#dvwa" class="headerlink" title="dvwa"></a>dvwa</h5><p><a target="_blank" rel="noopener" href="https://gitcode.com/digininja/DVWA/overview?utm_source=csdn_github_accelerator&isLogin=1">github项目地址</a></p>
+<p>需要修改<code>config.inc.php.dist</code>为<code>config.inc.php</code></p>
+<p>然后直接访问进入初始化界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240503202455.png" alt="20240503202455"></p>
+<p>说我们的一个配置没有打开</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240503202611.png" alt="20240503202611"></p>
+<p>把off改为on</p>
+<p>重启集成环境</p>
+<p>接下来打开<code>config.inc.php</code>修改一下，mysql账号密码</p>
+<p>dvwa默认密码<code>admin</code>,<code>password</code></p>
+<h5 id="phpcms"><a href="#phpcms" class="headerlink" title="phpcms"></a>phpcms</h5><p><a target="_blank" rel="noopener" href="https://www.phpcmsv9.cn/">PHPCMS官网</a></p>
+<p>接下来，进入<code>install/install.php</code>进行初始化就ok</p>
+<h4 id="vulhub靶场"><a href="#vulhub靶场" class="headerlink" title="vulhub靶场"></a>vulhub靶场</h4><p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub">靶场项目地址</a></p>
+<ol>
+<li><p>进入一个靶场环境目录<br><code>cd /root/vulhub/weblogic/CVE-2017-10271</code></p>
+</li>
+<li><p>对靶场进行编译<br><code>docker-compose build</code></p>
+</li>
+<li><p>运行此靶场<br><code>docker-compose up -d</code></p>
+</li>
+<li><p>查看启动环境<br><code>docker-compose ps -a</code></p>
+</li>
+<li><p>关闭此靶场环境<br><code>docker-compose down</code></p>
+</li>
+</ol>
+<h4 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h4><p>简单说一说，遇到的问题吧，当时遇见</p>
+<p>vmware-tools，无法安装，图标为灰色</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240507192051.png" alt="20240507192051"></p>
+<p>需要将CD光盘调整到指定位置，就可以安装了</p>
+<p>还可以使用另外一个工具</p>
+<p><code>sudo apt-get update</code><br>更新一下apt</p>
+<p><code>sudo apt-get install open-vm-tools-desktop</code><br>安装之后重启就可以直接使用</p>
+<p>设置超级用户</p>
+<p><code>sudo passwd root</code> 配置root密码</p>
+<h4 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h4><p>docker是一个软件，是一个运行与linux和windows上的软件，用于创建、管理和编排容器；docker平台就是一个软件集装箱化平台，是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，也可以实现虚拟化，并且容器之间不会有任何接口。</p>
+<p>一般项目中一个容器还不够，则需要多个容器，难道就一个个下载，运行吗？这样还是麻烦，有没有一种办法，同时启动多个容器呢？那就是通过docker-compose 技术可以做到同时启动多个容器</p>
+<h5 id="centos-docker的安装"><a href="#centos-docker的安装" class="headerlink" title="centos docker的安装"></a>centos docker的安装</h5><ul>
+<li>CentOS中安装docker</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># centos7上面用yum安装</span><br><span class="line">yum install docker -y</span><br><span class="line">#启动docker</span><br><span class="line">systemctl start docker</span><br><span class="line">#设置开机自启</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<h5 id="Ubuntu上安装Docker"><a href="#Ubuntu上安装Docker" class="headerlink" title="Ubuntu上安装Docker"></a>Ubuntu上安装Docker</h5><ol>
+<li>添加Docker官方仓库</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>安装docker</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install docker-ce</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动docker服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status docker</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>docker-compose的安装<br><a target="_blank" rel="noopener" href="https://gitcode.com/docker/compose/releases?utm_source=csdn_github_accelerator&isLogin=1">docker-compose gitcode项目地址</a><br>先到Docker-Compose下载最新版本的docker-compose-Linux-x86_64，并上传到虚拟机</p>
+</li>
+</ol>
+<p>pip安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install python3-pip</span><br><span class="line">pip install docker-compose</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Docker加速<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">vim /etc/docker/daemon.json</span><br><span class="line"># 加入以下代码</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;加速器地址&quot;]</span><br><span class="line">&#125;</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h6 id="添加Docker官方仓库"><a href="#添加Docker官方仓库" class="headerlink" title="添加Docker官方仓库"></a>添加Docker官方仓库</h6><p>需要添加Docker官方仓库以获取最新的Docker软件包。在终端中执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="kail上安装docker"><a href="#kail上安装docker" class="headerlink" title="kail上安装docker"></a>kail上安装docker</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#添加docker的gpg密钥，签名用的</span><br><span class="line">curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian/gpg | sudo apt-key add -</span><br><span class="line">#添加docker的apt源</span><br><span class="line">echo &#x27;deb https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian/ buster stable&#x27; | sudo tee /etc/apt/sources.list.d/docker.list</span><br><span class="line">#更新apt缓存</span><br><span class="line">apt update</span><br><span class="line">#安装docker</span><br><span class="line">sudo apt-get install docker.io</span><br><span class="line">#安装docker-compose</span><br><span class="line">sudo apt-get install docker docker-compose -y</span><br><span class="line">或</span><br><span class="line">apt install docker-compose</span><br><span class="line">#安装完成之后，docker就自动启动了</span><br><span class="line">systemctl status docker   </span><br><span class="line">#查看docker版本</span><br><span class="line">docker -v </span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-参数详解"><a href="#docker-参数详解" class="headerlink" title="docker 参数详解"></a>docker 参数详解</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-a stdin: 指定标准输入输出内容类型，可选 STDIN/STDOUT/STDERR 三项；</span><br><span class="line">-d: 后台运行容器，并返回容器ID；</span><br><span class="line">-i: 以交互模式运行容器，通常与 -t 同时使用；</span><br><span class="line">-t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；</span><br><span class="line">–name=&quot;nginx-lb&quot;: 为容器指定一个名称；</span><br><span class="line">–dns 8.8.8.8: 指定容器使用的DNS服务器，默认和宿主一致；</span><br><span class="line">–dns-search example.com: 指定容器DNS搜索域名，默认和宿主一致；</span><br><span class="line">-h &quot;mars&quot;: 指定容器的hostname；</span><br><span class="line">-e username=&quot;ritchie&quot;: 设置环境变量；</span><br><span class="line">–env-file=[]: 从指定文件读入环境变量；</span><br><span class="line">–cpuset=&quot;0-2&quot; or –cpuset=&quot;0,1,2&quot;: 绑定容器到指定CPU运行；</span><br><span class="line">-m :设置容器使用内存最大值；</span><br><span class="line">–net=&quot;bridge&quot;: 指定容器的网络连接类型，支持 bridge/host/none/Container: 四种类型；</span><br><span class="line">–link=[]: 添加链接到另一个容器；</span><br><span class="line">–expose=[]: 开放一个端口或一组端口；</span><br><span class="line">-v 是用来挂载宿主机的目录或文件到容器中的参数。</span><br></pre></td></tr></table></figure>
+
+<p><code>docker run -m 256m my_image</code></p>
+<p>以搭建蜜罐<code>HFish</code>为例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd --name hfish \  #运行容器并且命名hfish，并且分配终端，和交互式命令</span><br><span class="line">-v /usr/share/hfish:/usr/share/hfish \ #</span><br><span class="line">--network host \ #创建一个网络名称叫host</span><br><span class="line">--privileged=true \ </span><br><span class="line">threatbook/hfish-server:latest # 获取最新版本的蜜罐hfish</span><br></pre></td></tr></table></figure>
+
+<h6 id="v参数详解"><a href="#v参数详解" class="headerlink" title="-v参数详解"></a>-v参数详解</h6><p>-v参数用于指定挂载关系，格式为宿主机目录:容器目录。</p>
+<p>简单描述就是将容器的目录链接上宿主机目录</p>
+<h5 id="docker保存的镜像的位置"><a href="#docker保存的镜像的位置" class="headerlink" title="docker保存的镜像的位置"></a>docker保存的镜像的位置</h5><p>1、linux保存在”&#x2F;var&#x2F;lib&#x2F;docker&#x2F;“中；<br>2、windows保存在”C:\ProgramData\DockerDesktop”中；<br>3、Mac保存在”com.docker.docker&#x2F;Data&#x2F;vms&#x2F;0&#x2F;“中</p>
+<h5 id="docker-镜像-常用命令"><a href="#docker-镜像-常用命令" class="headerlink" title="docker 镜像 常用命令"></a>docker 镜像 常用命令</h5><h6 id="docker-run-命令"><a href="#docker-run-命令" class="headerlink" title="docker run 命令"></a>docker run 命令</h6><p>用于从远程仓库下载镜像，并直接运行（一个命令就可以下载，运行）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-d  #放后台运行</span><br><span class="line">-p 端口映射 #例子： -p 宿主机端口:容器端口</span><br><span class="line">--name 指定容器的名字 # docker run -it --name jaden 镜像id或者名称</span><br><span class="line">--link 关联另一个容器 # 了解即可</span><br><span class="line">-e MYSQL_ROOT_PASSWORD #设置容器的一些属性，了解一下即可</span><br><span class="line">-it #是给运行起来的这个容器分配一个终端，就可以进入到容器内部操作了</span><br></pre></td></tr></table></figure>
+
+<p>eg: 下载Nginx1.16版本</p>
+<p>这一个是没有指定版本<br><code>docker run -d -p 80:80 nginx</code></p>
+<p>因为每个镜像他都是有自己的端口的比如nginx镜像默认是80端口，这个端口跟本机端口是两回事，我们需要用本机的端口进行映射，比如把本机80端口映射到Nginx的80端口；</p>
+<p>所以这里的80:80就是指的将物理机的80端口映射到Nginx镜像的80端口</p>
+<p>指定版本nginx下载<br>如果本机的80端口已经被占用了，就假设我们前面已经下载了nginx，那我们这一次下载指定版本就需要换成81端口<br><code>docker run -d -p 81:80 nginx:1.16</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508195155.png" alt="20240508195155"></p>
+<p>下载的时候可能出现一个提示，比如<br><code>Unable to find image &quot;nginx1.16&quot; locally</code></p>
+<p>是因为docker run命令下载镜像的时候先判断这个镜像在本地存不存在（有没有已经下载好），如果没有则从远程仓库下载，如果本地有，则直接运行本地下载好的镜像</p>
+<p>注意：镜像是镜像，容器是容器，不是说镜像运行起来以后身份变了成了容器；而是镜像运行起来以后镜像还在，可以说产生了一个容器，所以说一个镜像可以运行多个独立的容器</p>
+<p>比如我们现在再创建一个nginx1.16的容器，但是我们需要换一个端口<br><code>docker run -d -p  82:80 nginx:1.16</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508205824.png" alt="20240508205824"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508205839.png" alt="20240508205839"></p>
+<h6 id="docker-search-命令"><a href="#docker-search-命令" class="headerlink" title="docker search 命令"></a>docker search 命令</h6><p>用于搜索镜像，有时候想下载镜像，但想看看有有哪些镜像，就可以用这个命令去查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker search nginx</span><br><span class="line">docker search httpd</span><br><span class="line">docker search mysql</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508201945.png" alt="20240508201945"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NAME∶镜像名字</span><br><span class="line">DESCRIPTION:镜像描述</span><br><span class="line">STARS:获得的星星，越多表示越受欢迎</span><br><span class="line">OFFICIAL:是否是官方维护的（除了官方，也可以制作镜像放到远程仓库</span><br></pre></td></tr></table></figure>
+
+<p>下载的时候就可以下载自己想下载的镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d  -p 3306:3306 mariadb</span><br><span class="line"># 不指定版本号默认下载最新的</span><br></pre></td></tr></table></figure>
+
+<h6 id="docker-images-命令"><a href="#docker-images-命令" class="headerlink" title="docker images 命令"></a>docker images 命令</h6><p>查看本地镜像列表（下载了哪些镜像）<br>有个 IMAGE ID 就是这个镜像的ID值</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508202053.png" alt="20240508202053"></p>
+<h6 id="docker-pull-命令"><a href="#docker-pull-命令" class="headerlink" title="docker pull 命令"></a>docker pull 命令</h6><p>docker run 命令时下载直接运行镜像，而我们只想下载，不想运行，就使用这个指令</p>
+<p>docker pull 作用把远程镜像拉取到本地</p>
+<p><code>docker pull httpd</code></p>
+<h6 id="docker-push-命令"><a href="#docker-push-命令" class="headerlink" title="docker push 命令"></a>docker push 命令</h6><p>上传镜像，推送镜像，推到官方仓库</p>
+<h6 id="docker-rmi-命令"><a href="#docker-rmi-命令" class="headerlink" title="docker rmi 命令"></a>docker rmi 命令</h6><p>已经运行的镜像不能删除<br><code>docker rmi nginx:1.16</code></p>
+<p>删除镜像可以用名字，也可以用他的IMAGE ID</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508203631.png" alt="20240508203631"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker rmi nginx:latest</span><br><span class="line">或</span><br><span class="line">docker rmi 1d668e06f1e5</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508203656.png" alt="20240508203656"></p>
+<p>可以同时删除多个镜像：格式就是如下，通过空格隔开可以删除多个容器<br><code>docker rmi nginx:latest nginx:1.16</code></p>
+<h6 id="docker-save"><a href="#docker-save" class="headerlink" title="docker save"></a>docker save</h6><p>导出镜像，如果我们想要把镜像导出，放到另一个主机里导入然后运行，比如：<br><code>docker save nginx:1.16 -o docker.nginx1.16.tar.gz</code></p>
+<h6 id="docker-ps"><a href="#docker-ps" class="headerlink" title="docker ps"></a>docker ps</h6><p>查看已经运行的容器列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker ps //查看docker的进程</span><br><span class="line">docker container ls //ls docker开启容器</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508203953.png" alt="20240508203953"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508204012.png" alt="20240508204012"></p>
+<p>但是作用几乎是一致的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-a   ## all 的意思，显示所有容器（运行起来以后停掉的也算容器）</span><br><span class="line"></span><br><span class="line">CONTAINER ID ： 容器ID，删除容器都是通过ID或者NAMES删除的；</span><br><span class="line">IMAGES：镜像，就是从哪个镜像启动的</span><br><span class="line">CREATED：什么时候创建的</span><br><span class="line">STATUS：状态，up 表示在运行，Exited表示停止运行了，上面Nginx1.16有两个说明一个镜像可以多次运行称为多个容器；</span><br><span class="line">NAMES：表示镜像列表，运行的时候可以--name参数起名字，如果不起名字就随机分配一个名字；我们没有起名字所以NAMES都是随机的 </span><br><span class="line"></span><br><span class="line">-q  ## 只显示容器的ID</span><br><span class="line"></span><br><span class="line">docker ps -a  ## 列出所有容器的详细信息（已经运行的+运行完停掉的）</span><br><span class="line">docker ps -q  ## 只列出容器的ID号</span><br><span class="line">docker ps -a -q ## 列出所容器的ID号</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508204208.png" alt="20240508204208"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508204227.png" alt="20240508204227"></p>
+<p>其他的可以自己去尝试</p>
+<h6 id="docker-stop"><a href="#docker-stop" class="headerlink" title="docker stop"></a>docker stop</h6><p>停止运行的容器（只能根据container ID 或者 NAMES 删除）</p>
+<p><code>docker stop 105869cf5243</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508204440.png" alt="20240508204440"></p>
+<p>停止所有在运行的容器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop `docker ps -q`</span><br></pre></td></tr></table></figure>
+
+<h6 id="docker-start"><a href="#docker-start" class="headerlink" title="docker start"></a>docker start</h6><p>启动容器（根据容器的ID或者名字）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508205216.png" alt="20240508205216"></p>
+<p><code>docker ps -a</code> 关闭掉的容器也会显示,但是状态是<code>exit</code>还有时间</p>
+<p><code>docker start 105869cf5243</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508205350.png" alt="20240508205350"></p>
+<p>可以使用指令</p>
+<p><code>docker ps</code>查看是否开启，也可以通过访问端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508205447.png" alt="20240508205447"></p>
+<h6 id="docker-restar"><a href="#docker-restar" class="headerlink" title="docker restar"></a>docker restar</h6><p>重启容器（根据容器的ID或者名字）</p>
+<p><code>docker restart e932acc39242</code></p>
+<h6 id="docker-rm"><a href="#docker-rm" class="headerlink" title="docker rm"></a>docker rm</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">删除容器，只能删除已经停掉的容器（docker rm -f 强制删除也能删除在运行的容器）</span><br><span class="line"></span><br><span class="line">先 docker ps -a 查看所有容器，根据ID号（或者NAMES）删除没在运行的容器</span><br><span class="line"></span><br><span class="line">docker rm 容器id或者容器名字，同时删除多个，就空格隔开，处于up状态是不能直接删除的，强制删除是可以删除up状态的容器的 </span><br><span class="line"></span><br><span class="line">docker rm -f `docker ps -a -q` #删除所有容器，-q是只显示容器id，反引号中的指令优先执行</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508210340.png" alt="20240508210340"></p>
+<h6 id="docker-top"><a href="#docker-top" class="headerlink" title="docker top"></a>docker top</h6><p>查看容器内的进程（根据容器的ID或者名字）</p>
+<p><code>docker top 59545f8455cf</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508210524.png" alt="20240508210524"></p>
+<h6 id="docker-stats"><a href="#docker-stats" class="headerlink" title="docker stats"></a>docker stats</h6><p>查看容器的资源占用情况</p>
+<p><code>docker stats 59545f8455cf</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508210734.png" alt="20240508210734"></p>
+<h6 id="docker-exec"><a href="#docker-exec" class="headerlink" title="docker exec"></a>docker exec</h6><p>进入容器内部</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 容器id或者容器名字 进入容器目录</span><br><span class="line">docker exec -it 59545f8455cf /bin/bash</span><br><span class="line"></span><br><span class="line"># 直接交互指令：docker exec -it 76738703b7b2 ls</span><br><span class="line"># 执行ls指令</span><br><span class="line"># 进入终端：docker exec -it 76738703b7b2 /bin/bash或者/bin/sh #/bin/bash打开一个终端窗口，exit指令退出终端，但是docker容器内容一般不会安装额外的软件，所以导致大量的指令是用不了的，比如ifconfig、ps、ip addr等</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240508211007.png" alt="20240508211007"></p>
+<h5 id="docker给容器添加ssh"><a href="#docker给容器添加ssh" class="headerlink" title="docker给容器添加ssh"></a>docker给容器添加ssh</h5><p>需要给容器kail的root权限，容器的root权限，只是 kail的普通用户权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it [containerID] /bin/bash</span><br><span class="line"></span><br><span class="line">apt-get update</span><br><span class="line"></span><br><span class="line">apt-get install openssh-server</span><br><span class="line"></span><br><span class="line">service ssh satrt</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="docker清除镜像缓存"><a href="#docker清除镜像缓存" class="headerlink" title="docker清除镜像缓存"></a>docker清除镜像缓存</h5><p>在一些情况下，由于镜像缓存的原因，Docker镜像拉取失败。可以尝试清除Docker镜像缓存，从而解决拉取失败问题。可以通过以下命令来清除Docker镜像缓存：<br><code>docker system prune -a</code><br>当然，此操作将会清除所有Docker缓存以及未使用的Docker镜像、容器、网络等信息，慎重执行。</p>
+<h5 id="docker换源"><a href="#docker换源" class="headerlink" title="docker换源"></a>docker换源</h5><p>最近不知道怎么回事,网络一直出现问题,一直想下载一个ningx的镜像但是下载不下来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.Docker中国区官方镜像</span><br><span class="line">https://registry.docker-cn.com</span><br><span class="line"></span><br><span class="line">2.网易</span><br><span class="line">http://hub-mirror.c.163.com</span><br><span class="line"></span><br><span class="line">3.ustc </span><br><span class="line">https://docker.mirrors.ustc.edu.cn</span><br><span class="line"></span><br><span class="line">4.中国科技大学</span><br><span class="line">https://docker.mirrors.ustc.edu.cn</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527163747.png" alt="20240527163747"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [</span><br><span class="line">        &quot;https://registry.hub.docker.com&quot;,</span><br><span class="line">        &quot;http://hub-mirror.c.163.com&quot;,</span><br><span class="line">        &quot;https://docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">        &quot;https://registry.docker-cn.com&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启docker<br><code>systemctl restart docker</code></p>
+<p><code>docker info</code>查看docker信息看是否换源成功<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527164023.png" alt="20240527164023"></p>
+<h5 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h5><h6 id="docker-compose-常用命令"><a href="#docker-compose-常用命令" class="headerlink" title="docker-compose 常用命令"></a>docker-compose 常用命令</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#创建并启动</span><br><span class="line">docker-compose up -d # 启动之后就可以通过浏览器访问了</span><br><span class="line">#停止并删除</span><br><span class="line">docker-compose down</span><br><span class="line">#重启</span><br><span class="line">docker-compose restart</span><br><span class="line">#停止</span><br><span class="line">docker-compose stop</span><br><span class="line">#启动</span><br><span class="line">docker-compose start</span><br></pre></td></tr></table></figure>
+
+<h5 id="为docker容器分配局域网和桥接网络"><a href="#为docker容器分配局域网和桥接网络" class="headerlink" title="为docker容器分配局域网和桥接网络"></a>为docker容器分配局域网和桥接网络</h5><ul>
+<li>桥接网络</li>
+</ul>
+<p>先创建一个桥接的网络<br><code>docker network create --driver=bridge --subnet=192.168.1.0/24 my_bridge_network</code></p>
+<p>启动一个容器并将它连接到你刚刚创建的网络<br><code>docker run --network=my_bridge_network -d --name=my_container my_image</code></p>
+<p><code>docker network create --driver=bridge --subnet=192.168.1.0/24 fylshaqiu1</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515231733.png" alt="20240515231733"></p>
+<p><code>docker run --network=fylshaqiu1 -d --name=redis_b 90e157a2e91e</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515233836.png" alt="20240515233836"></p>
+<p>接上我们的桥接网络</p>
+<p>但是我尝试使用我其他的kail去访问却访问不上，只有本机才可以访问</p>
+<p>我的kail攻击机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515234222.png" alt="20240515234222"></p>
+<p>我的kail本机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515234247.png" alt="20240515234247"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515234306.png" alt="20240515234306"></p>
+<p>但是其实docker默认的网络方式就是网桥模式，会写入一个docker0的网卡，来保证我们和宿主机之间的连接，所以直接创建</p>
+<p><code>docker run -p 80:80 -d</code> 直接就会默认docker0网桥</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515235417.png" alt="20240515235417"></p>
+<p>这个docker0会和我们的eth0来建立连接,保证相互之间通信</p>
+<p><code>docker inspect -f &#39;&#123;&#123;range.NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#39; my_container</code></p>
+<p>查看容器ip</p>
+<h5 id="docker搭建nignx并且部署web"><a href="#docker搭建nignx并且部署web" class="headerlink" title="docker搭建nignx并且部署web"></a>docker搭建nignx并且部署web</h5><p>创建挂载目录</p>
+<p>接下来我们创建容器的挂载目录文件夹，主要有三个目录，目录位置可根据自己的习惯调整<br>nginx_logs ：日志文件目录<br>nginx_conf ：配置文件目录<br>nginx_web ：项目文件目录（这里可以存放web文件）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mkdir /root/nginxlastest/nginx_conf</span><br><span class="line">mkdir /root/nginxlastest/nginx_logs</span><br><span class="line">mkdir /root/nginxlastest/nginx_web</span><br><span class="line"></span><br><span class="line">授权文件夹，防止nginx操作文件夹权限不足</span><br><span class="line"></span><br><span class="line">chmod 777 /root/nginxlastest/nginx_conf</span><br><span class="line">chmod 777 /root/nginxlastest/nginx_logs</span><br><span class="line">chmod 777 /root/nginxlastest/nginx_web</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511214302.png" alt="20240511214302"></p>
+<p>然后我们需要,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#参数解释</span><br><span class="line"></span><br><span class="line">-p 映射端口，格式为“宿主机端口:容器端口</span><br><span class="line">-v 挂载文件</span><br><span class="line">-e TZ=Asia/Shanghai 设置时区</span><br><span class="line">-privileoed=true 让容器中的root用户拥有直下的root权限</span><br><span class="line">--network host  让容器使用宿主机的IP和端口</span><br><span class="line">--name 容器名字，以后可以使用这个名字启动或者信止容器</span><br><span class="line">-restart=alwavs docker启动时自动启动容器</span><br><span class="line">-d 指定要启动的镜像名</span><br></pre></td></tr></table></figure>
+
+<p>这里我的想法是可以让ningx监听到我使用其他靶机的流量，所以就需要使用<br><code>docker run --name nginx-test -d --net=&quot;host&quot; nginx</code><br>直接让nignx使用宿主机端口</p>
+<p>拉取官方镜像<br><code>docker pull nignx</code>拉取最新的ningx</p>
 
                 
                 <p class="end">__END__</p>
@@ -116,6 +328,9 @@
                 
                 
                 <div class="article-prev-next">
+                    
+                        <a href="/2024/04/18/adworldctf/" class="prev-prefix">« </a> 上一篇：    <a href="/2024/04/18/adworldctf/" title="发布于 2024-04-18 11:04">adworldctf</a>
+                        <br>
                     
                     
                         <a href="/2024/04/12/kail%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" class="next-prefix">» </a> 下一篇：    <a href="/2024/04/12/kail%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" title="发布于 2024-04-12 10:00">kail虚拟机安装</a>

